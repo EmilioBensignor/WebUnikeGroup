@@ -15,7 +15,7 @@
                         name="material-symbols:star-rounded" class="w-4 h-4 text-secondary opacity-50" />
 
                     <Icon v-for="n in (5 - Math.ceil(opinion.rating))" :key="`empty-${n}`"
-                        name="material-symbols:star-rounded" class="w-4 h-4 text-gray-300" />
+                        name="material-symbols:star-rounded" class="w-4 h-4 text-gray-mid" />
                 </div>
             </div>
         </div>

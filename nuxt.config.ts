@@ -35,6 +35,11 @@ export default defineNuxtConfig({
   //     ]
   //   }
   // },
+  runtimeConfig: {
+    public: {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
+    },
+  }, 
   site: {
     url: 'https://unikegroup.com.ar',
     name: 'Unike Group',

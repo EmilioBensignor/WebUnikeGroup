@@ -7,5 +7,7 @@
         <WaterplastSobre />
         <WaterplastOpiniones />
         <WaterplastDistribuidores />
+        <WaterplastFAQs />
+        <WaterplastBlog />
     </DefaultMain>
 </template>

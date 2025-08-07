@@ -1,5 +1,5 @@
 <template>
-    <DefaultSection class="gap-6 bg-lightGray py-6 px-4">
+    <DefaultSection class="gap-6 bg-gray-light py-6 px-4">
         <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-2">
                 <HeadingH2 class="text-terciary">Sobre Waterplast</HeadingH2>
