@@ -1,5 +1,11 @@
 <template>
     <DefaultMain>
-        <HeadingH1>Waterplast</HeadingH1>
+        <WaterplastHero />
+        <div class="pt-24">
+            // Soplado
+        </div>
+        <WaterplastSobre />
+        <WaterplastOpiniones />
+        <WaterplastDistribuidores />
     </DefaultMain>
 </template>

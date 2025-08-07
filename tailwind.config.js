@@ -14,6 +14,7 @@ export default {
                 terciary: "#212C54",
                 dark: "#010101",
                 error: "#F03A36",
+                lightGray: "#F9F9F9",
             },
             backgroundImage: {
                 'primary-gradient': 'linear-gradient(180deg, #005CB9 0%, #212C54 100%)'
