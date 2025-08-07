@@ -4,7 +4,7 @@
             <NuxtImg :src="opinion.img" :alt="opinion.nombre" class="w-12 h-12 rounded-full" />
             <div class="flex flex-col gap-0.5">
                 <div class="flex items-start gap-0.5">
-                    <p class="text-sm text-terciary font-semibold">{{ opinion.nombre }}</p>
+                    <p class="text-xs text-terciary font-semibold">{{ opinion.nombre }}</p>
                     <Icon name="material-symbols:verified" class="w-3 h-3 text-primary -mt-0.5" />
                 </div>
                 <div class="flex items-center gap-0.5">

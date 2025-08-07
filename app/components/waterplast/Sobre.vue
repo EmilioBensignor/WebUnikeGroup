@@ -3,11 +3,11 @@
         <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-2">
                 <HeadingH2 class="text-terciary">Sobre Waterplast</HeadingH2>
-                <p class="text-sm text-dark font-medium">
+                <p class="text-sm text-dark">
                     Somos un equipo con años de experiencia en desarrollo de tecnología e infraestructura sostenible
                     aplicada a la gestión de los recursos hídricos.
                 </p>
-                <p class="text-sm text-dark font-medium">
+                <p class="text-sm text-dark">
                     Nos especializamos en sistemas de almacenamiento y distribución de agua para ámbitos tanto urbanos
                     como agro-industriales, siendo elegidos por la calidad, durabilidad y eficiencia de nuestras
                     soluciones.
@@ -18,7 +18,7 @@
                     <span class="w-12 h-12 flex items-center justify-center bg-secondary rounded-full flex-shrink-0">
                         <img :src="`/images/waterplast/sobre/${item.icon}.svg`" :alt="item.texto" class="w-6 h-6" />
                     </span>
-                    <p class="text-sm text-dark font-semibold">{{ item.texto }}</p>
+                    <p class="text-sm text-dark font-medium">{{ item.texto }}</p>
                 </div>
             </div>
             <ButtonPrimary class="flex justify-center items-center gap-2.5">
