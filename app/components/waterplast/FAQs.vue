@@ -1,8 +1,13 @@
 <template>
-    <DefaultSection class="bg-gray-light gap-3 py-6 px-4">
+    <DefaultSection class="bg-gray-light gap-3 md:gap-4 py-6 px-4 md:px-8">
         <HeadingH2 class="text-center text-terciary">Preguntas Frecuentes</HeadingH2>
-        <div class="flex flex-col gap-3">
-            <FaqAccordion v-for="(faq, index) in faqs" :key="index" :faq="faq" />
+        <div class="flex flex-col md:grid md:grid-cols-2 gap-3 md:gap-8">
+            <div class="flex flex-col gap-3">
+                <FaqAccordion v-for="(faq, index) in primeraColumna" :key="index" :faq="faq" />
+            </div>
+            <div class="flex flex-col gap-3">
+                <FaqAccordion v-for="(faq, index) in segundaColumna" :key="index" :faq="faq" />
+            </div>
         </div>
     </DefaultSection>
 </template>
@@ -34,4 +39,14 @@ const faqs = [
         respuesta: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
 ];
+
+const mitad = Math.ceil(faqs.length / 2);
+
+const primeraColumna = computed(() => {
+    return faqs.slice(0, mitad);
+});
+
+const segundaColumna = computed(() => {
+    return faqs.slice(mitad);
+});
 </script>

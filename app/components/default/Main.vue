@@ -1,3 +1,3 @@
 <template>
-    <main><slot /></main>
+    <main class="w-full"><slot /></main>
 </template>
