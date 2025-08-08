@@ -1,8 +1,7 @@
 <template>
     <DefaultSection>
         <NuxtImg src="/images/waterplast/Hero-Mobile.png" alt="Waterplast" class="w-full h-40 md:hidden object-cover" />
-        <NuxtImg src="/images/waterplast/Hero-Mobile.png" alt="Waterplast"
-            class="w-full h-80 hidden md:block object-cover" />
+        <NuxtImg src="/images/waterplast/Hero-Desktop.png" alt="Waterplast" class="w-full h-80 hidden md:block object-cover" />
         <div class="flex flex-col gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-12 pb-24 md:px-8">
             <div class="flex flex-col gap-2 md:gap-3 text-white px-4">
                 <HeadingH1>Somos Waterplast</HeadingH1>
