@@ -23,9 +23,9 @@
             <div class="md:w-1/2 flex flex-col gap-4 md:gap-6">
                 <div v-for="(item, index) in sobre" :key="index" class="flex items-center gap-4">
                     <span
-                        class="w-12 md:w-[4.75rem] h-12 md:h-[4.75rem] flex items-center justify-center bg-secondary rounded-full flex-shrink-0">
+                        class="w-12 md:w-[3.75rem] h-12 md:h-[3.75rem] flex items-center justify-center bg-secondary rounded-full flex-shrink-0">
                         <img :src="`/images/waterplast/sobre/${item.icon}.svg`" :alt="item.texto"
-                            class="w-6 md:w-12 h-6 md:h-12" />
+                            class="w-6 md:w-9 h-6 md:h-9" />
                     </span>
                     <p class="text-sm text-dark font-medium">{{ item.texto }}</p>
                 </div>
