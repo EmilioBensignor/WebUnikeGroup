@@ -19,7 +19,7 @@
                     </div>
 
                     <div v-if="mapLoaded && selectedDistribuidor"
-                        class="w-[90%] md:max-w-64 flex flex-col gap-3 absolute bottom-4 md:top-6 md:bottom-auto left-0 md:left-auto right-0 md:right-6 bg-white rounded-[18px] shadow-1 z-10 p-3 mx-auto">
+                        class="w-[90%] md:max-w-64 flex flex-col gap-3 absolute bottom-4 md:top-6 md:bottom-auto left-0 md:left-auto right-0 md:right-6 bg-white rounded-[18px] shadow-md shadow-dark/20 z-10 p-3 mx-auto">
                         <div class="flex justify-between items-start gap-3">
                             <div class="flex items-start gap-1 text-primary">
                                 <Icon name="material-symbols:shopping-bag-outline" class="flex-shrink-0" />
@@ -83,7 +83,7 @@
             leave-active-class="transition-all duration-200 ease-in"
             leave-from-class="opacity-100 transform translate-y-0" leave-to-class="opacity-0 transform translate-y-2">
             <div v-if="showCopyText"
-                class="w-max flex items-center gap-2 absolute top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white rounded-[18px] shadow-1 z-50 px-4 py-2">
+                class="w-max flex items-center gap-2 absolute top-20 left-1/2 transform -translate-x-1/2 bg-primary text-white rounded-[18px] shadow-md shadow-dark/20 z-50 px-4 py-2">
                 <Icon name="material-symbols:check-circle-outline-rounded" class="text-white w-5 h-5" />
                 <span class="text-sm font-medium">¡Copiado al portapapeles!</span>
             </div>

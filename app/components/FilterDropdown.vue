@@ -5,7 +5,7 @@
             class="w-full flex items-center justify-between text-left outline-none transition-colors px-4 py-3 md:pl-6">
             <span class="text-dark font-bold truncate max-w-[calc(100%-2rem)]">{{ value || placeholder }}</span>
             <span
-                class="w-6 h-6 flex justify-center items-center rounded-full shadow-1 transition-transform duration-300"
+                class="w-6 h-6 flex justify-center items-center rounded-full shadow-md shadow-dark/20 transition-transform duration-300"
                 :class="{ 'rotate-180': isOpen }">
                 <Icon name="material-symbols:keyboard-arrow-down-rounded" class="w-6 h-6 text-secondary" />
             </span>
@@ -13,7 +13,7 @@
 
         <Transition name="expand">
             <div v-if="isOpen && !disabled" ref="dropdown"
-                class="md:w-56 md:max-h-80 flex flex-col gap-2.5 md:fixed md:z-[9999] md:bg-white md:shadow-1 md:rounded-2xl p-3"
+                class="md:w-56 md:max-h-80 flex flex-col gap-2.5 md:fixed md:z-[9999] md:bg-white md:shadow-md shadow-dark/20 md:rounded-2xl p-3"
                 :style="dropdownStyle">
                 <div class="relative">
                     <input :id="id" :value="search" @input="$emit('update:search', $event.target.value)" type="text"

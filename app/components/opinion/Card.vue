@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink to="#" class="flex flex-col gap-2 bg-white shadow-1 rounded-2xl p-4">
+    <NuxtLink to="#" class="flex flex-col gap-2 bg-white shadow-md shadow-dark/20 rounded-2xl p-4">
         <div class="flex items-center gap-3">
             <NuxtImg :src="opinion.img" :alt="opinion.nombre" class="w-12 h-12 rounded-full" />
             <div class="flex flex-col gap-0.5">
