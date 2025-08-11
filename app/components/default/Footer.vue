@@ -10,7 +10,7 @@
                     <p class="text-base font-bold">{{ section.title }}</p>
                     <ul
                         :class="section.title === 'Redes Sociales' ? 'flex items-center gap-2' : 'flex flex-col items-center md:items-start gap-3'">
-                        <li class="md:max-w-52" v-for="item in section.items" :key="item.route || item.link || item.map">
+                        <li class="max-w-56 md:max-w-52" v-for="item in section.items" :key="item.route || item.link || item.map">
                             <NuxtLink v-if="item.link" :to="item.link" class="flex gap-3">
                                 <Icon v-if="item.icon" :name="`material-symbols:${item.icon}`"
                                     class="w-4 h-4 flex-shrink-0" />

@@ -15,31 +15,31 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/seo',
   ],
-  // app: {
-  //   head: {
-  //     charset: 'utf-8',
-  //     viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-  //     htmlAttrs: {
-  //       lang: 'es'
-  //     },
-  //     meta: [
-  //       { name: 'format-detection', content: 'telephone=no' },
-  //       { name: 'theme-color', content: '#ffffff' },
-  //       { name: 'mobile-web-app-capable', content: 'yes' },
-  //       { name: 'apple-mobile-web-app-capable', content: 'yes' },
-  //       { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
-  //     ],
-  //     link: [
-  //       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-  //       { rel: 'apple-touch-icon', href: '/images/Unike-Group-Logo.svg' }
-  //     ]
-  //   }
-  // },
+  app: {
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+      htmlAttrs: {
+        lang: 'es'
+      },
+      meta: [
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'theme-color', content: '#ffffff' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', href: '/images/Unike-Group-Logo.svg' }
+      ]
+    }
+  },
   runtimeConfig: {
     public: {
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
     },
-  }, 
+  },
   site: {
     url: 'https://unikegroup.com.ar',
     name: 'Unike Group',

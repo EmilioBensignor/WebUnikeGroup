@@ -17,7 +17,7 @@
                 <NuxtImg :src="categoria.img" :alt="categoria.nombre"
                     class="w-full h-[6.25rem] md:h-32 rounded-xl object-cover relative z-[2]" />
                 <div class="w-full absolute bottom-0 rounded-b-2xl text-center text-white font-semibold pt-6 pb-2"
-                    :class="'bg-[' + categoria.color + ']'">
+                    :style="{ backgroundColor: categoria.color }">
                     <p>{{ categoria.nombre }}</p>
                 </div>
             </NuxtLink>
