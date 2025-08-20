@@ -1,9 +1,7 @@
 <template>
     <DefaultMain>
         <WaterplastHero />
-        <div class="pt-24">
-            // Soplado
-        </div>
+        <WaterplastMuestra />
         <WaterplastSobre />
         <WaterplastOpiniones />
         <WaterplastDistribuidores />
@@ -11,3 +9,9 @@
         <WaterplastBlog />
     </DefaultMain>
 </template>
+
+<script setup>
+definePageMeta({
+    layout: 'waterplast'
+})
+</script>

@@ -20,7 +20,8 @@ export default {
                 }
             },
             backgroundImage: {
-                'primary-gradient': 'linear-gradient(180deg, #005CB9 0%, #212C54 100%)'
+                'primary-gradient': 'linear-gradient(180deg, #005CB9 0%, #212C54 100%)',
+                'primary-reverse-gradient': 'linear-gradient(0deg, #212C54 0%, #005CB9 100%)',
             },
             boxShadow: {
                 '1': '0px 1px 4px 0px rgba(12, 12, 13, 0.15)',

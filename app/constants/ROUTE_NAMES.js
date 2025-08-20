@@ -23,4 +23,10 @@ export const ROUTES_NAMES = {
         YOUTUBE: "#",
         LINKEDIN: "#",
     },
+    WATERPLAST: {
+        PRODUCTOS: "#",
+        DISTRIBUIDORES: "#",
+        BLOG: "#",
+        CONTACTO: "#",
+    },
 }

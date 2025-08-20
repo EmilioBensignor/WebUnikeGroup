@@ -1,13 +1,13 @@
 <template>
     <DefaultSection class="gap-3 md:gap-6 bg-gray-light py-6 px-4 md:px-8 relative">
-        <HeadingH2 class="text-center text-terciary">
-            Distribuidores Waterplast
+        <HeadingH2 class="flex justify-center items-end gap-2 text-center text-primary">
+            Distribuidores <NuxtImg src="/images/logos/Logo-Waterplast-Azul.svg" alt="Logo Waterplast" class="w-24 h-8" />
         </HeadingH2>
-        <div class="bg-primary-gradient md:bg-none rounded-2xl md:rounded-[18px] overflow-hidden">
+        <div class="bg-primary-gradient rounded-2xl md:rounded-[18px] overflow-hidden md:p-2">
             <ClientOnly>
-                <div class="w-full h-72 rounded-2xl md:rounded-[18px] relative">
+                <div class="w-full h-72 rounded-2xl md:rounded-xl relative">
                     <div ref="mapContainer"
-                        class="w-full h-full border-2 md:border-[3px] border-terciary rounded-2xl md:rounded-[18px]">
+                        class="w-full h-full border-2 md:border-none border-terciary rounded-2xl md:rounded-[18px]">
                     </div>
 
                     <div v-if="!mapLoaded"
