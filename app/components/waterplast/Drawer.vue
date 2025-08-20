@@ -33,9 +33,9 @@
                                 </NuxtLink>
                             </li>
                             <li>
-                                <p class="w-full text-start py-4 px-3">
+                                <button @click="navigateToPanel(3)" class="w-full text-start py-4 px-3">
                                     Somos Unike Group
-                                </p>
+                                </button>
                             </li>
                         </ul>
                     </nav>
@@ -88,12 +88,52 @@
                     </div>
                 </div>
             </Transition>
+
+            <Transition enter-active-class="transition-all duration-300 ease-out"
+                leave-active-class="transition-all duration-300 ease-in" enter-from-class="translate-x-full"
+                enter-to-class="translate-x-0" leave-from-class="translate-x-0" leave-to-class="translate-x-full">
+                <div v-if="currentPanel === 3"
+                    class="h-full flex flex-col md:gap-6 absolute inset-0 z-20 bg-primary-reverse-gradient sm:rounded-l-[18px] md:p-6">
+                    <div class="flex justify-between py-2 px-4 md:p-0">
+                        <button @click="navigateToPanel(1)" class="w-12 h-12 flex justify-center items-center">
+                            <div class="w-6 h-6 flex justify-center items-center bg-white rounded-full">
+                                <Icon name="material-symbols:arrow-back" class="w-5 h-5 text-primary" />
+                            </div>
+                        </button>
+                        <button @click="$emit('close')" class="w-12 h-12 flex justify-center items-center">
+                            <div class="w-6 h-6 flex justify-center items-center bg-white rounded-full">
+                                <Icon name="material-symbols:close-rounded" class="w-5 h-5 text-primary" />
+                            </div>
+                        </button>
+                    </div>
+
+                    <nav class="flex flex-col gap-6 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
+                        <ul class="text-sm text-white font-bold">
+                            <li @click="$emit('close')" class="w-full text-start py-4 px-3">
+                                <NuxtLink to="#">
+                                    Rohermet
+                                </NuxtLink>
+                            </li>
+                            <li @click="$emit('close')" class="w-full text-start py-4 px-3">
+                                <NuxtLink to="#">
+                                    Murallón
+                                </NuxtLink>
+                            </li>
+                        </ul>
+                        <div class="flex justify-center pb-5">
+                            <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
+                                class="w-36 md:w-[13.5rem] h-12 md:h-[4.5rem]" />
+                        </div>
+                    </nav>
+                </div>
+            </Transition>
         </div>
     </Transition>
 </template>
 
 <script setup>
 import categorias from '~/shared/waterplast/categorias.js'
+import menu from '~/shared/waterplast/menu.js'
 
 const props = defineProps({
     isOpen: {
@@ -101,21 +141,6 @@ const props = defineProps({
         default: false
     }
 })
-
-const menu = [
-    {
-        nombre: "Distribuidores",
-        route: "#"
-    },
-    {
-        nombre: "Blog",
-        route: "#"
-    },
-    {
-        nombre: "Contacto",
-        route: "#"
-    },
-];
 
 const emit = defineEmits(['close'])
 

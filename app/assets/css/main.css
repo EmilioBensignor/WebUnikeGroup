@@ -13,6 +13,10 @@ body {
     background-color: white;
 }
 
+#__nuxt {
+    position: relative;
+}
+
 /* Input number */
 
 input[type="number"]::-webkit-outer-spin-button,

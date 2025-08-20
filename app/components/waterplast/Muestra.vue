@@ -1,7 +1,7 @@
 <template>
-    <DefaultSection class="relative h-[250vh] md:h-[120vh] pt-2 px-4 pb-6 md:px-8 md:py-8">
+    <DefaultSection class="relative h-[250vh] md:h-[150vh] pt-2 px-4 pb-6 md:px-8 md:py-8">
         <div ref="sectionRef" class="h-full">
-        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 sticky top-2 md:top-8">
+        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 sticky top-20 md:top-32">
             <div class="md:w-1/2 flex justify-center md:justify-start">
                 <NuxtImg src="/images/waterplast/muestra/Soplado.png" alt="Soplado"
                     class="w-[13.5rem] md:w-[22rem] h-[14.625rem] md:h-[24rem] object-contain flex-shrink-0" />
