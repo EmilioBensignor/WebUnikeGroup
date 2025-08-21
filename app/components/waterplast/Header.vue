@@ -1,6 +1,9 @@
 <template>
     <header
-        class="flex items-center justify-between sticky top-0 lg:top-16 z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 px-4 md:px-8 lg:px-4 lg:mx-16">
+        :class="[
+            'flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 px-4 md:px-8 lg:px-4 lg:mx-16 transition-all duration-300',
+            isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
+        ]">
         <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
             class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
         <button @click="toggleDrawer" class="w-12 h-12 lg:hidden flex justify-center items-center p-4">
@@ -18,8 +21,10 @@
                         <div class="grid grid-cols-4 gap-3">
                             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                                 @click="goToCategory(categoria)" class="relative">
-                                <NuxtImg :src="categoria.img" :alt="`Categoria ${categoria.nombre}`"
-                                    class="w-[9.25rem] h-[8.75rem] object-cover rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300" />
+                                <div class="w-[9.25rem] h-[8.75rem] rounded-2xl overflow-hidden shadow-lg">
+                                    <NuxtImg :src="categoria.img" :alt="`Categoria ${categoria.nombre}`"
+                                        class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
+                                </div>
                                 <p class="absolute top-4 left-0 right-0 text-center text-white font-semibold">
                                     {{ categoria.nombre }}
                                 </p>
@@ -61,6 +66,7 @@ import menu from '~/shared/waterplast/menu.js'
 import categorias from '~/shared/waterplast/categorias.js'
 
 const isDrawerOpen = ref(false)
+const isScrolled = ref(false)
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value
@@ -69,4 +75,16 @@ const toggleDrawer = () => {
 const closeDrawer = () => {
     isDrawerOpen.value = false
 }
+
+onMounted(() => {
+    const handleScroll = () => {
+        isScrolled.value = window.scrollY > 0
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    
+    onUnmounted(() => {
+        window.removeEventListener('scroll', handleScroll)
+    })
+})
 </script>

@@ -1,10 +1,10 @@
 <template>
-    <DefaultSection class="relative h-[250vh] md:h-[150vh] pt-2 px-4 pb-6 md:px-8 md:py-8">
+    <DefaultSection class="relative h-[250vh] md:h-[150vh] lg:h-[300vh] pt-2 px-4 pb-6 md:px-8 md:py-8 lg:px-16">
         <div ref="sectionRef" class="h-full">
         <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 sticky top-20 md:top-32">
             <div class="md:w-1/2 flex justify-center md:justify-start">
                 <NuxtImg src="/images/waterplast/muestra/Soplado.png" alt="Soplado"
-                    class="w-[13.5rem] md:w-[22rem] h-[14.625rem] md:h-[24rem] object-contain flex-shrink-0" />
+                    class="w-[13.5rem] md:w-[22rem] lg:w-[34.25rem] h-[14.625rem] md:h-[24rem] lg:h-[38rem] object-contain flex-shrink-0" />
             </div>
             <div class="md:w-1/2 flex flex-col gap-2 md:gap-8">
                 <div v-for="(caracteristica, index) in caracteristicas" :key="index"
@@ -12,10 +12,10 @@
                         'opacity-0 translate-y-12': !caracteristica.visible,
                         'opacity-100 translate-y-0': caracteristica.visible
                     }">
-                    <NuxtImg :src="caracteristica.img" :alt="caracteristica.titulo" class="w-[4.5rem] h-[4.5rem]" />
+                    <NuxtImg :src="caracteristica.img" :alt="caracteristica.titulo" class="w-[4.5rem] lg:w-[6.25rem] h-[4.5rem] lg:h-[6.25rem]" />
                     <div class="flex flex-col gap-1 text-dark">
-                        <p class="text-sm font-bold">{{ caracteristica.titulo }}</p>
-                        <p class="text-xs font-medium">{{ caracteristica.texto }}</p>
+                        <p class="text-sm lg:text-base font-bold">{{ caracteristica.titulo }}</p>
+                        <p class="text-xs lg:text-sm font-medium">{{ caracteristica.texto }}</p>
                     </div>
                 </div>
             </div>

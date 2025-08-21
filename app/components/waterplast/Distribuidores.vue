@@ -1,13 +1,13 @@
 <template>
-    <DefaultSection class="gap-3 md:gap-6 bg-gray-light py-6 px-4 md:px-8 relative">
-        <HeadingH2 class="flex justify-center items-end gap-2 text-center text-primary">
-            Distribuidores <NuxtImg src="/images/logos/Logo-Waterplast-Azul.svg" alt="Logo Waterplast" class="w-24 h-8" />
+    <DefaultSection class="gap-3 md:gap-6 lg:gap-8 bg-gray-light py-6 lg:pt-12 lg:pb-0 px-4 md:px-8 lg:px-16 relative">
+        <HeadingH2 class="flex justify-center items-end gap-2 lg:gap-3 text-center text-primary">
+            Distribuidores <NuxtImg src="/images/logos/Logo-Waterplast-Azul.svg" alt="Logo Waterplast" class="w-24 lg:w-32 h-8 lg:h-11 object-contain" />
         </HeadingH2>
-        <div class="bg-primary-gradient rounded-2xl md:rounded-[18px] overflow-hidden md:p-2">
+        <div class="bg-primary-gradient rounded-2xl md:rounded-[18px] overflow-hidden md:p-2 lg:p-2.5">
             <ClientOnly>
-                <div class="w-full h-72 rounded-2xl md:rounded-xl relative">
+                <div class="w-full h-72 lg:h-[30rem] rounded-2xl md:rounded-xl relative">
                     <div ref="mapContainer"
-                        class="w-full h-full border-2 md:border-none border-terciary rounded-2xl md:rounded-[18px]">
+                        class="w-full h-full border-2 md:border-none border-terciary rounded-2xl md:rounded-[18px] lg:rounded-2xl">
                     </div>
 
                     <div v-if="!mapLoaded"
@@ -19,7 +19,7 @@
                     </div>
 
                     <div v-if="mapLoaded && selectedDistribuidor"
-                        class="w-[90%] md:max-w-64 flex flex-col gap-3 absolute bottom-4 md:top-6 md:bottom-auto left-0 md:left-auto right-0 md:right-6 bg-white rounded-[18px] shadow-md shadow-dark/20 z-10 p-3 mx-auto">
+                        class="w-[90%] md:max-w-64 lg:max-w-72 flex flex-col gap-3 absolute bottom-4 md:top-6 md:bottom-auto left-0 md:left-auto right-0 md:right-6 bg-white rounded-[18px] shadow-md shadow-dark/20 z-10 p-3 mx-auto">
                         <div class="flex justify-between items-start gap-3">
                             <div class="flex items-start gap-1 text-primary">
                                 <Icon name="material-symbols:shopping-bag-outline" class="flex-shrink-0" />
@@ -56,8 +56,8 @@
                 </template>
             </ClientOnly>
 
-            <div class="md:absolute md:left-0 md:right-0 bottom-7 p-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:px-16">
+            <div class="lg:max-w-[43.25rem] lg:w-full md:absolute md:left-0 md:right-0 bottom-7 p-4 lg:mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:px-16 lg:px-0">
                     <FilterDropdown id="provincia" :value="selectedProvincia" placeholder="Provincia"
                         :options="filteredProvincias" :search="searchProvincia"
                         @update:search="searchProvincia = $event" @select="selectProvincia"

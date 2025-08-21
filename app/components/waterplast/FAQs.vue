@@ -1,11 +1,11 @@
 <template>
-    <DefaultSection class="bg-gray-light gap-3 md:gap-4 py-6 px-4 md:px-8">
+    <DefaultSection class="bg-gray-light gap-3 md:gap-4 lg:gap-6 py-6 lg:py-12 px-4 md:px-8 lg:px-16">
         <HeadingH2 class="text-center text-terciary">Preguntas Frecuentes</HeadingH2>
         <div class="flex flex-col md:grid md:grid-cols-2 gap-3 md:gap-8">
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-3 lg:gap-4">
                 <FaqAccordion v-for="(faq, index) in primeraColumna" :key="index" :faq="faq" />
             </div>
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-3 lg:gap-4">
                 <FaqAccordion v-for="(faq, index) in segundaColumna" :key="index" :faq="faq" />
             </div>
         </div>

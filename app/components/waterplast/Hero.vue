@@ -31,8 +31,11 @@
         }" class="-mt-[4.5rem] lg:-mt-20">
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                 class="flex flex-col items-center relative bg-white shadow-md shadow-dark/20 rounded-2xl lg:rounded-3xl p-2 pb-9 md:first:ml-8 lg:first:ml-0 md:last:mr-8 lg:last:mr-0">
-                <NuxtImg :src="categoria.imgHero" :alt="categoria.nombre"
-                    class="w-full h-[6.25rem] md:h-32 lg:h-40 rounded-xl lg:rounded-2xl object-cover relative z-[2]" />
+                <div
+                    class="w-full h-[6.25rem] md:h-32 lg:h-40 rounded-xl lg:rounded-2xl overflow-hidden relative z-[2]">
+                    <NuxtImg :src="categoria.imgHero" :alt="categoria.nombre"
+                        class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110" />
+                </div>
                 <div class="w-full absolute bottom-0 rounded-b-2xl lg:rounded-b-3xl text-center text-white font-semibold pt-6 lg:pt-16 pb-2"
                     :style="{ backgroundColor: categoria.color }">
                     <p>{{ categoria.nombre }}</p>

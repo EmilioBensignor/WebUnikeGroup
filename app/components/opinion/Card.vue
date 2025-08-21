@@ -1,10 +1,10 @@
 <template>
-    <NuxtLink to="#" class="flex flex-col gap-2 bg-white shadow-md shadow-dark/20 rounded-2xl p-4">
+    <NuxtLink to="#" class="flex flex-col gap-2 bg-white shadow-md shadow-dark/20 rounded-2xl lg:rounded-3xl p-4">
         <div class="flex items-center gap-3">
             <NuxtImg :src="opinion.img" :alt="opinion.nombre" class="w-12 h-12 rounded-full" />
             <div class="flex flex-col gap-0.5">
-                <div class="flex items-start gap-0.5">
-                    <p class="text-xs text-terciary font-semibold">{{ opinion.nombre }}</p>
+                <div class="flex items-start gap-0.5 lg:gap-1">
+                    <p class="text-xs lg:text-base text-terciary font-semibold">{{ opinion.nombre }}</p>
                     <Icon name="material-symbols:verified" class="w-3 h-3 text-primary -mt-0.5" />
                 </div>
                 <div class="flex items-center gap-0.5">
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-1 text-xs text-terciary">
+        <div class="flex flex-col gap-1 text-xs lg:text-sm text-terciary">
             <p class="font-bold">{{ opinion.opinion }}</p>
             <p class="font-medium">{{ opinion.comentario }}</p>
         </div>

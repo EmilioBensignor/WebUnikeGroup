@@ -1,33 +1,33 @@
 <template>
-    <DefaultSection class="gap-6 bg-gray-light py-6 px-4 md:p-8">
-        <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
-            <div class="md:w-1/2 flex flex-col gap-2 md:gap-6">
+    <DefaultSection class="gap-6 lg:gap-12 bg-gray-light py-6 px-4 md:p-8 lg:py-12 lg:px-16">
+        <div class="flex flex-col md:flex-row md:items-center lg:justify-between gap-6 md:gap-8 lg:gap-14">
+            <div class="md:w-1/2 lg:w-auto flex flex-col gap-2 md:gap-6">
                 <div class="flex flex-col gap-2 md:gap-3">
                     <HeadingH2 class="text-terciary">Sobre Waterplast</HeadingH2>
-                    <p class="text-sm text-dark">
+                    <p class="text-sm lg:text-xl text-dark">
                         Somos un equipo con años de experiencia en desarrollo de tecnología e infraestructura sostenible
                         aplicada a la gestión de los recursos hídricos.
                     </p>
-                    <p class="text-sm text-dark">
+                    <p class="text-sm lg:text-xl text-dark">
                         Nos especializamos en sistemas de almacenamiento y distribución de agua para ámbitos tanto
                         urbanos
                         como agro-industriales, siendo elegidos por la calidad, durabilidad y eficiencia de nuestras
                         soluciones.
                     </p>
                 </div>
-                <ButtonPrimary class="hidden md:flex justify-center items-center gap-2.5">
+                <ButtonPrimary class="hidden lg:w-max md:flex justify-center items-center gap-2.5">
                     Somos Unike Group
                     <Icon name="material-symbols:arrow-right-alt-rounded" class="w-6 h-6" />
                 </ButtonPrimary>
             </div>
-            <div class="md:w-1/2 flex flex-col gap-4 md:gap-6">
+            <div class="md:w-1/2 lg:w-max lg:max-w-[22rem] flex flex-col gap-4 md:gap-6 flex-shrink-0">
                 <div v-for="(item, index) in sobre" :key="index" class="flex items-center gap-4">
                     <span
-                        class="w-12 md:w-[3.75rem] h-12 md:h-[3.75rem] flex items-center justify-center bg-secondary rounded-full flex-shrink-0">
+                        class="w-12 md:w-[3.75rem] lg:w-[4.75rem] h-12 md:h-[3.75rem] lg:h-[4.75rem] flex items-center justify-center bg-secondary rounded-full flex-shrink-0">
                         <img :src="`/images/waterplast/sobre/${item.icon}.svg`" :alt="item.texto"
-                            class="w-6 md:w-9 h-6 md:h-9" />
+                            class="w-6 md:w-9 lg:w-12 h-6 md:h-9 lg:h-12" />
                     </span>
-                    <p class="text-sm text-dark font-medium">{{ item.texto }}</p>
+                    <p class="text-sm lg:text-xl text-dark font-medium">{{ item.texto }}</p>
                 </div>
             </div>
             <ButtonPrimary class="flex md:hidden justify-center items-center gap-2.5">
@@ -36,10 +36,10 @@
             </ButtonPrimary>
         </div>
         <div
-            class="flex flex-col md:items-start gap-6 bg-cover bg-center bg-no-repeat rounded-2xl md:rounded-3xl p-6 md:p-8 bg-[url('/images/waterplast/sobre/Instalar.png')]">
-            <div class="md:max-w-[22rem] flex flex-col md:items-start gap-3 text-center md:text-start text-white">
+            class="flex flex-col md:items-start gap-6 bg-[url('/images/waterplast/sobre/Instalar.png')] bg-cover bg-center bg-no-repeat rounded-2xl md:rounded-3xl p-6 md:p-8 lg:py-14">
+            <div class="md:max-w-[22rem] lg:max-w-[31.25rem] flex flex-col md:items-start gap-3 text-center md:text-start text-white">
                 <HeadingH2>Cómo instalar Waterplast</HeadingH2>
-                <div class="flex flex-col md:items-start gap-2 text-sm">
+                <div class="flex flex-col md:items-start gap-2 text-sm lg:text-base">
                     <p class="font-bold">¿Tenés alguna duda sobre nuestros productos?</p>
                     <p class="font-medium">
                         No te preocupes, tenemos un canal de youtube con tutoriales
