@@ -1,7 +1,7 @@
 <template>
     <header
         :class="[
-            'flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 px-4 md:px-8 lg:px-4 lg:mx-16 transition-all duration-300',
+            'xxl:max-w-[1375px] flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
             isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
         ]">
         <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
@@ -13,11 +13,11 @@
             <ul class="flex items-center text-white font-bold">
                 <li class="relative group">
                     <div
-                        class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 cursor-default">
+                        class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 xxl:px-6 cursor-default">
                         Productos
                     </div>
                     <div
-                        class="w-[59.5rem] flex gap-6 absolute top-full -left-[200%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
+                        class="w-[59.5rem] xxl:w-[82.25rem] flex gap-6 absolute top-full -left-[200%] xxl:-left-[425%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
                         <div class="grid grid-cols-4 gap-3">
                             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                                 @click="goToCategory(categoria)" class="relative">
@@ -31,11 +31,13 @@
                             </NuxtLink>
                         </div>
                         <NuxtImg src="/images/waterplast/banners/Biolam.png" alt="Banner Biolam"
-                            class="w-[17.5rem] h-[18.125rem] object-cover rounded-2xl shadow-lg" />
+                            class="w-[17.5rem] h-[18.125rem] xxl:hidden object-cover rounded-2xl shadow-lg" />
+                        <NuxtImg src="/images/waterplast/banners/Biolam-Desktop.png" alt="Banner Biolam"
+                            class="w-[17.5rem] xxl:w-[40.25rem] hidden xxl:block h-[18.125rem] object-cover rounded-2xl shadow-lg" />
                     </div>
                 </li>
                 <li v-for="(item, index) in menu" :key="index"
-                    class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4">
+                    class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 xxl:px-6">
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
                 <div class="relative ml-2 group">

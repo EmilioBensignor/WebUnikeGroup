@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full relative lg:px-16" ref="carouselWrapper">
+    <div class="w-full xxl:max-w-[1375px] relative lg:px-16" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
             class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-white shadow-md rounded-full"
             :style="leftButtonStyle" :disabled="isAtStart" aria-label="Anterior">
@@ -51,14 +51,14 @@ const props = defineProps({
                 md: '-2rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             },
             right: {
                 base: '0.5rem',
                 md: '-2rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             }
         })
     },

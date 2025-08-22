@@ -2,9 +2,9 @@
     <DefaultSection class="relative lg:-mt-32">
         <NuxtImg src="/images/waterplast/Hero-Mobile.png" alt="Waterplast" class="w-full h-40 md:hidden object-cover" />
         <NuxtImg src="/images/waterplast/Hero-Desktop.png" alt="Waterplast"
-            class="w-full h-80 lg:h-[34.5rem] hidden md:block object-cover lg:object-[85%_2.5rem]" />
+            class="w-full h-80 lg:h-[34.5rem] xxl:h-[35.75rem] hidden md:block object-cover lg:object-[85%_2.5rem]" />
         <div
-            class="lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-12 pb-24 md:px-8 lg:px-16">
+            class="xxl:w-full xxl:max-w-[1375px] lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-12 pb-24 md:px-8 lg:px-16 xxl:mx-auto">
             <div class="flex flex-col gap-2 md:gap-3 lg:gap-4 text-white px-4 md:px-0">
                 <HeadingH1>Somos Waterplast</HeadingH1>
                 <p class="md:max-w-[25rem] lg:max-w-[40.75rem] text-sm md:text-xl lg:text-[1.75rem] font-medium">
@@ -13,20 +13,20 @@
                 </p>
             </div>
         </div>
-        <CarouselStatic :slides-per-view="{ base: 1.7, sm: 2.5, md: 3.5, lg: 4, xl: 4, xxl: 6 }" :button-position="{
+        <CarouselStatic :slides-per-view="{ base: 1.7, sm: 2.5, md: 3.5, lg: 4, xl: 4, xxl: 5 }" :button-position="{
             top: '50%',
             transform: 'translateY(-50%)',
             left: {
                 md: '-5rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             },
             right: {
                 md: '-5rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             }
         }" class="-mt-[4.5rem] lg:-mt-20">
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"

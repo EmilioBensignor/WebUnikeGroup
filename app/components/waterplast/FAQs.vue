@@ -1,7 +1,7 @@
 <template>
-    <DefaultSection class="bg-gray-light gap-3 md:gap-4 lg:gap-6 py-6 lg:py-12 px-4 md:px-8 lg:px-16">
+    <DefaultSection class="bg-gray-light gap-3 md:gap-4 lg:gap-6 xxl:gap-8 py-6 md:py-8 lg:py-12 xxl:py-16 px-4 md:px-8 lg:px-16">
         <HeadingH2 class="text-center text-terciary">Preguntas Frecuentes</HeadingH2>
-        <div class="flex flex-col md:grid md:grid-cols-2 gap-3 md:gap-8">
+        <div class="xxl:max-w-[1375px] xxl:w-full flex flex-col md:grid md:grid-cols-2 gap-3 md:gap-8">
             <div class="flex flex-col gap-3 lg:gap-4">
                 <FaqAccordion v-for="(faq, index) in primeraColumna" :key="index" :faq="faq" />
             </div>
