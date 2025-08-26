@@ -1,7 +1,7 @@
 <template>
     <header
         :class="[
-            'xxl:max-w-[1375px] flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
+            'xxl:max-w-[1304px] flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
             isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
         ]">
         <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"

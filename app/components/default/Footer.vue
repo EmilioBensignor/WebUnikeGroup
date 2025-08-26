@@ -1,6 +1,6 @@
 <template>
     <footer class="w-full flex flex-col items-center gap-6 bg-primary-gradient rounded-t-3xl pt-12 xxl:px-16">
-        <div class="lg:w-full xxl:max-w-[1375px] flex flex-col xxl:flex-row items-center gap-6 md:gap-12 xxl:gap-28 px-4 md:px-8 lg:px-16 xxl:px-0">
+        <div class="lg:w-full xxl:max-w-[1304px] flex flex-col xxl:flex-row items-center gap-6 md:gap-12 xxl:gap-28 px-4 md:px-8 lg:px-16 xxl:px-0">
             <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group"
                 class="w-[6.5rem] md:w-[11.75rem] h-[4.5rem] md:h-32" />
             <div

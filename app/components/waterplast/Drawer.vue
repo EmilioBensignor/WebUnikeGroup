@@ -8,7 +8,7 @@
     <Transition enter-active-class="transition-transform duration-300 ease-out"
         leave-active-class="transition-transform duration-300 ease-in" enter-from-class="translate-x-full"
         enter-to-class="translate-x-0" leave-from-class="translate-x-0" leave-to-class="translate-x-full">
-        <div v-if="isOpen" class="w-full max-w-sm h-full fixed top-0 right-0 z-50">
+        <div v-if="isOpen" class="w-full sm:max-w-md h-full fixed top-0 right-0 z-50">
             <div
                 class="h-full flex flex-col md:gap-6 absolute inset-0 z-10 bg-primary-reverse-gradient sm:rounded-l-[18px] md:p-6">
                 <div class="flex justify-end py-2 px-4 md:p-0">
@@ -81,7 +81,7 @@
                             <NuxtImg src="/images/waterplast/banners/Biolam.png" alt="Banner Biolam"
                                 class="w-full object-cover rounded-2xl shadow-lg" />
                         </div>
-                        <div class="flex justify-center pb-5">
+                        <div class="flex justify-center pb-12">
                             <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
                                 class="w-36 md:w-[13.5rem] h-12 md:h-[4.5rem]" />
                         </div>
@@ -107,7 +107,7 @@
                         </button>
                     </div>
 
-                    <nav class="flex flex-col gap-6 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
+                    <nav class="flex flex-col gap-6 px-4 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
                         <ul class="text-sm text-white font-bold">
                             <li @click="$emit('close')" class="w-full text-start py-4 px-3">
                                 <NuxtLink to="#">

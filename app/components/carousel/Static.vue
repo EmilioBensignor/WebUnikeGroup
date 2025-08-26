@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full xxl:max-w-[1375px] relative lg:px-16" ref="carouselWrapper">
+    <div class="w-full xxl:max-w-[1304px] relative lg:px-16 xxl:px-0" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
             class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-white shadow-md rounded-full"
             :style="leftButtonStyle" :disabled="isAtStart" aria-label="Anterior">

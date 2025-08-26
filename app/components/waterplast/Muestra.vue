@@ -1,7 +1,7 @@
 <template>
     <DefaultSection class="relative h-[250vh] md:h-[150vh] lg:h-[300vh] pt-2 px-4 pb-6 md:px-8 md:py-8 xxl:py-16 lg:px-16">
         <div ref="sectionRef" class="h-full">
-            <div class="hidden xxl:flex flex-row justify-between items-center gap-12 sticky top-32">
+            <div class="hidden xxl:max-w-[1304px] xxl:flex flex-row justify-between items-center gap-12 sticky top-32">
                 <div class="w-[22.125rem] flex flex-col gap-8">
                     <div v-for="(capa, index) in capas" :key="index"
                         class="flex gap-4 transition-all duration-700 ease-out transform" :class="{

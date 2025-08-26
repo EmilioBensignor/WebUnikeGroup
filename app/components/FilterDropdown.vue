@@ -69,12 +69,25 @@ const updateDropdownPosition = () => {
     }
 }
 
+const handleScroll = () => {
+    if (props.isOpen) {
+        updateDropdownPosition()
+    }
+}
+
 watch(() => props.isOpen, (newVal) => {
     if (newVal) {
         nextTick(() => {
             updateDropdownPosition()
+            window.addEventListener('scroll', handleScroll, true)
         })
+    } else {
+        window.removeEventListener('scroll', handleScroll, true)
     }
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll, true)
 })
 
 const getOptionKey = (option) => {

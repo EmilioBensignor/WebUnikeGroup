@@ -3,7 +3,7 @@
         <HeadingH2 class="flex justify-center items-end gap-2 lg:gap-3 text-center text-primary">
             Distribuidores <NuxtImg src="/images/logos/Logo-Waterplast-Azul.svg" alt="Logo Waterplast" class="w-24 lg:w-32 h-8 lg:h-11 object-contain" />
         </HeadingH2>
-        <div class="w-full xxl:max-w-[1375px] bg-primary-gradient rounded-2xl md:rounded-[18px] xxl:rounded-3xl overflow-hidden md:p-2 lg:p-2.5 xxl:p-3">
+        <div class="w-full xxl:max-w-[1304px] bg-primary-gradient rounded-2xl md:rounded-[18px] xxl:rounded-3xl overflow-hidden md:p-2 lg:p-2.5 xxl:p-3">
             <ClientOnly>
                 <div class="w-full h-72 lg:h-[30rem] rounded-2xl md:rounded-xl relative">
                     <div ref="mapContainer"
