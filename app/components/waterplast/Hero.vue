@@ -20,13 +20,13 @@
                 md: '-5rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             },
             right: {
                 md: '-5rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             }
         }" class="-mt-[4.5rem] lg:-mt-[6.5rem]">
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"

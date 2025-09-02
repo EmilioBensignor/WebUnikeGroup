@@ -9,13 +9,13 @@
                 md: '-5rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             },
             right: {
                 md: '-5rem',
                 lg: '2rem',
                 xl: '2rem',
-                xxl: '2rem',
+                xxl: '-2rem',
             }
         }">
             <OpinionCard v-for="(opinion, index) in opiniones" :key="index" :opinion="opinion" />
