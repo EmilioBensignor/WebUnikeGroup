@@ -1,8 +1,12 @@
 <template>
     <DefaultSection class="relative lg:-mt-32">
-        <NuxtImg src="/images/waterplast/Hero-Mobile.png" alt="Waterplast" class="w-full h-40 sm:h-full md:hidden object-cover" />
-        <NuxtImg src="/images/waterplast/Hero-Desktop.png" alt="Waterplast"
-            class="w-full h-80 lg:h-[34.5rem] xxl:h-[35.75rem] hidden md:block object-cover lg:object-[85%_2.5rem]" />
+        <picture class="w-full">
+            <source media="(min-width: 1440px)" srcset="/images/waterplast/Hero-Waterplast-1440.png">
+            <source media="(min-width: 1080px)" srcset="/images/waterplast/Hero-Waterplast-1080.webp">
+            <source media="(min-width: 768px)" srcset="/images/waterplast/Hero-Waterplast-768.webp">
+            <img src="/images/waterplast/Hero-Waterplast-320.webp" alt="Waterplast" 
+                class="w-full h-40 sm:h-full md:h-80 lg:h-[34.5rem] xxl:h-[35.75rem] object-cover">
+        </picture>
         <div
             class="xxl:w-full xxl:max-w-[1304px] lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-12 pb-24 md:px-8 lg:px-16 xxl:px-0 xxl:mx-auto">
             <div class="flex flex-col gap-2 md:gap-3 lg:gap-4 text-white px-4 md:px-0">
@@ -13,7 +17,7 @@
                 </p>
             </div>
         </div>
-        <CarouselStatic :slides-per-view="{ base: 1.7, sm: 2.5, md: 3.5, lg: 4, xl: 4, xxl: 5 }" :button-position="{
+        <CarouselStatic :slides-per-view="{ base: 1.7, sm: 2.7, md: 3.7, lg: 4, xl: 4, xxl: 5 }" :button-position="{
             top: '47%',
             transform: 'translateY(-50%)',
             left: {

@@ -36,7 +36,7 @@
             </ButtonPrimary>
         </div>
         <div
-            class="xxl:max-w-[1304px] xxl:w-full flex flex-col md:items-start gap-6 xxl:gap-8 bg-[url('/images/waterplast/sobre/Instalar.png')] bg-cover bg-center bg-no-repeat rounded-2xl md:rounded-3xl p-6 md:p-8 lg:py-14 xxl:px-16">
+            class="xxl:max-w-[1304px] xxl:w-full flex flex-col md:items-start gap-6 xxl:gap-8 bg-[url('/images/waterplast/sobre/banner_tutoriales_320.webp')] sm:bg-[url('/images/waterplast/sobre/banner_tutoriales_768.webp')] lg:bg-[url('/images/waterplast/sobre/banner_tutoriales_1080.webp')] xxl:bg-[url('/images/waterplast/sobre/banner_tutoriales_1440.webp')] bg-cover bg-center bg-no-repeat rounded-2xl md:rounded-3xl p-6 md:p-8 lg:py-14 xxl:px-16">
             <div class="md:max-w-[22rem] lg:max-w-[31.25rem] xxl:max-w-[31.5rem] flex flex-col md:items-start gap-3 xxl:gap-4 text-center md:text-start text-white">
                 <HeadingH2>Cómo instalar Waterplast</HeadingH2>
                 <div class="flex flex-col md:items-start gap-2 xxl:gap-1 text-sm lg:text-base">

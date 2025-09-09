@@ -1,5 +1,6 @@
 <template>
-    <DefaultSection class="relative h-[250vh] md:h-[150vh] lg:h-[300vh] pt-2 px-4 pb-6 md:px-8 md:py-8 xxl:py-16 lg:px-16">
+    <DefaultSection
+        class="relative h-[250vh] md:h-[150vh] lg:h-[300vh] pt-2 px-4 pb-6 md:px-8 md:py-8 xxl:py-16 lg:px-16">
         <div ref="sectionRef" class="h-full">
             <div class="hidden xxl:max-w-[1304px] xxl:flex flex-row justify-between items-center gap-12 sticky top-32">
                 <div class="w-[22.125rem] flex flex-col gap-8">
@@ -20,8 +21,13 @@
                     </div>
                 </div>
                 <div class="flex justify-center md:justify-start">
-                    <NuxtImg src="/images/waterplast/muestra/Soplado.png" alt="Soplado"
-                        class="w-[35.75rem] h-[39.5rem] object-contain flex-shrink-0" />
+                    <picture class="w-full">
+                        <source media="(min-width: 1440px)" srcset="/images/waterplast/muestra/render_soplado_1440.webp">
+                        <source media="(min-width: 1080px)" srcset="/images/waterplast/muestra/render_soplado_1080.webp">
+                        <source media="(min-width: 768px)" srcset="/images/waterplast/muestra/render_soplado_768.webp">
+                        <img src="/images/waterplast/muestra/render_soplado_320.webp" alt="Waterplast"
+                            class="w-[35.75rem] h-[39.5rem] object-contain flex-shrink-0">
+                    </picture>
                 </div>
                 <div class="w-[22.125rem] flex flex-col gap-8">
                     <div v-for="(caracteristica, index) in caracteristicas" :key="index"
@@ -68,19 +74,19 @@ const caracteristicas = ref([
     {
         titulo: "CIERRE HERMÉTICO",
         texto: "Tapa a rosca de 48 cm con sistema antivuelco. Diseño innovador con filtro UV.",
-        img: "/images/waterplast/muestra/Cierre-Hermetico.png",
+        img: "/images/waterplast/muestra/tapa.webp",
         visible: false
     },
     {
         titulo: "MANIJA PARA IZAR",
         texto: "Manijas integradas para sujeción fácil y segura.",
-        img: "/images/waterplast/muestra/Manija-Izar.png",
+        img: "/images/waterplast/muestra/manija.webp",
         visible: false
     },
     {
         titulo: "CONEXIÓN",
         texto: "Salida integrada en lateral inferior con brida roscada de 11/2.",
-        img: "/images/waterplast/muestra/Conexion.png",
+        img: "/images/waterplast/muestra/conexion.webp",
         visible: false
     }
 ])
