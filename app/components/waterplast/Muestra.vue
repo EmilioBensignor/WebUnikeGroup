@@ -22,7 +22,7 @@
                 </div>
                 <div class="flex justify-center md:justify-start">
                     <NuxtImg 
-                        src="/images/waterplast/muestra/Render_soplado_1440.webp" 
+                        src="/images/waterplast/muestra/Render_soplado.webp" 
                         alt="Waterplast"
                         class="w-[35.75rem] h-[39.5rem] object-contain flex-shrink-0" />
                 </div>
@@ -44,7 +44,7 @@
 
             <div class="flex xxl:hidden flex-col md:flex-row items-center gap-12 sticky top-32">
                 <div class="md:w-1/2 flex justify-center md:justify-start">
-                    <NuxtImg src="/images/waterplast/muestra/Render_soplado_1440.webp" alt="Soplado"
+                    <NuxtImg src="/images/waterplast/muestra/Render_soplado.webp" alt="Soplado"
                         class="w-[13.5rem] md:w-[22rem] lg:w-[34.25rem] h-[14.625rem] md:h-[24rem] lg:h-[38rem] object-contain flex-shrink-0" />
                 </div>
                 <div class="md:w-1/2 flex flex-col gap-2 md:gap-8">
