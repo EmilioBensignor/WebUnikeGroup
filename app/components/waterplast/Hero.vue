@@ -1,7 +1,7 @@
 <template>
     <DefaultSection class="relative lg:-mt-32">
         <picture class="w-full">
-            <source media="(min-width: 1440px)" srcset="/images/waterplast/Hero-Waterplast-1440.png">
+            <source media="(min-width: 1440px)" srcset="/images/waterplast/Hero-Waterplast-1440.webp">
             <source media="(min-width: 1080px)" srcset="/images/waterplast/Hero-Waterplast-1080.webp">
             <source media="(min-width: 768px)" srcset="/images/waterplast/Hero-Waterplast-768.webp">
             <img src="/images/waterplast/Hero-Waterplast-320.webp" alt="Waterplast" 
