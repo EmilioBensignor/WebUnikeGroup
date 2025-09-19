@@ -18,11 +18,22 @@
                 xxl: '-2rem',
             }
         }">
-            <OpinionCard v-for="(opinion, index) in opiniones" :key="index" :opinion="opinion" />
+            <div v-if="loading" class="flex justify-center items-center min-h-[200px]">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+            </div>
+            <div v-else-if="error" class="text-center text-white py-8">
+                <p>Error al cargar las opiniones: {{ error }}</p>
+            </div>
+            <OpinionCard v-else v-for="(opinion, index) in opiniones" :key="opinion.id || index" :opinion="opinion" />
         </CarouselStatic>
     </DefaultSection>
 </template>
 
 <script setup>
-import opiniones from '~/shared/waterplast/opiniones.js';
+const { useWaterplastOpiniones } = await import('~/composables/waterplast/useOpiniones.js')
+const { opiniones, loading, error, fetchOpiniones } = useWaterplastOpiniones()
+
+onMounted(() => {
+    fetchOpiniones()
+})
 </script>

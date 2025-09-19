@@ -124,7 +124,6 @@ const handleScroll = () => {
 
     const scrollProgress = Math.max(0, Math.min(1, (viewportHeight - sectionRect.top) / (sectionHeight + viewportHeight)))
 
-    // Sincronizar capas y características para que aparezcan al mismo tiempo por índice
     const maxLength = Math.max(caracteristicas.value.length, capas.value.length)
 
     for (let i = 0; i < maxLength; i++) {

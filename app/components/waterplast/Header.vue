@@ -1,9 +1,8 @@
 <template>
-    <header
-        :class="[
-            'xxl:max-w-[1304px] flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
-            isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
-        ]">
+    <header :class="[
+        'xxl:max-w-[1304px] flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
+        isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
+    ]">
         <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
             class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
         <button @click="toggleDrawer" class="w-12 h-12 lg:hidden flex justify-center items-center p-4">
@@ -19,10 +18,17 @@
                     <div
                         class="w-[59.5rem] xxl:w-[82.25rem] flex gap-6 absolute top-full -left-[200%] xxl:-left-[425%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
                         <div class="grid grid-cols-4 gap-3">
-                            <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
-                                @click="goToCategory(categoria)" class="relative">
+                            <div v-if="loading" class="col-span-4 flex justify-center items-center py-8">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                            </div>
+                            <div v-else-if="error" class="col-span-4 text-center text-red-500 py-8">
+                                <p>Error al cargar categorías</p>
+                            </div>
+                            <NuxtLink v-else to="#" v-for="(categoria, index) in categorias"
+                                :key="categoria.id || index" @click="goToCategory(categoria)" class="relative">
                                 <div class="w-[9.25rem] h-[8.75rem] rounded-2xl overflow-hidden shadow-lg">
-                                    <NuxtImg :src="categoria.img" :alt="`Categoria ${categoria.nombre}`"
+                                    <img :src="categoria.imagen_menu"
+                                        :alt="`Categoria ${categoria.nombre}`"
                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
                                 </div>
                                 <p class="absolute top-4 left-0 right-0 text-center text-white font-semibold">
@@ -30,9 +36,9 @@
                                 </p>
                             </NuxtLink>
                         </div>
-                        <NuxtImg src="/images/waterplast/banners/Biolam.png" alt="Banner Biolam"
+                        <img v-if="imagenBanner" :src="imagenBanner.imagen_mediana" :alt="imagenBanner.nombre"
                             class="w-[17.5rem] h-[18.125rem] xxl:hidden object-cover rounded-2xl shadow-lg" />
-                        <NuxtImg src="/images/waterplast/banners/Biolam-Desktop.png" alt="Banner Biolam"
+                        <img v-if="imagenBanner" :src="imagenBanner.imagen_grande" :alt="imagenBanner.nombre"
                             class="w-[17.5rem] xxl:w-[40.25rem] hidden xxl:block h-[18.125rem] object-cover rounded-2xl shadow-lg" />
                     </div>
                 </li>
@@ -65,10 +71,17 @@
 
 <script setup>
 import menu from '~/shared/waterplast/menu.js'
-import categorias from '~/shared/waterplast/categorias.js'
+
+const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
+const { categorias, loading, error, fetchCategorias } = useWaterplastCategorias()
+
+const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
+const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
 
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
+const imagenBanner = ref(null)
+
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value
@@ -78,13 +91,24 @@ const closeDrawer = () => {
     isDrawerOpen.value = false
 }
 
-onMounted(() => {
+onMounted(async () => {
+    fetchCategorias()
+
+    try {
+        const imagenMenu = await fetchImagenDestacadaBySlug('imagen-menu')
+        if (imagenMenu) {
+            imagenBanner.value = imagenMenu
+        }
+    } catch (error) {
+        console.error('Error al cargar imagen del menú:', error)
+    }
+
     const handleScroll = () => {
         isScrolled.value = window.scrollY > 0
     }
-    
+
     window.addEventListener('scroll', handleScroll)
-    
+
     onUnmounted(() => {
         window.removeEventListener('scroll', handleScroll)
     })

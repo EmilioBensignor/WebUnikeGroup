@@ -3,18 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  modules: [
-    '@nuxt/fonts',
-    '@nuxt/icon',
-    '@nuxt/image',
-    '@pinia/nuxt',
-    // Fontaine
-    // Booster
-    // Vitalizer
-    // GTM
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/seo',
-  ],
+  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/tailwindcss', '@nuxtjs/seo', '@nuxtjs/supabase'],
   app: {
     head: {
       charset: 'utf-8',
@@ -59,5 +48,8 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify',
     collections: ['material-symbols']
+  },
+  supabase: {
+    redirect: false,
   },
 })

@@ -68,17 +68,22 @@
                     <div class="flex flex-col gap-6 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
                         <div class="flex flex-col gap-4 px-4 md:p-0">
                             <div class="grid grid-cols-2 gap-2">
-                                <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
-                                    @click="goToCategory(categoria)" class="relative">
-                                    <NuxtImg :src="categoria.img" :alt="`Categoria ${categoria.nombre}`"
-                                        class="rounded-2xl shadow-lg" />
+                                <div v-if="loading" class="col-span-2 flex justify-center items-center py-8">
+                                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                                </div>
+                                <div v-else-if="error" class="col-span-2 text-center text-white py-8">
+                                    <p>Error al cargar categorías</p>
+                                </div>
+                                <NuxtLink v-else to="#" v-for="(categoria, index) in categorias"
+                                    :key="categoria.id || index" @click="goToCategory(categoria)" class="relative">
+                                    <img :src="categoria.imagen_menu"
+                                        :alt="`Categoria ${categoria.nombre}`" class="w-full h-[8.5rem] md:h-[9.25rem] object-cover rounded-2xl shadow-lg" />
                                     <p
                                         class="absolute top-4 left-0 right-0 text-center text-sm text-white font-semibold">
-                                        {{
-                                            categoria.nombre }}</p>
+                                        {{ categoria.nombre }}</p>
                                 </NuxtLink>
                             </div>
-                            <NuxtImg src="/images/waterplast/banners/Biolam.png" alt="Banner Biolam"
+                            <img v-if="imagenBanner" :src="imagenBanner.imagen_chica" :alt="imagenBanner.nombre"
                                 class="w-full object-cover rounded-2xl shadow-lg" />
                         </div>
                         <div class="flex justify-center pb-12">
@@ -132,8 +137,15 @@
 </template>
 
 <script setup>
-import categorias from '~/shared/waterplast/categorias.js'
 import menu from '~/shared/waterplast/menu.js'
+
+const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
+const { categorias, loading, error, fetchCategorias } = useWaterplastCategorias()
+
+const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
+const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
+
+const imagenBanner = ref(null)
 
 const props = defineProps({
     isOpen: {
@@ -141,6 +153,7 @@ const props = defineProps({
         default: false
     }
 })
+
 
 const emit = defineEmits(['close'])
 
@@ -179,7 +192,18 @@ onUnmounted(() => {
     }
 })
 
-onMounted(() => {
+onMounted(async () => {
+    fetchCategorias()
+
+    try {
+        const imagenMenu = await fetchImagenDestacadaBySlug('imagen-menu')
+        if (imagenMenu) {
+            imagenBanner.value = imagenMenu
+        }
+    } catch (error) {
+        console.error('Error al cargar imagen del menú:', error)
+    }
+
     const handleEscape = (e) => {
         if (e.key === 'Escape' && props.isOpen) {
             emit('close')
