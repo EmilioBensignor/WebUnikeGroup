@@ -74,8 +74,8 @@
                                 <div v-else-if="error" class="col-span-2 text-center text-white py-8">
                                     <p>Error al cargar categorías</p>
                                 </div>
-                                <NuxtLink v-else to="#" v-for="(categoria, index) in categorias"
-                                    :key="categoria.id || index" @click="goToCategory(categoria)" class="relative">
+                                <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias"
+                                    :key="categoria.id || index" @click="$emit('close')" class="relative">
                                     <img :src="categoria.imagen_menu"
                                         :alt="`Categoria ${categoria.nombre}`" class="w-full h-[8.5rem] md:h-[9.25rem] object-cover rounded-2xl shadow-lg" />
                                     <p
@@ -137,6 +137,7 @@
 </template>
 
 <script setup>
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
 
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
@@ -163,10 +164,6 @@ const navigateToPanel = (panelNumber) => {
     currentPanel.value = panelNumber
 }
 
-const goToCategory = (categoria) => {
-    navigateTo(`/productos/${categoria.nombre.toLowerCase().replace('°', '').replace(' ', '-')}`)
-    emit('close')
-}
 
 watch(() => props.isOpen, (newVal) => {
     if (!newVal) {
@@ -192,6 +189,12 @@ onUnmounted(() => {
     }
 })
 
+const handleEscape = (e) => {
+    if (e.key === 'Escape' && props.isOpen) {
+        emit('close')
+    }
+}
+
 onMounted(async () => {
     fetchCategorias()
 
@@ -201,19 +204,13 @@ onMounted(async () => {
             imagenBanner.value = imagenMenu
         }
     } catch (error) {
-        console.error('Error al cargar imagen del menú:', error)
-    }
-
-    const handleEscape = (e) => {
-        if (e.key === 'Escape' && props.isOpen) {
-            emit('close')
-        }
+        console.log(error);
     }
 
     document.addEventListener('keydown', handleEscape)
+})
 
-    onUnmounted(() => {
-        document.removeEventListener('keydown', handleEscape)
-    })
+onUnmounted(() => {
+    document.removeEventListener('keydown', handleEscape)
 })
 </script>

@@ -84,7 +84,12 @@ export const useWaterplastImagenesDestacadas = () => {
                 .eq('slug', slug)
                 .single()
 
-            if (supabaseError) throw supabaseError
+            if (supabaseError) {
+                if (supabaseError.code === 'PGRST116') {
+                    return null
+                }
+                throw supabaseError
+            }
 
             const imagenWithUrls = {
                 ...data,

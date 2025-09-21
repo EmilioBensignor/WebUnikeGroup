@@ -105,6 +105,47 @@ export const useWaterplastCategorias = () => {
         }
     }
 
+    const fetchCategoriaBySlug = async (slug) => {
+        loading.value = true
+        error.value = null
+        currentCategoria.value = null
+
+        try {
+            const { data, error: supabaseError } = await supabase
+                .from('waterplast-categorias')
+                .select('*')
+                .eq('slug', slug)
+                .single()
+
+            if (supabaseError) throw supabaseError
+
+            const categoriaWithUrls = {
+                ...data,
+                imagen_menu: data.imagen_menu ? getCategoriaImageUrl(data.imagen_menu) : null,
+                imagen_hero_home: data.imagen_hero_home ? getCategoriaImageUrl(data.imagen_hero_home) : null,
+                imagen_pagina_categorias: data.imagen_pagina_categorias ? getCategoriaImageUrl(data.imagen_pagina_categorias) : null,
+                icono1: data.icono1 ? getCategoriaIconUrl(data.icono1) : null,
+                icono2: data.icono2 ? getCategoriaIconUrl(data.icono2) : null,
+                icono3: data.icono3 ? getCategoriaIconUrl(data.icono3) : null,
+                imagenes_redes: data.imagenes_redes ?
+                    data.imagenes_redes.map((img, index) => ({
+                        id: `red-${index}`,
+                        name: `imagen-red-${index + 1}.jpg`,
+                        url: getCategoriaImagenRedUrl(img)
+                    })) : []
+            }
+
+            currentCategoria.value = categoriaWithUrls
+            return categoriaWithUrls
+        } catch (err) {
+            error.value = err.message
+            console.error('Error al obtener categoría por slug:', err)
+            throw err
+        } finally {
+            loading.value = false
+        }
+    }
+
     return {
         categorias: readonly(categorias),
         currentCategoria: readonly(currentCategoria),
@@ -112,6 +153,7 @@ export const useWaterplastCategorias = () => {
         error: readonly(error),
         fetchCategorias,
         fetchCategoriaById,
+        fetchCategoriaBySlug,
         getCategoriaImageUrl,
         getCategoriaIconUrl,
         getCategoriaImagenRedUrl

@@ -7,7 +7,6 @@ export const ROUTES_NAMES = {
     },
     UNIKE: {
         SOBRE: "#",
-        WATERPLAST: "#",
         ROHERMET: "#",
         MURALLON: "#",
     },
@@ -24,9 +23,12 @@ export const ROUTES_NAMES = {
         LINKEDIN: "#",
     },
     WATERPLAST: {
+        HOME: "/waterplast",
         PRODUCTOS: "#",
         DISTRIBUIDORES: "#",
         BLOG: "#",
         CONTACTO: "#",
+        CATEGORIA: (slug) => `/waterplast/${slug}`,
+        PRODUCTO: (categoria, producto) => `/waterplast/${categoria}/${producto}`,
     },
 }

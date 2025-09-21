@@ -39,7 +39,7 @@
             <div v-else-if="error" class="text-center text-white py-8">
                 <p>Error al cargar las categorías: {{ error }}</p>
             </div>
-            <NuxtLink v-else to="#" v-for="(categoria, index) in categorias" :key="categoria.id || index"
+            <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias" :key="categoria.id || index"
                 class="flex flex-col items-center relative bg-white shadow-md shadow-dark/20 rounded-2xl lg:rounded-3xl p-2 pb-9 md:first:ml-8 lg:first:ml-0 md:last:mr-8 lg:last:mr-0">
                 <div
                     class="w-full h-[6.25rem] md:h-32 lg:h-40 rounded-xl lg:rounded-2xl overflow-hidden relative z-[2]">
@@ -56,6 +56,8 @@
 </template>
 
 <script setup>
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
+
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
 const { categorias, loading, error, fetchCategorias } = useWaterplastCategorias()
 

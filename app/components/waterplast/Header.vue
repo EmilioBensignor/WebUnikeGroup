@@ -3,8 +3,10 @@
         'xxl:max-w-[1304px] flex items-center justify-between sticky z-10 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
         isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
     ]">
-        <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
+        <NuxtLink :to="ROUTES_NAMES.HOME">
+            <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
             class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
+        </NuxtLink>
         <button @click="toggleDrawer" class="w-12 h-12 lg:hidden flex justify-center items-center p-4">
             <Icon name="material-symbols:menu-rounded" class="w-6 md:w-8 h-6 md:h-8 flex-shrink-0 text-white" />
         </button>
@@ -24,8 +26,8 @@
                             <div v-else-if="error" class="col-span-4 text-center text-red-500 py-8">
                                 <p>Error al cargar categorías</p>
                             </div>
-                            <NuxtLink v-else to="#" v-for="(categoria, index) in categorias"
-                                :key="categoria.id || index" @click="goToCategory(categoria)" class="relative">
+                            <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias"
+                                :key="categoria.id || index" class="relative">
                                 <div class="w-[9.25rem] h-[8.75rem] rounded-2xl overflow-hidden shadow-lg">
                                     <img :src="categoria.imagen_menu"
                                         :alt="`Categoria ${categoria.nombre}`"
@@ -70,6 +72,7 @@
 </template>
 
 <script setup>
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
 
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
@@ -91,6 +94,10 @@ const closeDrawer = () => {
     isDrawerOpen.value = false
 }
 
+const handleScroll = () => {
+    isScrolled.value = window.scrollY > 0
+}
+
 onMounted(async () => {
     fetchCategorias()
 
@@ -100,17 +107,13 @@ onMounted(async () => {
             imagenBanner.value = imagenMenu
         }
     } catch (error) {
-        console.error('Error al cargar imagen del menú:', error)
-    }
-
-    const handleScroll = () => {
-        isScrolled.value = window.scrollY > 0
+        console.log(error);
     }
 
     window.addEventListener('scroll', handleScroll)
+})
 
-    onUnmounted(() => {
-        window.removeEventListener('scroll', handleScroll)
-    })
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
 })
 </script>
