@@ -253,20 +253,69 @@ export const useWaterplastProductos = () => {
         console.log('Found b.src patterns:', matches ? matches.length : 0)
 
         // Try different patterns that might exist in the minified code
-        const imageBaseUrl = `https://fxytgajevhfuzwlyaorb.supabase.co/storage/v1/object/public/waterplast-productos/${cleanName}/images`
+        const imageBaseUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${cleanName}/images`
 
         // Try multiple possible patterns
         let modified = false
-        if (keyshotContent.includes('b.src=a.D[f]')) {
-            keyshotContent = keyshotContent.replace(/b\.src=a\.D\[f\]/g, `b.src="${imageBaseUrl}/"+a.D[f]`)
+        
+        console.log('Original KeyShot content length:', keyshotContent.length)
+        console.log('Looking for va function pattern...')
+        
+        // Pattern 1: The va function that constructs image paths (most precise)
+        const vaPattern = /this\.va=function\(b,f\)\{return A\+a\.s\+[^}]+\}/
+        const vaMatch = keyshotContent.match(vaPattern)
+        
+        if (vaMatch) {
+            console.log('Found va function:', vaMatch[0])
+            keyshotContent = keyshotContent.replace(
+                vaPattern,
+                `this.va=function(b,f){return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"}`
+            )
             modified = true
-        } else if (keyshotContent.includes('.src=')) {
-            // Find any .src= pattern and modify it
-            keyshotContent = keyshotContent.replace(/(\w+)\.src=(\w+)\.(\w+)\[(\w+)\]/g, `$1.src="${imageBaseUrl}/"+$2.$3[$4]`)
-            modified = true
+            console.log('Applied pattern 1: va function replacement')
+        } else {
+            console.log('va function not found, trying alternative patterns...')
+        }
+        
+        // Only try other patterns if va function wasn't found and replaced
+        if (!modified) {
+            // Pattern 2: More general approach - find any function that looks like it builds image paths
+            if (keyshotContent.includes('parseInt(f)+"_"+parseInt(b)')) {
+                keyshotContent = keyshotContent.replace(
+                    /return [^;]+parseInt\(f\)\+["']_["']\+parseInt\(b\)[^;]+/g,
+                    `return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"`
+                )
+                modified = true
+                console.log('Applied pattern 2: parseInt pattern replacement')
+            }
         }
 
         console.log('KeyShotXR code modified:', modified)
+        console.log('Image base URL:', imageBaseUrl)
+        console.log('Clean name:', cleanName)
+
+        // Show a sample of the modified code around the va function
+        if (modified) {
+            const vaIndex = keyshotContent.indexOf('this.va=function')
+            if (vaIndex !== -1) {
+                console.log('Modified va function area:', keyshotContent.substring(vaIndex, vaIndex + 200))
+            }
+        }
+
+        // Ensure window.keyshotXR is properly declared
+        if (!keyshotContent.includes('window.keyshotXR=function')) {
+            console.error('KeyShotXR function not found in the loaded script')
+        } else {
+            console.log('KeyShotXR function found successfully')
+        }
+
+        // Remove the problematic debugging code for now
+        // if (keyshotContent.includes('b.src=')) {
+        //     keyshotContent = keyshotContent.replace(
+        //         /(b\.src=)/g,
+        //         'console.log("Loading image:", arguments[0]); $1'
+        //     )
+        // }
 
         // Transform script src to inline script
         processedHTML = processedHTML.replace(
@@ -291,6 +340,24 @@ export const useWaterplastProductos = () => {
             /<div([^>]*?)id=["']?xr-container["']?([^>]*?)>/g,
             '<div$1id="xr-container"$2 style="width: 100%; height: 100%; position: relative;">'
         )
+
+        console.log('Processed HTML preview:', processedHTML.substring(0, 500))
+
+        // Also log the script content to check for syntax errors
+        const scriptMatch = processedHTML.match(/<script type="text\/javascript">(.*?)<\/script>/s)
+        if (scriptMatch) {
+            console.log('Script content length:', scriptMatch[1].length)
+            console.log('Script start:', scriptMatch[1].substring(0, 200))
+            
+            // Try to detect syntax errors
+            try {
+                new Function(scriptMatch[1])
+                console.log('Script syntax is valid')
+            } catch (e) {
+                console.error('Script syntax error:', e.message)
+                console.log('Error around character:', e.message.match(/\d+/) ? scriptMatch[1].substring(parseInt(e.message.match(/\d+/)[0]) - 50, parseInt(e.message.match(/\d+/)[0]) + 50) : 'unknown')
+            }
+        }
 
         return processedHTML
     }
