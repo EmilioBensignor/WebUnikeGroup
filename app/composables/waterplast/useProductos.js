@@ -191,6 +191,188 @@ export const useWaterplastProductos = () => {
         }
     }
 
+    const generateCleanName = (nombre) => {
+        if (!nombre) return ''
+
+        return nombre
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .trim('-')
+            .substring(0, 20)
+            .replace(/-$/, '')
+    }
+
+    const fetchProducto3DFromSupabase = async (productoId) => {
+        try {
+            const { data, error } = await supabase
+                .from('waterplast-productos')
+                .select('archivo_html, nombre')
+                .eq('id', productoId)
+                .single()
+
+            if (error) throw error
+
+            if (data && data.archivo_html) {
+                // Fetch the HTML content from the archivo_html URL
+                const htmlResponse = await $fetch(data.archivo_html)
+
+                // Process the HTML with KeyShotXR transformations
+                const processedHTML = processKeyShotXRHTML(htmlResponse, data.nombre)
+
+                return {
+                    ...data,
+                    processed_html: processedHTML,
+                    clean_name: generateCleanName(data.nombre)
+                }
+            }
+
+            return data
+        } catch (error) {
+            console.error('Error fetching 3D product from Supabase:', error)
+            throw error
+        }
+    }
+
+    const processKeyShotXRHTML = async (html, productoNombre) => {
+        if (!html) return ''
+
+        let processedHTML = html
+        const cleanName = generateCleanName(productoNombre)
+        const config = useRuntimeConfig()
+
+        // Read KeyShotXR content and modify it to handle absolute URLs
+        let keyshotContent = await $fetch('/lib/keyshot-xr.js')
+
+        // Check if the pattern exists in the code
+        const pattern = /b\.src=a\.D\[f\]/g
+        const matches = keyshotContent.match(pattern)
+        console.log('Found b.src patterns:', matches ? matches.length : 0)
+
+        // Try different patterns that might exist in the minified code
+        const imageBaseUrl = `https://fxytgajevhfuzwlyaorb.supabase.co/storage/v1/object/public/waterplast-productos/${cleanName}/images`
+
+        // Try multiple possible patterns
+        let modified = false
+        if (keyshotContent.includes('b.src=a.D[f]')) {
+            keyshotContent = keyshotContent.replace(/b\.src=a\.D\[f\]/g, `b.src="${imageBaseUrl}/"+a.D[f]`)
+            modified = true
+        } else if (keyshotContent.includes('.src=')) {
+            // Find any .src= pattern and modify it
+            keyshotContent = keyshotContent.replace(/(\w+)\.src=(\w+)\.(\w+)\[(\w+)\]/g, `$1.src="${imageBaseUrl}/"+$2.$3[$4]`)
+            modified = true
+        }
+
+        console.log('KeyShotXR code modified:', modified)
+
+        // Transform script src to inline script
+        processedHTML = processedHTML.replace(
+            /<script\s+type="text\/javascript"\s+src="[^"]*KeyShotXR\.js"><\/script>/gi,
+            `<script type="text/javascript">${keyshotContent}</script>`
+        )
+
+        // Also handle other variations
+        processedHTML = processedHTML.replace(
+            /<script[^>]*src="[^"]*KeyShotXR\.js"[^>]*><\/script>/gi,
+            `<script type="text/javascript">${keyshotContent}</script>`
+        )
+
+        // Set folderName to empty since we're handling URLs in the script
+        processedHTML = processedHTML.replace(
+            /var\s+folderName\s*=\s*["']([^"']*)["']/g,
+            'var folderName = ""'
+        )
+
+        // Make sure the container has proper styling
+        processedHTML = processedHTML.replace(
+            /<div([^>]*?)id=["']?xr-container["']?([^>]*?)>/g,
+            '<div$1id="xr-container"$2 style="width: 100%; height: 100%; position: relative;">'
+        )
+
+        return processedHTML
+    }
+
+    const injectXRViewer = (containerId, html) => {
+        if (process.client) {
+            const container = document.getElementById(containerId)
+            if (container && html) {
+                container.innerHTML = html
+
+                // Execute scripts in the injected HTML
+                const scripts = container.querySelectorAll('script')
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script')
+
+                    if (script.src) {
+                        newScript.src = script.src
+                    } else {
+                        newScript.textContent = script.textContent
+                    }
+
+                    if (script.type) {
+                        newScript.type = script.type
+                    }
+
+                    document.head.appendChild(newScript)
+
+                    setTimeout(() => {
+                        if (newScript.parentNode) {
+                            newScript.parentNode.removeChild(newScript)
+                        }
+                    }, 100)
+                })
+            }
+        }
+    }
+
+    const renderXRViewer = async (containerId, productoSlug) => {
+        try {
+            const producto = await fetchProductoBySlug(productoSlug)
+
+            if (producto && producto.xr_html_content) {
+                const processedHTML = processKeyShotXRHTML(producto.xr_html_content, producto.nombre)
+                injectXRViewer(containerId, processedHTML)
+                return true
+            }
+            return false
+        } catch (err) {
+            console.error('Error rendering XR viewer:', err)
+            return false
+        }
+    }
+
+    const processProductoHTML = async (producto) => {
+        if (!producto || !producto.archivo_html) return null
+
+        try {
+            // Build the full URL for the HTML file
+            let htmlUrl = producto.archivo_html
+            if (!htmlUrl.startsWith('http')) {
+                const config = useRuntimeConfig()
+                htmlUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${htmlUrl}`
+            }
+
+
+            // Fetch the HTML content from the archivo_html URL
+            const htmlResponse = await $fetch(htmlUrl)
+
+            // Process the HTML with KeyShotXR transformations
+            const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre)
+
+            return {
+                ...producto,
+                processed_html: processedHTML,
+                clean_name: generateCleanName(producto.nombre)
+            }
+        } catch (error) {
+            console.error('Error processing producto HTML:', error)
+            return null
+        }
+    }
+
     return {
         productos: readonly(productos),
         currentProducto: readonly(currentProducto),
@@ -200,6 +382,12 @@ export const useWaterplastProductos = () => {
         fetchProductosByCategoria,
         fetchProductoBySlug,
         fetchProductoByCategoriaAndSlug,
-        getProductoImageUrl
+        getProductoImageUrl,
+        generateCleanName,
+        fetchProducto3DFromSupabase,
+        processKeyShotXRHTML,
+        processProductoHTML,
+        injectXRViewer,
+        renderXRViewer
     }
 }

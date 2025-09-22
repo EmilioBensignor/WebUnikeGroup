@@ -26,7 +26,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
+      bucketUrl: (process.env.SUPABASE_URL || 'https://fxytgajevhfuzwlyaorb.supabase.co') + '/storage/v1/object/public'
     },
   },
   site: {
