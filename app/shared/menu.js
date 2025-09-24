@@ -74,7 +74,7 @@ const footerSections = [
                 route: ROUTES_NAMES.REDES.FACEBOOK,
             },
             {
-                img: 'YouTube',
+                img: 'Youtube',
                 route: ROUTES_NAMES.REDES.YOUTUBE,
             },
             {
