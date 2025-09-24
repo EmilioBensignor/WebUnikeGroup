@@ -11,9 +11,8 @@
                     <ul
                         :class="section.title === 'Redes Sociales' ? 'flex items-center gap-2' : 'flex flex-col items-center md:items-start gap-3'">
                         <li class="max-w-56 md:max-w-52 lg:max-w-60" v-for="item in section.items" :key="item.route || item.link || item.map">
-                            <NuxtLink v-if="item.link" :to="item.link" class="flex gap-3">
-                                <Icon v-if="item.icon" :name="`material-symbols:${item.icon}`"
-                                    class="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
+                            <NuxtLink v-if="item.link && section.title === 'Contacto'" :to="item.link" class="flex gap-3">
+                                <Icon v-if="item.icon" :name="`material-symbols:${item.icon}`" class="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                                 <span>{{ item.text }}</span>
                             </NuxtLink>
                             <div v-else-if="item.map" class="flex gap-3">
@@ -24,7 +23,7 @@
                                 class="text-white hover:underline">
                                 {{ item.nombre }}
                             </NuxtLink>
-                            <NuxtLink v-else-if="item.route && item.img" :to="item.route"
+                            <NuxtLink v-else-if="item.route && item.img && section.title === 'Redes Sociales'" :to="item.route"
                                 class="text-white hover:underline">
                                 <NuxtImg :src="`/images/redes/${item.img}.svg`" :alt="item.img" class="w-8 h-8" />
                             </NuxtLink>
