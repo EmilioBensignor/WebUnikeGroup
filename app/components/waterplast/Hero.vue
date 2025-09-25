@@ -5,10 +5,10 @@
             <source media="(min-width: 1080px)" srcset="/images/waterplast/Hero-Waterplast-1080.webp">
             <source media="(min-width: 768px)" srcset="/images/waterplast/Hero-Waterplast-768.webp">
             <img src="/images/waterplast/Hero-Waterplast-320.webp" alt="Waterplast"
-                class="w-full h-40 sm:h-full md:h-80 lg:h-[34.5rem] xxl:h-[35.75rem] object-cover">
+                class="w-full h-40 sm:h-full md:h-96 lg:h-[38rem] xl:h-[40rem] object-cover">
         </picture>
         <div
-            class="xxl:w-full xxl:max-w-[1304px] lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-12 pb-24 md:px-8 lg:px-16 xxl:px-0 xxl:mx-auto">
+            class="xxl:w-full xxl:max-w-[1304px] lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-24 lg:pt-12 pb-24 md:px-8 lg:px-16 xxl:px-0 xxl:mx-auto">
             <div class="flex flex-col gap-2 md:gap-3 lg:gap-4 text-white px-4 md:px-0">
                 <HeadingH1>Somos Waterplast</HeadingH1>
                 <p class="md:max-w-[25rem] lg:max-w-[40.75rem] text-sm md:text-xl lg:text-[1.75rem] font-medium">
