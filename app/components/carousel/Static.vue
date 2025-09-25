@@ -77,6 +77,7 @@ const isAtEnd = ref(false)
 const isDragging = ref(false)
 const containerWidth = ref(0)
 const currentBreakpoint = ref('base')
+const forceUpdate = ref(0)
 
 let startX = 0
 let startY = 0
@@ -86,7 +87,23 @@ let isDragHorizontal = false
 let hasScrollStarted = false
 
 const showLeftArrow = computed(() => !isAtStart.value)
-const showRightArrow = computed(() => !isAtEnd.value)
+const showRightArrow = computed(() => {
+    forceUpdate.value
+
+    if (!container.value) return true
+
+    const { scrollLeft, scrollWidth, clientWidth } = container.value
+
+    if (scrollWidth <= clientWidth) {
+        return false
+    }
+
+    if (scrollLeft === 0) {
+        return true
+    }
+
+    return !isAtEnd.value
+})
 
 const slidesVisible = computed(() => {
     const value = props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
@@ -159,6 +176,8 @@ const updateArrows = () => {
 
     isAtStart.value = scrollLeft <= tolerance
     isAtEnd.value = scrollLeft >= scrollWidth - clientWidth - tolerance
+
+    forceUpdate.value++
 }
 
 const scrollLeft = () => {
@@ -312,9 +331,9 @@ const initialize = async () => {
     updateContainerWidth()
     setupChildrenClasses()
 
-    setTimeout(() => {
-        updateArrows()
-    }, 100)
+    setTimeout(() => updateArrows(), 100)
+    setTimeout(() => updateArrows(), 300)
+    setTimeout(() => updateArrows(), 500)
 }
 
 onMounted(() => {

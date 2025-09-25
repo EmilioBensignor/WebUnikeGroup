@@ -9,11 +9,11 @@
             </picture>
             <div
                 class="flex flex-col md:items-start gap-4 md:gap-6 xxl:gap-8 bg-primary-gradient md:bg-none p-4 pb-32 md:pb-0">
-                <div class="flex flex-col gap-2 md:gap-3 xxl:gap-4 text-white">
+                <div class="flex flex-col gap-2 md:gap-3 xxl:gap-4 relative z-10 text-white">
                     <HeadingH2>Blog Unike Group</HeadingH2>
                     <p class="text-sm lg:text-xl font-medium">Enterate de las últimas novedades que tenemos para vos</p>
                 </div>
-                <ButtonPrimary class="sm:self-start !bg-white md:!bg-primary !text-primary md:!text-white !px-12">Ir al
+                <ButtonPrimary class="sm:self-start relative z-10 !bg-white md:!bg-primary !text-primary md:!text-white !px-12">Ir al
                     blog
                 </ButtonPrimary>
             </div>
@@ -21,13 +21,13 @@
                 top: '50%',
                 transform: 'translateY(-50%)',
                 left: {
-                    md: '-5rem',
+                    md: '-1.5rem',
                     lg: '-1.5rem',
                     xl: '-1.5rem',
                     xxl: '-1.5rem',
                 },
                 right: {
-                    md: '-5rem',
+                    md: '-1.5rem',
                     lg: '-1.5rem',
                     xl: '-1.5rem',
                     xxl: '-1.5rem',

@@ -47,12 +47,14 @@
                     </p>
                 </div>
             </div>
-            <ButtonPrimary class="sm:self-center md:self-start">Suscribite a nuestro canal</ButtonPrimary>
+            <ButtonPrimary :to="ROUTES_NAMES.AYUDA.TUTORIALES" target="_blank" class="sm:self-center md:self-start">Suscribite a nuestro canal</ButtonPrimary>
         </div>
     </DefaultSection>
 </template>
 
 <script setup>
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES';
+
 const sobre = [
     {
         icon: "Sostenible",
