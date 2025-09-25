@@ -12,15 +12,15 @@ export const ROUTES_NAMES = {
     },
     AYUDA: {
         FAQS: "#",
-        TUTORIALES: "#",
+        TUTORIALES: "https://www.youtube.com/channel/UCf7ptluQ34qdjBTtvmMhKmA",
         DISTRIBUIDORES: "#",
         BLOG: "#",
     },
     REDES: {
-        INSTAGRAM: "#",
-        FACEBOOK: "#",
-        YOUTUBE: "#",
-        LINKEDIN: "#",
+        INSTAGRAM: "https://www.instagram.com/unikegroupsa/",
+        FACEBOOK: "https://www.facebook.com/unikegroupsa/?locale=es_LA",
+        YOUTUBE: "https://www.youtube.com/channel/UCf7ptluQ34qdjBTtvmMhKmA",
+        LINKEDIN: "https://www.linkedin.com/company/unike-group-sa/",
     },
     WATERPLAST: {
         HOME: "/waterplast",
