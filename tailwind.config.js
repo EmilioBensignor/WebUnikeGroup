@@ -17,6 +17,7 @@ export default {
                 gray: {
                     light: "#F9F9F9",
                     mid: "#E9E9E9",
+                    dark: "#9D9C9C",
                 }
             },
             backgroundImage: {

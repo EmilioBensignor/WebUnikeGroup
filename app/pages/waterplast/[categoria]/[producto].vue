@@ -60,7 +60,6 @@ const producto = ref(null)
 const processedProducto = ref(null)
 let timer = null
 
-// Computed properties for 3D viewer
 const has3DViewer = computed(() => {
   return (producto.value && (
     producto.value.archivo_html ||
@@ -69,9 +68,7 @@ const has3DViewer = computed(() => {
 })
 
 const get3DViewerUrl = () => {
-  // Priority: processed HTML > archivo_html > xr_viewer_path
   if (processedProducto.value && processedProducto.value.processed_html) {
-    // Create blob URL for processed HTML content
     const blob = new Blob([processedProducto.value.processed_html], { type: 'text/html' })
     return URL.createObjectURL(blob)
   }
@@ -79,11 +76,9 @@ const get3DViewerUrl = () => {
   if (!producto.value) return ''
 
   if (producto.value.archivo_html) {
-    // If archivo_html is a full URL, use it directly
     if (producto.value.archivo_html.startsWith('http')) {
       return producto.value.archivo_html
     }
-    // Otherwise, construct the Supabase storage URL
     const config = useRuntimeConfig()
     return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${producto.value.archivo_html}`
   }
@@ -106,7 +101,6 @@ const fetchProducto = async () => {
     if (error) throw error
     producto.value = data
 
-    // Process HTML if archivo_html exists
     if (data && data.archivo_html) {
       try {
         const processed = await processProductoHTML(data)
@@ -123,7 +117,6 @@ const fetchProducto = async () => {
   }
 }
 
-// Polling conservador solo para consultar estado
 const startPolling = () => {
   if (producto.value?.xr_status === 'pending') {
     timer = setInterval(async () => {
@@ -132,7 +125,7 @@ const startPolling = () => {
         clearInterval(timer)
         timer = null
       }
-    }, 10000) // cada 10 segundos
+    }, 10000)
   }
 }
 

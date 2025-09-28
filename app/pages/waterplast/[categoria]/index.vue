@@ -1,18 +1,43 @@
 <template>
   <DefaultMain>
-    <DefaultSection class="my-32 space-y-8">
-      <div>
-        <HeadingH1>{{ categoriaData?.nombre || categoria }}</HeadingH1>
-        <p v-if="categoriaData?.descripcion" class="text-lg text-gray-600 mt-4">
-          {{ categoriaData.descripcion }}
-        </p>
+    <DefaultSection class="flex flex-col md:relative lg:-mt-20 xxl:-mt-[5.25rem]">
+      <div class="w-full">
+        <NuxtImg v-if="categoriaData?.imagen_s_categorias" :src="getImageUrl(categoriaData.imagen_s_categorias)"
+          class="w-full block md:hidden lg:hidden xl:hidden" />
+        <NuxtImg v-if="categoriaData?.imagen_m_categorias" :src="getImageUrl(categoriaData.imagen_m_categorias)"
+          class="w-full hidden md:block lg:hidden xl:hidden" />
+        <NuxtImg v-if="categoriaData?.imagen_l_categorias" :src="getImageUrl(categoriaData.imagen_l_categorias)"
+          class="w-full hidden md:hidden lg:block xl:hidden" />
+        <NuxtImg v-if="categoriaData?.imagen_xl_categorias" :src="getImageUrl(categoriaData.imagen_xl_categorias)"
+          class="w-full hidden md:hidden lg:hidden xl:block" />
       </div>
+      <div
+        class="md:max-w-xs lg:max-w-[25rem] xxl:max-w-[37.75rem] flex flex-col gap-4 md:absolute md:bottom-[8.5rem] lg:bottom-[11rem] xxl:bottom-[14.875rem] md:left-8 lg:left-16 px-4 lg:px-0">
+        <HeadingH1 class="absolute -z-10 lg:static lg:z-0 text-white">{{ categoriaData?.nombre }}</HeadingH1>
+        <div class="flex items-center gap-4">
+          <NuxtImg :src="getImageUrl(categoriaData?.icono1)" :alt="categoriaData?.caracteristica1"
+            class="w-12 lg:w-14 h-12 lg:h-14" />
+          <p class="text-sm lg:text-2xl md:text-white font-semibold">{{ categoriaData?.caracteristica1 }}</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <NuxtImg :src="getImageUrl(categoriaData?.icono2)" :alt="categoriaData?.caracteristica2"
+            class="w-12 lg:w-14 h-12 lg:h-14" />
+          <p class="text-sm lg:text-2xl md:text-white font-semibold">{{ categoriaData?.caracteristica2 }}</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <NuxtImg :src="getImageUrl(categoriaData?.icono3)" :alt="categoriaData?.caracteristica3"
+            class="w-12 lg:w-14 h-12 lg:h-14" />
+          <p class="text-sm lg:text-2xl md:text-white font-semibold">{{ categoriaData?.caracteristica3 }}</p>
+        </div>
+      </div>
+    </DefaultSection>
 
+    <DefaultSection>
       <div v-if="!isClient || loading" class="text-center py-8">
         <p>Cargando productos...</p>
       </div>
 
-      <div v-else-if="error" class="text-center text-red-500 py-8">
+      <div v-else-if="error" class="text-center text-error py-8">
         <p>Error al cargar productos: {{ error }}</p>
       </div>
 
@@ -20,33 +45,7 @@
         <p>No hay productos disponibles en esta categoría.</p>
       </div>
 
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <NuxtLink
-          v-for="producto in productos"
-          :key="producto.id"
-          :to="ROUTES_NAMES.WATERPLAST.PRODUCTO(categoria, producto.slug)"
-          class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-        >
-          <img
-            v-if="producto.imagen_principal"
-            :src="producto.imagen_principal"
-            :alt="producto.nombre"
-            class="w-full h-48 object-cover"
-          />
-          <div class="p-4">
-            <h3 class="text-xl font-semibold mb-2">{{ producto.nombre }}</h3>
-            <p v-if="producto.descripcion" class="text-gray-600 text-sm">
-              {{ producto.descripcion }}
-            </p>
-          </div>
-        </NuxtLink>
-      </div>
-
-      <div class="pt-8">
-        <NuxtLink :to="ROUTES_NAMES.WATERPLAST.HOME" class="text-blue-600 hover:text-blue-800">
-          ← Volver a Waterplast
-        </NuxtLink>
-      </div>
+      <WaterplastCategoriaFiltros v-else :categoria-actual="categoriaData" :productos="productos" />
     </DefaultSection>
   </DefaultMain>
 </template>
@@ -64,12 +63,15 @@ const route = useRoute()
 const categoria = route.params.categoria
 
 const { productos, loading, error, fetchProductosByCategoria } = useWaterplastProductos()
-const { fetchCategoriaBySlug } = useWaterplastCategorias()
+const { fetchCategoriaBySlug, getCategoriaImageUrl } = useWaterplastCategorias()
 
 const categoriaData = ref(null)
 const isClient = ref(false)
 
-// Evitar hydration mismatch cargando solo en cliente
+const getImageUrl = (imagePath) => {
+  return getCategoriaImageUrl(imagePath)
+}
+
 onMounted(async () => {
   isClient.value = true
   try {

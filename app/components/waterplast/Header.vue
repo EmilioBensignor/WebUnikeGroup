@@ -29,7 +29,7 @@
                             <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias"
                                 :key="categoria.id || index" class="relative">
                                 <div class="w-[9.25rem] h-[8.75rem] rounded-2xl overflow-hidden shadow-lg">
-                                    <img :src="categoria.imagen_menu"
+                                    <img :src="getCategoriaImageUrl(categoria.imagen_menu)"
                                         :alt="`Categoria ${categoria.nombre}`"
                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
                                 </div>
@@ -38,9 +38,9 @@
                                 </p>
                             </NuxtLink>
                         </div>
-                        <img v-if="imagenBanner" :src="imagenBanner.imagen_mediana" :alt="imagenBanner.nombre"
+                        <img v-if="imagenBanner" :src="getImagenDestacadaUrl(imagenBanner.imagen_mediana)" :alt="imagenBanner.nombre"
                             class="w-[17.5rem] h-[18.125rem] xxl:hidden object-cover rounded-2xl shadow-lg" />
-                        <img v-if="imagenBanner" :src="imagenBanner.imagen_grande" :alt="imagenBanner.nombre"
+                        <img v-if="imagenBanner" :src="getImagenDestacadaUrl(imagenBanner.imagen_grande)" :alt="imagenBanner.nombre"
                             class="w-[17.5rem] xxl:w-[40.25rem] hidden xxl:block h-[18.125rem] object-cover rounded-2xl shadow-lg" />
                     </div>
                 </li>
@@ -76,10 +76,10 @@ import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
 
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
-const { categorias, loading, error, fetchCategorias } = useWaterplastCategorias()
+const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = useWaterplastCategorias()
 
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
-const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
+const { fetchImagenDestacadaBySlug, getImagenDestacadaUrl } = useWaterplastImagenesDestacadas()
 
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
