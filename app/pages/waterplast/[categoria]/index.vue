@@ -3,16 +3,16 @@
     <DefaultSection class="flex flex-col md:relative lg:-mt-20 xxl:-mt-[5.25rem]">
       <div class="w-full">
         <NuxtImg v-if="categoriaData?.imagen_s_categorias" :src="getImageUrl(categoriaData.imagen_s_categorias)"
-          class="w-full block md:hidden lg:hidden xl:hidden" />
+          class="w-full block md:hidden" />
         <NuxtImg v-if="categoriaData?.imagen_m_categorias" :src="getImageUrl(categoriaData.imagen_m_categorias)"
-          class="w-full hidden md:block lg:hidden xl:hidden" />
+          class="w-full hidden md:block lg:hidden" />
         <NuxtImg v-if="categoriaData?.imagen_l_categorias" :src="getImageUrl(categoriaData.imagen_l_categorias)"
-          class="w-full hidden md:hidden lg:block xl:hidden" />
+          class="w-full hidden lg:block xxl:hidden" />
         <NuxtImg v-if="categoriaData?.imagen_xl_categorias" :src="getImageUrl(categoriaData.imagen_xl_categorias)"
-          class="w-full hidden md:hidden lg:hidden xl:block" />
+          class="w-full hidden xxl:block" />
       </div>
       <div
-        class="md:max-w-xs lg:max-w-[25rem] xxl:max-w-[37.75rem] flex flex-col gap-4 md:absolute md:bottom-[8.5rem] lg:bottom-[11rem] xxl:bottom-[14.875rem] md:left-8 lg:left-16 px-4 lg:px-0">
+        class="md:max-w-xs lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 md:absolute md:top-24 lg:top-[16.75rem] xxl:top-[18rem] md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
         <HeadingH1 class="absolute -z-10 lg:static lg:z-0 text-white">{{ categoriaData?.nombre }}</HeadingH1>
         <div class="flex items-center gap-4">
           <NuxtImg :src="getImageUrl(categoriaData?.icono1)" :alt="categoriaData?.caracteristica1"

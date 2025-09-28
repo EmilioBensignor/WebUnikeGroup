@@ -1,6 +1,6 @@
 <template>
     <DefaultSection>
-        <HeadingH2 class="hidden md:block text-center text-primary mt-8 lg:mt-12 xxl:mt-16">Desarrollados por personas para personas</HeadingH2>
+        <HeadingH2 class="hidden md:block text-center text-primary mt-8 md:mb-3 lg:mt-12 lg:mb-0 xxl:mt-16">Desarrollados por personas para personas</HeadingH2>
         <div class="w-full max-w-[1304px] flex flex-col md:flex-row md:gap-8 xxl:gap-16 md:p-8 lg:py-12 xxl:py-16 xxl:px-0">
             <div class="md:w-72 lg:w-[19.75rem] xxl:w-[20.75rem] flex flex-col flex-shrink-0 gap-3 lg:gap-4 py-6 px-4 md:p-0">
                 <div
