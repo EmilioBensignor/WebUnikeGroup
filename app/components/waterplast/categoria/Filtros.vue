@@ -336,31 +336,40 @@ const filtrosAplicados = computed(() => {
 const productosFiltrados = computed(() => {
     if (!props.productos?.length) return []
 
+    // Debug: mostrar primer producto para ver estructura de datos
+    if (props.productos.length > 0) {
+        console.log('Estructura del primer producto:', props.productos[0])
+    }
 
     return props.productos.filter(producto => {
-        if (filtros.value.altura && producto.altura_cm) {
-            const altura = parseInt(filtros.value.altura)
-            if (Math.abs(producto.altura_cm - altura) > 10) return false
+        const altura = filtros.value.altura ? parseFloat(filtros.value.altura) : null
+        if (altura && producto.altura_cm != null) {
+            const productoAltura = parseFloat(producto.altura_cm)
+            if (isNaN(productoAltura) || Math.abs(productoAltura - altura) > 10) return false
         }
 
-        if (filtros.value.ancho && producto.ancho_cm) {
-            const ancho = parseInt(filtros.value.ancho)
-            if (Math.abs(producto.ancho_cm - ancho) > 10) return false
+        const ancho = filtros.value.ancho ? parseFloat(filtros.value.ancho) : null
+        if (ancho && producto.ancho_cm != null) {
+            const productoAncho = parseFloat(producto.ancho_cm)
+            if (isNaN(productoAncho) || Math.abs(productoAncho - ancho) > 10) return false
         }
 
-        if (filtros.value.largo && producto.largo_cm) {
-            const largo = parseInt(filtros.value.largo)
-            if (Math.abs(producto.largo_cm - largo) > 10) return false
+        const largo = filtros.value.largo ? parseFloat(filtros.value.largo) : null
+        if (largo && producto.largo_cm != null) {
+            const productoLargo = parseFloat(producto.largo_cm)
+            if (isNaN(productoLargo) || Math.abs(productoLargo - largo) > 10) return false
         }
 
-        if (filtros.value.diametro && producto.diametro_cm) {
-            const diametro = parseInt(filtros.value.diametro)
-            if (Math.abs(producto.diametro_cm - diametro) > 10) return false
+        const diametro = filtros.value.diametro ? parseFloat(filtros.value.diametro) : null
+        if (diametro && producto.diametro_cm != null) {
+            const productoDiametro = parseFloat(producto.diametro_cm)
+            if (isNaN(productoDiametro) || Math.abs(productoDiametro - diametro) > 10) return false
         }
 
-        if (filtros.value.capacidad && producto.capacidad_lts) {
-            const capacidad = parseInt(filtros.value.capacidad)
-            if (Math.abs(producto.capacidad_lts - capacidad) > 10) return false
+        const capacidad = filtros.value.capacidad ? parseFloat(filtros.value.capacidad) : null
+        if (capacidad && producto.capacidad_lts != null) {
+            const productoCapacidad = parseFloat(producto.capacidad_lts)
+            if (isNaN(productoCapacidad) || Math.abs(productoCapacidad - capacidad) > 10) return false
         }
 
         const orientacionesSeleccionadas = Object.keys(filtros.value.orientacion).filter(orientacion => filtros.value.orientacion[orientacion])
