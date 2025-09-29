@@ -1,11 +1,15 @@
 <template>
     <DefaultSection>
-        <HeadingH2 class="hidden md:block text-center text-primary mt-8 md:mb-3 lg:mt-12 lg:mb-0 xxl:mt-16">Desarrollados por personas para personas</HeadingH2>
-        <div class="w-full max-w-[1304px] flex flex-col md:flex-row md:gap-8 xxl:gap-16 md:p-8 lg:py-12 xxl:py-16 xxl:px-0">
-            <div class="md:w-72 lg:w-[19.75rem] xxl:w-[20.75rem] flex flex-col flex-shrink-0 gap-3 lg:gap-4 py-6 px-4 md:p-0">
+        <HeadingH2 class="hidden md:block text-center text-primary mt-8 md:mb-3 lg:mt-12 lg:mb-0 xxl:mt-16">
+            Desarrollados por personas para personas</HeadingH2>
+        <div
+            class="w-full max-w-[1304px] flex flex-col md:flex-row md:gap-8 xxl:gap-16 md:p-8 lg:py-12 xxl:py-16 xxl:px-0">
+            <div
+                class="md:w-72 lg:w-[19.75rem] xxl:w-[20.75rem] flex flex-col flex-shrink-0 gap-3 lg:gap-4 py-6 px-4 md:p-0">
                 <div
                     class="flex flex-col gap-3 bg-gray-light rounded-[18px] shadow-md shadow-black/30 text-terciary p-4 lg:p-6">
-                    <p class="text-sm lg:text-xl font-bold"><span>{{ filtrosAplicados.length }}</span> Filtros aplicados</p>
+                    <p class="text-sm lg:text-xl font-bold"><span>{{ filtrosAplicados.length }}</span> Filtros aplicados
+                    </p>
                     <div class="flex flex-wrap items-center gap-2">
                         <span v-for="(filtro, index) in filtrosAplicados" :key="index"
                             class="flex items-center gap-2 border border-terciary rounded-full text-sm font-medium p-2 pl-3">
@@ -17,7 +21,8 @@
                             </button>
                         </span>
                     </div>
-                    <button @click="limpiarFiltros" class="self-end text-sm lg:text-base text-secondary font-semibold">Limpiar
+                    <button @click="limpiarFiltros"
+                        class="self-end text-sm lg:text-base text-secondary font-semibold">Limpiar
                         filtros</button>
                 </div>
                 <div
@@ -117,7 +122,8 @@
                                     <div class="flex flex-col gap-1.5">
                                         <div v-for="orientacion in orientaciones" :key="orientacion"
                                             class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ orientacion }}</span>
+                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ orientacion
+                                                }}</span>
                                             <label class="relative inline-flex items-center cursor-pointer">
                                                 <input :id="`orientacion-${orientacion}`"
                                                     :name="`orientacion-${orientacion}`"
@@ -137,7 +143,8 @@
                                     <div class="flex flex-col gap-1.5">
                                         <div v-for="color in colores" :key="color"
                                             class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ color }}</span>
+                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ color
+                                                }}</span>
                                             <label class="relative inline-flex items-center cursor-pointer">
                                                 <input :id="`color-${color}`" :name="`color-${color}`"
                                                     v-model="filtros.color[color]" type="checkbox"
@@ -175,7 +182,8 @@
                                     <div class="flex flex-col gap-1.5">
                                         <div v-for="opcion in opciones" :key="opcion"
                                             class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ opcion }}</span>
+                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ opcion
+                                                }}</span>
                                             <label class="relative inline-flex items-center cursor-pointer">
                                                 <input :id="`opcion-${opcion}`" :name="`opcion-${opcion}`"
                                                     v-model="filtros.opcion[opcion]" type="checkbox"
@@ -194,9 +202,15 @@
             </div>
             <!-- Resultados -->
             <div class="w-full flex flex-col gap-4 px-4 pb-6 md:p-0">
-                <HeadingH2 class="md:hidden text-center text-primary">Desarrollados por personas para personas</HeadingH2>
-                <div v-if="productosFiltrados.length === 0" class="text-center text-gray-dark">
-                    No se encontraron productos que coincidan con los filtros aplicados.
+                <HeadingH2 class="md:hidden text-center text-primary">Desarrollados por personas para personas
+                </HeadingH2>
+                <div v-if="productosFiltrados.length === 0"
+                    class="flex flex-col items-center text-center gap-4 lg:gap-5 xxl:gap-6 bg-gray-blue rounded-lg p-3 md:p-5 lg:p-6 xxl:p-8">
+                    <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu búsqueda.</p>
+                    <ButtonSecondary @click="limpiarFiltros">
+                        Limpiar filtros
+                    </ButtonSecondary>
+                    <p class="text-xs lg:text-sm xxl:text-base font-medium">O <NuxtLink :to="`tel:${ROUTES_NAMES.CONTACTO.TELEFONO}`" class="text-primary underline">ponete en contacto</NuxtLink> con nosotros.</p>
                 </div>
                 <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-2 lg:gap-y-4">
                     <WaterplastCategoriaCard v-for="producto in productosVisibles" :key="producto.id"
@@ -213,6 +227,8 @@
 </template>
 
 <script setup>
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
+
 const props = defineProps({
     categoriaActual: Object,
     productos: {
