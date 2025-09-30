@@ -1,6 +1,6 @@
 <template>
   <DefaultMain>
-    <DefaultSection class="flex flex-col md:relative lg:-mt-20 xxl:-mt-[5.25rem]">
+    <DefaultSection class="flex flex-col relative lg:-mt-20 xxl:-mt-[5.25rem]">
       <div class="w-full">
         <NuxtImg v-if="categoriaData?.imagen_s_categorias" :src="getImageUrl(categoriaData.imagen_s_categorias)"
           class="w-full block md:hidden" />
@@ -11,9 +11,13 @@
         <NuxtImg v-if="categoriaData?.imagen_xl_categorias" :src="getImageUrl(categoriaData.imagen_xl_categorias)"
           class="w-full hidden xxl:block" />
       </div>
-      <div
-        class="md:max-w-xs lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 md:absolute md:top-24 lg:top-[16.75rem] xxl:top-[18rem] md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
-        <HeadingH1 class="absolute -z-10 lg:static lg:z-0 text-white lg:!text-4xl">{{ categoriaData?.nombre }}</HeadingH1>
+      <div v-if="categoriaData?.nombre"
+        class="md:max-w-xs lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 md:absolute md:top-6 lg:top-[11.75rem] xxl:top-52 md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
+        <NuxtImg :src="`/images/waterplast/categorias/${categoriaData.nombre.toLowerCase()}_solapa.webp`"
+          :alt="`${categoriaData.nombre} - Solapa`"
+          class="w-64 lg:w-[22rem] h-12 lg:h-16 absolute md:static top-4 sm:top-10 left-0 right-0 object-contain mx-auto lg:mx-0" />
+        <HeadingH1 class="absolute -z-10 lg:static lg:z-0 text-white lg:!text-4xl">{{ categoriaData.nombre }}
+        </HeadingH1>
         <div class="flex items-center gap-4">
           <NuxtImg :src="getImageUrl(categoriaData?.icono1)" :alt="categoriaData?.caracteristica1"
             class="w-12 lg:w-14 h-12 lg:h-14" />
@@ -51,7 +55,6 @@
 </template>
 
 <script setup>
-import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import { useWaterplastProductos } from '~/composables/waterplast/useProductos'
 import { useWaterplastCategorias } from '~/composables/waterplast/useCategorias'
 

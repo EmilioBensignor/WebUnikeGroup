@@ -217,10 +217,8 @@ export const useWaterplastProductos = () => {
             if (error) throw error
 
             if (data && data.archivo_html) {
-                // Fetch the HTML content from the archivo_html URL
                 const htmlResponse = await $fetch(data.archivo_html)
 
-                // Process the HTML with KeyShotXR transformations
                 const processedHTML = processKeyShotXRHTML(htmlResponse, data.nombre)
 
                 return {
@@ -244,57 +242,37 @@ export const useWaterplastProductos = () => {
         const cleanName = generateCleanName(productoNombre)
         const config = useRuntimeConfig()
 
-        // Read KeyShotXR content and modify it to handle absolute URLs
         let keyshotContent = await $fetch('/lib/keyshot-xr.js')
 
-        // Check if the pattern exists in the code
         const pattern = /b\.src=a\.D\[f\]/g
         const matches = keyshotContent.match(pattern)
-        console.log('Found b.src patterns:', matches ? matches.length : 0)
 
-        // Try different patterns that might exist in the minified code
         const imageBaseUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${cleanName}/images`
 
-        // Try multiple possible patterns
         let modified = false
         
-        console.log('Original KeyShot content length:', keyshotContent.length)
-        console.log('Looking for va function pattern...')
-        
-        // Pattern 1: The va function that constructs image paths (most precise)
         const vaPattern = /this\.va=function\(b,f\)\{return A\+a\.s\+[^}]+\}/
         const vaMatch = keyshotContent.match(vaPattern)
         
         if (vaMatch) {
-            console.log('Found va function:', vaMatch[0])
             keyshotContent = keyshotContent.replace(
                 vaPattern,
                 `this.va=function(b,f){return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"}`
             )
             modified = true
-            console.log('Applied pattern 1: va function replacement')
         } else {
-            console.log('va function not found, trying alternative patterns...')
         }
         
-        // Only try other patterns if va function wasn't found and replaced
         if (!modified) {
-            // Pattern 2: More general approach - find any function that looks like it builds image paths
             if (keyshotContent.includes('parseInt(f)+"_"+parseInt(b)')) {
                 keyshotContent = keyshotContent.replace(
                     /return [^;]+parseInt\(f\)\+["']_["']\+parseInt\(b\)[^;]+/g,
                     `return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"`
                 )
                 modified = true
-                console.log('Applied pattern 2: parseInt pattern replacement')
             }
         }
 
-        console.log('KeyShotXR code modified:', modified)
-        console.log('Image base URL:', imageBaseUrl)
-        console.log('Clean name:', cleanName)
-
-        // Show a sample of the modified code around the va function
         if (modified) {
             const vaIndex = keyshotContent.indexOf('this.va=function')
             if (vaIndex !== -1) {
@@ -302,60 +280,41 @@ export const useWaterplastProductos = () => {
             }
         }
 
-        // Ensure window.keyshotXR is properly declared
         if (!keyshotContent.includes('window.keyshotXR=function')) {
             console.error('KeyShotXR function not found in the loaded script')
         } else {
             console.log('KeyShotXR function found successfully')
         }
 
-        // Remove the problematic debugging code for now
-        // if (keyshotContent.includes('b.src=')) {
-        //     keyshotContent = keyshotContent.replace(
-        //         /(b\.src=)/g,
-        //         'console.log("Loading image:", arguments[0]); $1'
-        //     )
-        // }
-
-        // Transform script src to inline script
         processedHTML = processedHTML.replace(
             /<script\s+type="text\/javascript"\s+src="[^"]*KeyShotXR\.js"><\/script>/gi,
             `<script type="text/javascript">${keyshotContent}</script>`
         )
 
-        // Also handle other variations
         processedHTML = processedHTML.replace(
             /<script[^>]*src="[^"]*KeyShotXR\.js"[^>]*><\/script>/gi,
             `<script type="text/javascript">${keyshotContent}</script>`
         )
 
-        // Set folderName to empty since we're handling URLs in the script
         processedHTML = processedHTML.replace(
             /var\s+folderName\s*=\s*["']([^"']*)["']/g,
             'var folderName = ""'
         )
 
-        // Make sure the container has proper styling
         processedHTML = processedHTML.replace(
             /<div([^>]*?)id=["']?xr-container["']?([^>]*?)>/g,
             '<div$1id="xr-container"$2 style="width: 100%; height: 100%; position: relative;">'
         )
 
-        console.log('Processed HTML preview:', processedHTML.substring(0, 500))
 
-        // Also log the script content to check for syntax errors
         const scriptMatch = processedHTML.match(/<script type="text\/javascript">(.*?)<\/script>/s)
         if (scriptMatch) {
-            console.log('Script content length:', scriptMatch[1].length)
-            console.log('Script start:', scriptMatch[1].substring(0, 200))
             
-            // Try to detect syntax errors
             try {
                 new Function(scriptMatch[1])
                 console.log('Script syntax is valid')
             } catch (e) {
                 console.error('Script syntax error:', e.message)
-                console.log('Error around character:', e.message.match(/\d+/) ? scriptMatch[1].substring(parseInt(e.message.match(/\d+/)[0]) - 50, parseInt(e.message.match(/\d+/)[0]) + 50) : 'unknown')
             }
         }
 
@@ -368,7 +327,6 @@ export const useWaterplastProductos = () => {
             if (container && html) {
                 container.innerHTML = html
 
-                // Execute scripts in the injected HTML
                 const scripts = container.querySelectorAll('script')
                 scripts.forEach(script => {
                     const newScript = document.createElement('script')
@@ -415,7 +373,6 @@ export const useWaterplastProductos = () => {
         if (!producto || !producto.archivo_html) return null
 
         try {
-            // Build the full URL for the HTML file
             let htmlUrl = producto.archivo_html
             if (!htmlUrl.startsWith('http')) {
                 const config = useRuntimeConfig()
@@ -423,10 +380,8 @@ export const useWaterplastProductos = () => {
             }
 
 
-            // Fetch the HTML content from the archivo_html URL
             const htmlResponse = await $fetch(htmlUrl)
 
-            // Process the HTML with KeyShotXR transformations
             const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre)
 
             return {

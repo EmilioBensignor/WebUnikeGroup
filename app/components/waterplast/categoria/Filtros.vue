@@ -336,11 +336,6 @@ const filtrosAplicados = computed(() => {
 const productosFiltrados = computed(() => {
     if (!props.productos?.length) return []
 
-    // Debug: mostrar primer producto para ver estructura de datos
-    if (props.productos.length > 0) {
-        console.log('Estructura del primer producto:', props.productos[0])
-    }
-
     return props.productos.filter(producto => {
         const altura = filtros.value.altura ? parseFloat(filtros.value.altura) : null
         if (altura && producto.altura_cm != null) {
