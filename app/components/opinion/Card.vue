@@ -52,7 +52,7 @@ const nombreUsuario = computed(() => {
 })
 
 const ratingValue = computed(() => {
-    return props.opinion.calificacion || props.opinion.rating || 5
+    return props.opinion.estrellas || props.opinion.calificacion || props.opinion.rating || 0
 })
 
 const tituloOpinion = computed(() => {
