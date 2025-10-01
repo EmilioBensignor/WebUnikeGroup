@@ -1,5 +1,9 @@
 <template>
-  <DefaultMain>
+  <div v-if="!isClient || loading || !categoriaData || !contentReady" class="h-screen flex items-center justify-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+
+  <DefaultMain v-else>
     <DefaultSection class="flex flex-col relative lg:-mt-20 xxl:-mt-[5.25rem]">
       <div class="w-full">
         <NuxtImg v-if="categoriaData?.imagen_s_categorias" :src="getImageUrl(categoriaData.imagen_s_categorias)"
@@ -13,7 +17,7 @@
       </div>
       <div v-if="categoriaData?.nombre"
         class="md:max-w-xs lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 md:absolute md:top-6 lg:top-[11.75rem] xxl:top-52 md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
-        <NuxtImg :src="`/images/waterplast/categorias/${categoriaData.nombre.toLowerCase()}_solapa.webp`"
+        <NuxtImg :src="getSolapaImageUrl(categoriaData.nombre)"
           :alt="`${categoriaData.nombre} - Solapa`"
           class="w-64 lg:w-[22rem] h-12 lg:h-16 absolute md:static top-4 sm:top-10 left-0 right-0 object-contain mx-auto lg:mx-0" />
         <HeadingH1 class="absolute -z-10 lg:static lg:z-0 text-white lg:!text-4xl">{{ categoriaData.nombre }}
@@ -37,11 +41,7 @@
     </DefaultSection>
 
     <DefaultSection>
-      <div v-if="!isClient || loading" class="text-center py-8">
-        <p>Cargando productos...</p>
-      </div>
-
-      <div v-else-if="error" class="text-center text-error py-8">
+      <div v-if="error" class="text-center text-error py-8">
         <p>Error al cargar productos: {{ error }}</p>
       </div>
 
@@ -70,9 +70,16 @@ const { fetchCategoriaBySlug, getCategoriaImageUrl } = useWaterplastCategorias()
 
 const categoriaData = ref(null)
 const isClient = ref(false)
+const contentReady = ref(false)
 
 const getImageUrl = (imagePath) => {
   return getCategoriaImageUrl(imagePath)
+}
+
+const getSolapaImageUrl = (nombre) => {
+  // Sanitizar el nombre removiendo caracteres especiales como °
+  const sanitizedNombre = nombre.toLowerCase().replace(/[°]/g, '')
+  return `/images/waterplast/categorias/${sanitizedNombre}_solapa.webp`
 }
 
 onMounted(async () => {
@@ -80,6 +87,10 @@ onMounted(async () => {
   try {
     categoriaData.value = await fetchCategoriaBySlug(categoria)
     await fetchProductosByCategoria(categoria)
+    // Dar un pequeño delay para que las imágenes tengan tiempo de cargar
+    setTimeout(() => {
+      contentReady.value = true
+    }, 300)
   } catch (err) {
     console.error('Error al cargar categoría:', err)
   }
