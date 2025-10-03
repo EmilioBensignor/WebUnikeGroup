@@ -70,7 +70,15 @@ export const useWaterplastProductos = () => {
 
             const { data, error: supabaseError } = await supabase
                 .from('waterplast-productos')
-                .select('*')
+                .select(`
+                    *,
+                    categoria:categoria_id (
+                        id,
+                        nombre,
+                        slug,
+                        color
+                    )
+                `)
                 .eq('estado', true)
                 .eq('categoria_id', categoriaData.id)
                 .order('created_at', { ascending: true })
@@ -79,8 +87,12 @@ export const useWaterplastProductos = () => {
 
             const productosWithUrls = (data || []).map(producto => ({
                 ...producto,
-                imagen_principal: producto.imagen_principal ? getProductoImageUrl(producto.imagen_principal) : null,
+                imagen: producto.imagen ? getProductoImageUrl(producto.imagen) : null,
+                imagen_principal: producto.imagen_principal ? getProductoImageUrl(producto.imagen_principal) : (producto.imagen ? getProductoImageUrl(producto.imagen) : null),
                 imagen_ficha_tecnica: producto.imagen_ficha_tecnica ? getProductoImageUrl(producto.imagen_ficha_tecnica) : null,
+                icono1: producto.icono1 ? getProductoImageUrl(producto.icono1) : null,
+                icono2: producto.icono2 ? getProductoImageUrl(producto.icono2) : null,
+                icono3: producto.icono3 ? getProductoImageUrl(producto.icono3) : null,
                 imagenes_galeria: producto.imagenes_galeria ?
                     producto.imagenes_galeria.map((img, index) => ({
                         id: `galeria-${index}`,
