@@ -338,31 +338,36 @@ const productosFiltrados = computed(() => {
 
     return props.productos.filter(producto => {
         const altura = filtros.value.altura ? parseFloat(filtros.value.altura) : null
-        if (altura && producto.altura_cm != null) {
+        if (altura) {
+            if (producto.altura_cm == null) return false
             const productoAltura = parseFloat(producto.altura_cm)
             if (isNaN(productoAltura) || Math.abs(productoAltura - altura) > 10) return false
         }
 
         const ancho = filtros.value.ancho ? parseFloat(filtros.value.ancho) : null
-        if (ancho && producto.ancho_cm != null) {
+        if (ancho) {
+            if (producto.ancho_cm == null) return false
             const productoAncho = parseFloat(producto.ancho_cm)
             if (isNaN(productoAncho) || Math.abs(productoAncho - ancho) > 10) return false
         }
 
         const largo = filtros.value.largo ? parseFloat(filtros.value.largo) : null
-        if (largo && producto.largo_cm != null) {
+        if (largo) {
+            if (producto.largo_cm == null) return false
             const productoLargo = parseFloat(producto.largo_cm)
             if (isNaN(productoLargo) || Math.abs(productoLargo - largo) > 10) return false
         }
 
         const diametro = filtros.value.diametro ? parseFloat(filtros.value.diametro) : null
-        if (diametro && producto.diametro_cm != null) {
+        if (diametro) {
+            if (producto.diametro_cm == null) return false
             const productoDiametro = parseFloat(producto.diametro_cm)
             if (isNaN(productoDiametro) || Math.abs(productoDiametro - diametro) > 10) return false
         }
 
         const capacidad = filtros.value.capacidad ? parseFloat(filtros.value.capacidad) : null
-        if (capacidad && producto.capacidad_lts != null) {
+        if (capacidad) {
+            if (producto.capacidad_lts == null) return false
             const productoCapacidad = parseFloat(producto.capacidad_lts)
             if (isNaN(productoCapacidad) || Math.abs(productoCapacidad - capacidad) > 10) return false
         }
