@@ -114,8 +114,9 @@ const capas = ref([
 
 const sectionRef = ref(null)
 let observer = null
+let ticking = false
 
-const handleScroll = () => {
+const updateVisibility = () => {
     if (!sectionRef.value) return
 
     const sectionRect = sectionRef.value.getBoundingClientRect()
@@ -136,6 +137,15 @@ const handleScroll = () => {
         if (capas.value[i]) {
             capas.value[i].visible = scrollProgress >= threshold
         }
+    }
+
+    ticking = false
+}
+
+const handleScroll = () => {
+    if (!ticking) {
+        requestAnimationFrame(updateVisibility)
+        ticking = true
     }
 }
 

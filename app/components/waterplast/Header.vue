@@ -7,8 +7,8 @@
             <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
             class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
         </NuxtLink>
-        <button @click="toggleDrawer" class="w-12 h-12 lg:hidden flex justify-center items-center p-4">
-            <Icon name="material-symbols:menu-rounded" class="w-6 md:w-8 h-6 md:h-8 flex-shrink-0 text-white" />
+        <button @click="toggleDrawer" class="w-12 h-12 lg:hidden flex justify-center items-center p-4 cursor-pointer touch-manipulation active:opacity-70">
+            <Icon name="material-symbols:menu-rounded" class="w-6 md:w-8 h-6 md:h-8 flex-shrink-0 text-white pointer-events-none" />
         </button>
         <nav class="hidden lg:flex">
             <ul class="flex items-center text-white font-bold">

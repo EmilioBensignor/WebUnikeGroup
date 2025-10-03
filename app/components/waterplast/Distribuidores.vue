@@ -257,7 +257,12 @@ const initializeMap = async () => {
             const apiKey = config.public.googleMapsApiKey
 
             await new Promise((resolve, reject) => {
+                let timeoutId = setTimeout(() => {
+                    reject(new Error('Timeout cargando Google Maps'))
+                }, 10000)
+
                 window.initMap = () => {
+                    clearTimeout(timeoutId)
                     resolve()
                     delete window.initMap
                 }
@@ -271,28 +276,33 @@ const initializeMap = async () => {
                 script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async&libraries=marker&callback=initMap`
                 script.async = true
                 script.defer = true
-                script.onerror = reject
+                script.onerror = (error) => {
+                    clearTimeout(timeoutId)
+                    reject(error)
+                }
                 document.head.appendChild(script)
             })
         }
 
-        if (mapContainer.value) {
+        if (mapContainer.value && window.google && window.google.maps) {
             map = new window.google.maps.Map(mapContainer.value, {
                 mapTypeControl: false,
                 streetViewControl: false,
                 fullscreenControl: false,
                 mapId: 'waterplast-map',
                 center: { lat: -34.6037, lng: -58.3816 },
-                zoom: 5
+                zoom: 5,
+                gestureHandling: 'greedy'
             })
 
-            await nextTick()
-            updateMarkers()
-
-            mapLoaded.value = true
+            window.google.maps.event.addListenerOnce(map, 'idle', () => {
+                mapLoaded.value = true
+                updateMarkers()
+            })
         }
     } catch (error) {
         console.error('Error al cargar el mapa:', error)
+        mapLoaded.value = true
     }
 }
 
@@ -322,23 +332,30 @@ const updateMarkers = () => {
 
             const position = { lat, lng }
 
+            const markerContainer = document.createElement('div')
+            markerContainer.style.cssText = 'cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;'
+
             const markerImg = document.createElement('img')
             markerImg.src = '/images/waterplast/Waterplast-Maps.svg'
-            markerImg.style.width = '100px'
-            markerImg.style.height = '40px'
-            markerImg.style.cursor = 'pointer'
+            markerImg.style.cssText = 'width: 100px; height: 40px; pointer-events: none; display: block;'
             markerImg.alt = distribuidor.nombreComercio
+
+            markerContainer.appendChild(markerImg)
 
             const marker = new window.google.maps.marker.AdvancedMarkerElement({
                 position: position,
                 map: map,
                 title: distribuidor.nombreComercio,
-                content: markerImg
+                content: markerContainer
             })
 
             marker.addListener('click', () => {
                 selectedDistribuidor.value = distribuidor
             })
+
+            markerContainer.addEventListener('click', () => {
+                selectedDistribuidor.value = distribuidor
+            }, { passive: true })
 
             markers.push(marker)
             bounds.extend(position)
