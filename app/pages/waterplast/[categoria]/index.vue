@@ -16,26 +16,26 @@
           class="w-full hidden xxl:block" />
       </div>
       <div v-if="categoriaData?.nombre"
-        class="md:max-w-xs lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 md:absolute md:top-6 lg:top-[11.75rem] xxl:top-52 md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
+        class="infoHeader md:max-w-96 lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 xl:gap-8 md:absolute md:top-6 lg:top-[11.75rem] xxl:top-52 md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
         <NuxtImg :src="getSolapaImageUrl(categoriaData.nombre)"
           :alt="`${categoriaData.nombre} - Solapa`"
-          class="w-64 lg:w-[22rem] h-12 lg:h-16 absolute md:static top-4 sm:top-10 left-0 right-0 object-contain mx-auto lg:mx-0" />
-        <HeadingH1 class="absolute -z-10 lg:static lg:z-0 text-white lg:!text-4xl">{{ categoriaData.nombre }}
+          class="w-64 sm:w-96 lg:w-[22rem] h-12 lg:h-16 absolute md:static top-4 sm:top-10 left-0 right-0 object-contain object-left mx-auto lg:mx-0" />
+        <HeadingH1 class="absolute -z-10 text-white">{{ categoriaData.nombre }}
         </HeadingH1>
         <div class="flex items-center gap-4">
           <NuxtImg :src="getImageUrl(categoriaData?.icono1)" :alt="categoriaData?.caracteristica1"
-            class="w-12 lg:w-14 h-12 lg:h-14" />
-          <p class="text-sm lg:text-2xl md:text-white font-medium">{{ categoriaData?.caracteristica1 }}</p>
+            class="w-12 xl:w-14 h-12 xl:h-14" />
+          <p class="text-sm lg:text-xl xxl:text-2xl md:text-white font-medium">{{ categoriaData?.caracteristica1 }}</p>
         </div>
         <div class="flex items-center gap-4">
           <NuxtImg :src="getImageUrl(categoriaData?.icono2)" :alt="categoriaData?.caracteristica2"
-            class="w-12 lg:w-14 h-12 lg:h-14" />
-          <p class="text-sm lg:text-2xl md:text-white font-medium">{{ categoriaData?.caracteristica2 }}</p>
+            class="w-12 xl:w-14 h-12 xl:h-14" />
+          <p class="text-sm lg:text-xl xxl:text-2xl md:text-white font-medium">{{ categoriaData?.caracteristica2 }}</p>
         </div>
         <div class="flex items-center gap-4">
           <NuxtImg :src="getImageUrl(categoriaData?.icono3)" :alt="categoriaData?.caracteristica3"
-            class="w-12 lg:w-14 h-12 lg:h-14" />
-          <p class="text-sm lg:text-2xl md:text-white font-medium">{{ categoriaData?.caracteristica3 }}</p>
+            class="w-12 xl:w-14 h-12 xl:h-14" />
+          <p class="text-sm lg:text-xl xxl:text-2xl md:text-white font-medium">{{ categoriaData?.caracteristica3 }}</p>
         </div>
       </div>
     </DefaultSection>
@@ -96,3 +96,19 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style>
+@media screen and (min-width: 1680px) {
+  .infoHeader {
+    top: 15rem;
+    max-width: 94rem;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .infoHeader {
+    top: 18rem;
+    max-width: 100rem;
+  }
+}
+</style>
