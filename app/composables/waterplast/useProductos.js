@@ -222,7 +222,7 @@ export const useWaterplastProductos = () => {
         try {
             const { data, error } = await supabase
                 .from('waterplast-productos')
-                .select('archivo_html, nombre')
+                .select('archivo_html, nombre, xr_images_folder, images_folder')
                 .eq('id', productoId)
                 .single()
 
@@ -231,7 +231,8 @@ export const useWaterplastProductos = () => {
             if (data && data.archivo_html) {
                 const htmlResponse = await $fetch(data.archivo_html)
 
-                const processedHTML = processKeyShotXRHTML(htmlResponse, data.nombre)
+                const imagesFolder = data.xr_images_folder || data.images_folder || null
+                const processedHTML = await processKeyShotXRHTML(htmlResponse, data.nombre, imagesFolder)
 
                 return {
                     ...data,
@@ -247,34 +248,75 @@ export const useWaterplastProductos = () => {
         }
     }
 
-    const processKeyShotXRHTML = async (html, productoNombre) => {
+    const detectImageFolderFromStorage = async (cleanName) => {
+        try {
+            const { data: files, error } = await supabase.storage
+                .from('waterplast-productos')
+                .list(`${cleanName}/images`, {
+                    limit: 100,
+                    offset: 0,
+                })
+
+            if (error || !files || files.length === 0) return null
+
+            const hasPngFiles = files.some(item => item.name && item.name.endsWith('.png'))
+            if (hasPngFiles) return null
+
+            const folders = files.filter(item => {
+                if (!item.name || item.name === 'files') return false
+                const hasImageExtension = /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(item.name)
+                const hasHtmlExtension = /\.html?$/i.test(item.name)
+                return !hasImageExtension && !hasHtmlExtension
+            })
+
+            if (folders.length > 0) {
+                return folders[0].name
+            }
+        } catch (error) {
+            // Silently fail
+        }
+
+        return null
+    }
+
+    const getImageBaseUrl = (cleanName, imagesFolder = null) => {
+        const config = useRuntimeConfig()
+        const baseUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${cleanName}/images`
+
+        if (imagesFolder) {
+            return `${baseUrl}/${imagesFolder}`
+        }
+
+        return baseUrl
+    }
+
+    const processKeyShotXRHTML = async (html, productoNombre, imagesFolder = null) => {
         if (!html) return ''
 
         let processedHTML = html
         const cleanName = generateCleanName(productoNombre)
-        const config = useRuntimeConfig()
+
+        if (!imagesFolder) {
+            imagesFolder = await detectImageFolderFromStorage(cleanName)
+        }
 
         let keyshotContent = await $fetch('/lib/keyshot-xr.js')
 
-        const pattern = /b\.src=a\.D\[f\]/g
-        const matches = keyshotContent.match(pattern)
-
-        const imageBaseUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${cleanName}/images`
+        const imageBaseUrl = getImageBaseUrl(cleanName, imagesFolder)
 
         let modified = false
-        
+
         const vaPattern = /this\.va=function\(b,f\)\{return A\+a\.s\+[^}]+\}/
         const vaMatch = keyshotContent.match(vaPattern)
-        
+
         if (vaMatch) {
             keyshotContent = keyshotContent.replace(
                 vaPattern,
                 `this.va=function(b,f){return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"}`
             )
             modified = true
-        } else {
         }
-        
+
         if (!modified) {
             if (keyshotContent.includes('parseInt(f)+"_"+parseInt(b)')) {
                 keyshotContent = keyshotContent.replace(
@@ -285,18 +327,22 @@ export const useWaterplastProductos = () => {
             }
         }
 
-        if (modified) {
-            const vaIndex = keyshotContent.indexOf('this.va=function')
-            if (vaIndex !== -1) {
-                console.log('Modified va function area:', keyshotContent.substring(vaIndex, vaIndex + 200))
-            }
-        }
+        keyshotContent = keyshotContent.replace(
+            /A\+a\.s\+["']\/files\/["']\+d/g,
+            `"${imageBaseUrl}/files/"+d`
+        )
 
-        if (!keyshotContent.includes('window.keyshotXR=function')) {
-            console.error('KeyShotXR function not found in the loaded script')
-        } else {
-            console.log('KeyShotXR function found successfully')
-        }
+        // Deshabilitar el loader reemplazando ca&&a.ua() con nada
+        keyshotContent = keyshotContent.replace(
+            /ca&&a\.ua\(\)/g,
+            'false'
+        )
+
+        // También deshabilitar la función que crea el loader
+        keyshotContent = keyshotContent.replace(
+            /this\.ua=function\(\)\{[^}]+a\.p=document\.createElement[^}]+\};/g,
+            'this.ua=function(){};'
+        )
 
         processedHTML = processedHTML.replace(
             /<script\s+type="text\/javascript"\s+src="[^"]*KeyShotXR\.js"><\/script>/gi,
@@ -314,21 +360,29 @@ export const useWaterplastProductos = () => {
         )
 
         processedHTML = processedHTML.replace(
+            /A\+a\.s\+["']\/files\/["']/g,
+            `"${imageBaseUrl}/files/"`
+        )
+
+        processedHTML = processedHTML.replace(
+            /src=["']files\//g,
+            `src="${imageBaseUrl}/files/`
+        )
+
+        processedHTML = processedHTML.replace(
             /<div([^>]*?)id=["']?xr-container["']?([^>]*?)>/g,
             '<div$1id="xr-container"$2 style="width: 100%; height: 100%; position: relative;">'
         )
 
+        processedHTML = processedHTML.replace(
+            /<body([^>]*)>/gi,
+            '<body$1 style="background-color: transparent;">'
+        )
 
-        const scriptMatch = processedHTML.match(/<script type="text\/javascript">(.*?)<\/script>/s)
-        if (scriptMatch) {
-            
-            try {
-                new Function(scriptMatch[1])
-                console.log('Script syntax is valid')
-            } catch (e) {
-                console.error('Script syntax error:', e.message)
-            }
-        }
+        processedHTML = processedHTML.replace(
+            /this\.backgroundColor=s\.style\.backgroundColor=[^;]+;/g,
+            'this.backgroundColor=s.style.backgroundColor="transparent";'
+        )
 
         return processedHTML
     }
@@ -391,19 +445,134 @@ export const useWaterplastProductos = () => {
                 htmlUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${htmlUrl}`
             }
 
-
             const htmlResponse = await $fetch(htmlUrl)
 
-            const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre)
+            let imagesFolder = producto.xr_images_folder || producto.images_folder || null
+            const cleanName = generateCleanName(producto.nombre)
+
+            if (!imagesFolder) {
+                imagesFolder = await detectImageFolderFromStorage(cleanName)
+
+                if (imagesFolder && producto.id) {
+                    try {
+                        await supabase
+                            .from('waterplast-productos')
+                            .update({ xr_images_folder: imagesFolder })
+                            .eq('id', producto.id)
+                    } catch (updateErr) {
+                        // Silently fail if can't save
+                    }
+                }
+            }
+
+            const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre, imagesFolder)
 
             return {
                 ...producto,
                 processed_html: processedHTML,
-                clean_name: generateCleanName(producto.nombre)
+                clean_name: cleanName,
+                xr_images_folder: imagesFolder
             }
         } catch (error) {
             console.error('Error processing producto HTML:', error)
             return null
+        }
+    }
+
+    const getCaracteristicaImageUrl = (imagePath) => {
+        if (!imagePath) return null
+        if (imagePath.startsWith('http')) return imagePath
+        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos-caracteristicas/${imagePath}`
+    }
+
+    const fetchProductosRelacionados = async (productosRelacionadosIds) => {
+        if (!productosRelacionadosIds || productosRelacionadosIds.length === 0) {
+            return []
+        }
+
+        try {
+            const { data, error: supabaseError } = await supabase
+                .from('waterplast-productos')
+                .select(`
+                    *,
+                    categoria:categoria_id (
+                        id,
+                        nombre,
+                        slug,
+                        color
+                    )
+                `)
+                .in('id', productosRelacionadosIds)
+                .eq('estado', true)
+
+            if (supabaseError) throw supabaseError
+
+            const productosWithUrls = (data || []).map(producto => ({
+                ...producto,
+                imagen_principal: producto.imagen_principal ? getProductoImageUrl(producto.imagen_principal) : null,
+                icono1: producto.icono1 ? getProductoImageUrl(producto.icono1) : null,
+                icono2: producto.icono2 ? getProductoImageUrl(producto.icono2) : null,
+                icono3: producto.icono3 ? getProductoImageUrl(producto.icono3) : null,
+            }))
+
+            return productosWithUrls
+        } catch (err) {
+            console.error('Error al obtener productos relacionados:', err)
+            return []
+        }
+    }
+
+    const fetchCaracteristicasAdicionales = async (productoId) => {
+        if (!productoId) return []
+
+        try {
+            const { data, error: supabaseError } = await supabase
+                .from('waterplast-productos-caracteristicas-adicionales')
+                .select('*')
+                .eq('producto_id', productoId)
+                .order('orden', { ascending: true })
+
+            if (supabaseError) throw supabaseError
+
+            const caracteristicasWithUrls = (data || []).map(caracteristica => ({
+                ...caracteristica,
+                imagen: caracteristica.imagen ? getCaracteristicaImageUrl(caracteristica.imagen) : null
+            }))
+
+            return caracteristicasWithUrls
+        } catch (err) {
+            console.error('Error al obtener características adicionales:', err)
+            return []
+        }
+    }
+
+    const fetchImagenesRedes = async (categoriaSlug) => {
+        if (!categoriaSlug) return []
+
+        try {
+            const { data: files, error } = await supabase.storage
+                .from('waterplast-categorias')
+                .list(`${categoriaSlug}/imagenes-redes`, {
+                    limit: 100,
+                    offset: 0,
+                })
+
+            if (error || !files || files.length === 0) return []
+
+            const imagenesRedes = files
+                .filter(file => {
+                    const ext = file.name.split('.').pop().toLowerCase()
+                    return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)
+                })
+                .map(file => ({
+                    name: file.name,
+                    url: `${config.public.supabase.url}/storage/v1/object/public/waterplast-categorias/${categoriaSlug}/imagenes-redes/${file.name}`
+                }))
+
+            return imagenesRedes
+        } catch (err) {
+            console.error('Error al obtener imágenes de redes:', err)
+            return []
         }
     }
 
@@ -417,11 +586,15 @@ export const useWaterplastProductos = () => {
         fetchProductoBySlug,
         fetchProductoByCategoriaAndSlug,
         getProductoImageUrl,
+        getCaracteristicaImageUrl,
         generateCleanName,
         fetchProducto3DFromSupabase,
         processKeyShotXRHTML,
         processProductoHTML,
         injectXRViewer,
-        renderXRViewer
+        renderXRViewer,
+        fetchProductosRelacionados,
+        fetchCaracteristicasAdicionales,
+        fetchImagenesRedes
     }
 }
