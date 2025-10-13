@@ -7,8 +7,8 @@
             <span class="hidden xxl:inline font-bold">Consultar por este producto</span>
         </ButtonPrimary>
 
-        <ButtonPrimary v-if="producto.ficha_tecnica" :href="getFichaTecnicaUrl(producto.ficha_tecnica)" download
-            class="w-full lg:w-1/2 flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6">
+        <ButtonPrimary v-if="producto.ficha_tecnica" @click="downloadFichaTecnica"
+            class="w-full lg:w-1/2 flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6 cursor-pointer">
             <Icon name="material-symbols:docs-outline-rounded" class="w-6 h-6 flex-shrink-0" />
             <span class="xxl:hidden font-bold">Ficha técnica</span>
             <span class="hidden xxl:inline font-bold">Descargar ficha técnica</span>
@@ -34,9 +34,40 @@ const whatsappLink = computed(() => {
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 })
 
-const getFichaTecnicaUrl = (fichaTecnica) => {
-    if (!fichaTecnica) return ''
-    if (fichaTecnica.startsWith('http')) return fichaTecnica
-    return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}`
+const downloadFichaTecnica = async () => {
+    if (!props.producto?.ficha_tecnica) return
+
+    const fichaTecnica = props.producto.ficha_tecnica
+    let downloadUrl = ''
+    let viewUrl = ''
+
+    const fileName = fichaTecnica.split('/').pop()
+    const extension = fileName.split('.').pop()
+    const downloadName = props.producto?.nombre
+        ? `${props.producto.nombre}-ficha-tecnica.${extension}`
+        : fileName
+
+    if (fichaTecnica.startsWith('http')) {
+        downloadUrl = fichaTecnica
+        viewUrl = fichaTecnica
+    } else {
+        downloadUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}?download=${encodeURIComponent(downloadName)}`
+        viewUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}`
+    }
+
+    try {
+        const downloadLink = document.createElement('a')
+        downloadLink.href = downloadUrl
+        downloadLink.download = downloadName
+        document.body.appendChild(downloadLink)
+        downloadLink.click()
+        document.body.removeChild(downloadLink)
+
+        setTimeout(() => {
+            window.open(viewUrl, '_blank')
+        }, 100)
+    } catch (error) {
+        console.error('Error al descargar ficha técnica:', error)
+    }
 }
 </script>
