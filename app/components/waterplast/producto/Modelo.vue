@@ -23,8 +23,13 @@
             <p>Procesando el modelo 3D… actualizando…</p>
         </div>
 
+        <div v-else-if="producto.imagen" class="w-full">
+            <NuxtImg :src="getImageUrl(producto.imagen)" :alt="producto.nombre"
+                class="w-full h-auto object-contain rounded-lg" loading="lazy" />
+        </div>
+
         <div v-else class="text-center py-8">
-            <p>Este producto no tiene modelo 3D disponible.</p>
+            <p>Este producto no tiene imagen disponible.</p>
         </div>
     </div>
 </template>
@@ -69,6 +74,12 @@ const get3DViewerUrl = () => {
     }
 
     return ''
+}
+
+const getImageUrl = (imagen) => {
+    if (!imagen) return ''
+    if (imagen.startsWith('http')) return imagen
+    return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${imagen}`
 }
 
 const fetchProducto = async () => {

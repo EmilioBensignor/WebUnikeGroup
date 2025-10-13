@@ -1,15 +1,17 @@
 <template>
-    <div v-if="producto" class="w-full md:max-w-72 flex flex-col items-center gap-2 lg:gap-4">
+    <div v-if="producto" class="w-full md:max-w-72 flex flex-col sm:flex-row md:flex-col items-center gap-2 lg:gap-4">
         <ButtonPrimary :href="whatsappLink" target="_blank" rel="noopener noreferrer"
-            class="w-full flex justify-center items-center gap-2.5 lg:px-6">
+            class="w-full lg:w-1/2 flex justify-center items-center gap-2.5 sm:px-6">
             <NuxtImg src="/images/redes/Whatsapp.svg" alt="Logo Whatsapp" class="w-6 h-6 flex-shrink-0" />
-            <span class="font-bold">Consultar</span>
+            <span class="xxl:hidden font-bold">Consultar</span>
+            <span class="hidden xxl:inline font-bold">Consultar por este producto</span>
         </ButtonPrimary>
 
         <ButtonPrimary v-if="producto.ficha_tecnica" :href="getFichaTecnicaUrl(producto.ficha_tecnica)" download
-            class="w-full flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary lg:px-6">
+            class="w-full lg:w-1/2 flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6">
             <Icon name="material-symbols:docs-outline-rounded" class="w-6 h-6 flex-shrink-0" />
-            <span class="font-bold">Ficha técnica</span>
+            <span class="xxl:hidden font-bold">Ficha técnica</span>
+            <span class="hidden xxl:inline font-bold">Descargar ficha técnica</span>
         </ButtonPrimary>
     </div>
 </template>

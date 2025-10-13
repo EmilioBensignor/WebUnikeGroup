@@ -1,43 +1,47 @@
 <template>
   <DefaultMain>
-    <span class="hero-gradient md:w-full md:h-[11.5rem] lg:h-[16.5rem] hidden md:block md:absolute md:top-0" :style="{ '--categoria-color': categoriaColor }"></span>
-    <DefaultSection class="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 py-6 px-4 md:p-16 md:pb-8 lg:pt-44 lg:pb-12 xxl:py-16 lg:px-16">
-      <WaterplastProductoModelo class="hidden lg:block" />
-      <div class="lg:w-1/2 flex flex-col gap-6">
-        <div class="flex flex-col md:flex-row-reverse gap-6">
-          <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6">
-            <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
-            <p class="text-sm lg:text-xl text-terciary font-medium">{{ producto?.descripcion }}</p>
-            <WaterplastProductoBotones v-if="producto" :producto="producto" class="hidden md:flex lg:hidden" />
-          </div>
-          <WaterplastProductoModelo class="lg:hidden" />
-        </div>
-
-        <div class="flex flex-col gap-6">
-          <div v-if="productosRelacionados.length > 0"
-            class="grid grid-cols-4 items-end">
-            <NuxtLink v-for="(relacionado, index) in productosRelacionados" :key="relacionado.id"
-              :to="`${ROUTES_NAMES.WATERPLAST.HOME}/${relacionado.categoria?.slug}/${relacionado.slug}`"
-              :style="getRelacionadoStyle(relacionado, index)" :class="getRelacionadoBorderClass(relacionado, index)"
-              class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
-              <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}</p>
-            </NuxtLink>
-          </div>
-          <!-- Características -->
-          <div v-if="caracteristicasAdicionales.length > 0"
-            class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 gap-4 lg:gap-6">
-            <div v-for="caracteristica in caracteristicasAdicionales" :key="caracteristica.id"
-              class="flex flex-col items-center gap-3 md:gap-4">
-              <div class="w-16 h-16 flex justify-center items-center rounded-full"
-                :style="{ backgroundColor: categoriaColor }">
-                <NuxtImg v-if="caracteristica.imagen" :src="caracteristica.imagen" :alt="caracteristica.descripcion"
-                  class="w-10 h-10 object-contain" loading="lazy" @error="(e) => handleImageError(e, caracteristica)" />
-              </div>
-              <p class="text-xs lg:text-sm text-center font-medium text-terciary">{{ caracteristica.descripcion }}</p>
+    <span class="hero-gradient md:w-full md:h-[11.5rem] lg:h-[16.5rem] hidden md:block md:absolute md:top-0"
+      :style="{ '--categoria-color': categoriaColor }"></span>
+    <DefaultSection class="py-6 px-4 md:p-16 md:pb-8 lg:pt-44 lg:pb-12 lg:px-16 xxl:py-32">
+      <div class="w-full xxl:max-w-[1304px] flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xxl:gap-16">
+        <WaterplastProductoModelo class="hidden lg:block xxl:w-[40%]" />
+        <div class="lg:w-1/2 xxl:w-[60%] flex flex-col gap-6 xxl:gap-8">
+          <div class="flex flex-col md:flex-row-reverse gap-6">
+            <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6 xxl:gap-8">
+              <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
+              <p class="text-sm lg:text-xl text-terciary font-medium">{{ producto?.descripcion }}</p>
+              <WaterplastProductoBotones v-if="producto" :producto="producto" class="hidden md:flex lg:hidden" />
             </div>
+            <WaterplastProductoModelo class="lg:hidden" />
           </div>
 
-          <WaterplastProductoBotones v-if="producto" :producto="producto" class="lg:max-w-full flex md:hidden lg:flex lg:flex-row" />
+          <div class="flex flex-col gap-6 xxl:gap-8">
+            <div v-if="productosRelacionados.length > 1" class="grid grid-cols-4 items-end">
+              <NuxtLink v-for="(relacionado, index) in productosRelacionados" :key="relacionado.id"
+                :to="`${ROUTES_NAMES.WATERPLAST.HOME}/${relacionado.categoria?.slug}/${relacionado.slug}`"
+                :style="getRelacionadoStyle(relacionado, index)" :class="getRelacionadoBorderClass(relacionado, index)"
+                class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
+                <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}</p>
+              </NuxtLink>
+            </div>
+            <!-- Características -->
+            <div v-if="caracteristicasAdicionales.length > 0"
+              class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
+              <div v-for="caracteristica in caracteristicasAdicionales" :key="caracteristica.id"
+                class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg v-if="caracteristica.imagen" :src="caracteristica.imagen" :alt="caracteristica.descripcion"
+                    class="w-10 h-10 object-contain" loading="lazy"
+                    @error="(e) => handleImageError(e, caracteristica)" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">{{ caracteristica.descripcion }}</p>
+              </div>
+            </div>
+
+            <WaterplastProductoBotones v-if="producto" :producto="producto"
+              class="lg:max-w-full flex md:hidden lg:flex lg:flex-row" />
+          </div>
         </div>
       </div>
     </DefaultSection>
@@ -45,9 +49,11 @@
     <DefaultSection v-if="imagenesRedes.length > 0"
       class="w-full flex flex-col items-center gap-3 md:gap-6 xxl:gap-8 py-6 lg:py-12 md:px-16">
       <HeadingH2 class="text-primary">Seguinos en nuestras redes</HeadingH2>
-      <CarouselStatic>
-        <NuxtImg v-for="imagen in imagenesRedes" :key="imagen.name" :src="imagen.url" :alt="imagen.name"
-          class="rounded-3xl" />
+      <CarouselStatic :slides-per-view="{ base: 1.4, sm: 2.5, md: 3, lg: 3, xl: 4, xxl: 4 }">
+        <NuxtLink v-for="imagen in imagenesRedes" :key="imagen.name" :to="ROUTES_NAMES.REDES.INSTAGRAM" target="_blank"
+          rel="noopener noreferrer">
+          <NuxtImg :src="imagen.url" :alt="imagen.name" class="h-full rounded-3xl object-cover" />
+        </NuxtLink>
       </CarouselStatic>
     </DefaultSection>
   </DefaultMain>
@@ -78,7 +84,7 @@ const categoriaColor = computed(() => {
 
 const getRelacionadoStyle = (relacionado, index) => {
   const isSelected = relacionado.slug === route.params.producto
-  const baseColor = producto.value?.categoria?.color || '#E6F3FF'
+  const baseColor = producto.value?.categoria?.color || '#C7B299'
 
   if (isSelected) {
     return { backgroundColor: '#FFFFFF' }
@@ -213,12 +219,12 @@ onMounted(async () => {
 
 <style scoped>
 .hero-gradient {
-  background: linear-gradient(180deg, var(--categoria-color) 65.22%, rgba(249, 249, 249, 0) 100%);
+  background: linear-gradient(180deg, var(--categoria-color) 66%, rgba(249, 249, 249, 0) 100%);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1080px) {
   .hero-gradient {
-    background: linear-gradient(180deg, var(--categoria-color) 0%, rgba(249, 249, 249, 0) 52%);
+    background: linear-gradient(180deg, var(--categoria-color) 0%, rgba(249, 249, 249, 0) 100%);
   }
 }
 </style>
