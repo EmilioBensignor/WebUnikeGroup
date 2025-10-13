@@ -27,7 +27,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
-      bucketUrl: (process.env.SUPABASE_URL || 'https://fxytgajevhfuzwlyaorb.supabase.co') + '/storage/v1/object/public'
+      bucketUrl: (process.env.SUPABASE_URL || 'https://fxytgajevhfuzwlyaorb.supabase.co') + '/storage/v1/object/public',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://unikegroup.com.ar'
     },
   },
   site: {

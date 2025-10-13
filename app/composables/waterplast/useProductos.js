@@ -300,7 +300,29 @@ export const useWaterplastProductos = () => {
             imagesFolder = await detectImageFolderFromStorage(cleanName)
         }
 
-        let keyshotContent = await $fetch('/lib/keyshot-xr.js')
+        // Usar la URL base del sitio para construir la ruta absoluta
+        const baseUrl = import.meta.client ? window.location.origin : (config.public.siteUrl || 'https://unikegroup.com.ar')
+
+        let keyshotContent
+        try {
+            keyshotContent = await $fetch(`${baseUrl}/lib/keyshot-xr.js`, {
+                responseType: 'text',
+                headers: {
+                    'Accept': 'application/javascript, text/javascript, */*'
+                }
+            })
+        } catch (fetchError) {
+            console.error('Error fetching keyshot-xr.js from:', `${baseUrl}/lib/keyshot-xr.js`, fetchError)
+            // Intentar con ruta relativa como fallback
+            try {
+                keyshotContent = await $fetch('/lib/keyshot-xr.js', {
+                    responseType: 'text'
+                })
+            } catch (fallbackError) {
+                console.error('Error fetching keyshot-xr.js with relative path:', fallbackError)
+                throw new Error('No se pudo cargar el visor 3D')
+            }
+        }
 
         const imageBaseUrl = getImageBaseUrl(cleanName, imagesFolder)
 
@@ -388,7 +410,7 @@ export const useWaterplastProductos = () => {
     }
 
     const injectXRViewer = (containerId, html) => {
-        if (process.client) {
+        if (import.meta.client) {
             const container = document.getElementById(containerId)
             if (container && html) {
                 container.innerHTML = html
