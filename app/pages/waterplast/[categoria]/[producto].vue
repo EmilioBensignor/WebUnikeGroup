@@ -79,12 +79,12 @@ const caracteristicasAdicionales = ref([])
 const imagenesRedes = ref([])
 
 const categoriaColor = computed(() => {
-  return producto.value?.categoria?.color || '#C7B299'
+  return producto.value?.categoria?.color || '#FFFFFF'
 })
 
 const getRelacionadoStyle = (relacionado, index) => {
   const isSelected = relacionado.slug === route.params.producto
-  const baseColor = producto.value?.categoria?.color || '#C7B299'
+  const baseColor = producto.value?.categoria?.color || '#FFFFFF'
 
   if (isSelected) {
     return { backgroundColor: '#FFFFFF' }
