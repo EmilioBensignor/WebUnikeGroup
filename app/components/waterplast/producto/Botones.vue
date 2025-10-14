@@ -54,14 +54,11 @@ const downloadFichaTecnica = async () => {
     }
 
     try {
-        // Fetch el archivo para evitar problemas CORS
         const response = await fetch(downloadUrl)
         const blob = await response.blob()
 
-        // Crear URL local del blob
         const blobUrl = URL.createObjectURL(blob)
 
-        // Crear y hacer click en el link de descarga
         const downloadLink = document.createElement('a')
         downloadLink.href = blobUrl
         downloadLink.download = downloadName
@@ -69,13 +66,15 @@ const downloadFichaTecnica = async () => {
         downloadLink.click()
         document.body.removeChild(downloadLink)
 
-        // Liberar memoria después de un breve delay
+        setTimeout(() => {
+            window.open(downloadUrl, '_blank', 'noopener,noreferrer')
+        }, 100)
+
         setTimeout(() => {
             URL.revokeObjectURL(blobUrl)
-        }, 100)
+        }, 500)
     } catch (error) {
         console.error('Error al descargar ficha técnica:', error)
-        // Fallback: intentar descarga directa si el fetch falla
         const downloadLink = document.createElement('a')
         downloadLink.href = downloadUrl
         downloadLink.download = downloadName

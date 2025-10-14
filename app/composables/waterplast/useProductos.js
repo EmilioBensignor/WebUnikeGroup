@@ -273,7 +273,6 @@ export const useWaterplastProductos = () => {
                 return folders[0].name
             }
         } catch (error) {
-            // Silently fail
         }
 
         return null
@@ -300,7 +299,6 @@ export const useWaterplastProductos = () => {
             imagesFolder = await detectImageFolderFromStorage(cleanName)
         }
 
-        // Usar la URL base del sitio para construir la ruta absoluta
         const baseUrl = import.meta.client ? window.location.origin : (config.public.siteUrl || 'https://unikegroup.com.ar')
 
         let keyshotContent
@@ -313,7 +311,6 @@ export const useWaterplastProductos = () => {
             })
         } catch (fetchError) {
             console.error('Error fetching keyshot-xr.js from:', `${baseUrl}/lib/keyshot-xr.js`, fetchError)
-            // Intentar con ruta relativa como fallback
             try {
                 keyshotContent = await $fetch('/lib/keyshot-xr.js', {
                     responseType: 'text'
@@ -354,13 +351,11 @@ export const useWaterplastProductos = () => {
             `"${imageBaseUrl}/files/"+d`
         )
 
-        // Deshabilitar el loader reemplazando ca&&a.ua() con nada
         keyshotContent = keyshotContent.replace(
             /ca&&a\.ua\(\)/g,
             'false'
         )
 
-        // También deshabilitar la función que crea el loader
         keyshotContent = keyshotContent.replace(
             /this\.ua=function\(\)\{[^}]+a\.p=document\.createElement[^}]+\};/g,
             'this.ua=function(){};'
@@ -482,7 +477,6 @@ export const useWaterplastProductos = () => {
                             .update({ xr_images_folder: imagesFolder })
                             .eq('id', producto.id)
                     } catch (updateErr) {
-                        // Silently fail if can't save
                     }
                 }
             }

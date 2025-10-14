@@ -77,7 +77,6 @@ const getImageUrl = (imagePath) => {
 }
 
 const getSolapaImageUrl = (nombre) => {
-  // Sanitizar el nombre removiendo caracteres especiales como °
   const sanitizedNombre = nombre.toLowerCase().replace(/[°]/g, '')
   return `/images/waterplast/categorias/${sanitizedNombre}_solapa.webp`
 }
@@ -87,7 +86,6 @@ onMounted(async () => {
   try {
     categoriaData.value = await fetchCategoriaBySlug(categoria)
     await fetchProductosByCategoria(categoria)
-    // Dar un pequeño delay para que las imágenes tengan tiempo de cargar
     setTimeout(() => {
       contentReady.value = true
     }, 300)
