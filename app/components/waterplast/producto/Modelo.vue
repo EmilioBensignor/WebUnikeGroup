@@ -1,7 +1,7 @@
 <template>
     <div class="w-full md:w-1/2">
         <div v-if="loading" class="flex justify-center items-center py-8">
-            <div class="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
 
         <div v-else-if="!producto" class="text-center py-8">
