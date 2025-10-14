@@ -38,8 +38,6 @@ const downloadFichaTecnica = async () => {
     if (!props.producto?.ficha_tecnica) return
 
     const fichaTecnica = props.producto.ficha_tecnica
-    let downloadUrl = ''
-    let viewUrl = ''
 
     const fileName = fichaTecnica.split('/').pop()
     const extension = fileName.split('.').pop()
@@ -47,27 +45,44 @@ const downloadFichaTecnica = async () => {
         ? `${props.producto.nombre}-ficha-tecnica.${extension}`
         : fileName
 
+    let downloadUrl = ''
+
     if (fichaTecnica.startsWith('http')) {
         downloadUrl = fichaTecnica
-        viewUrl = fichaTecnica
     } else {
-        downloadUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}?download=${encodeURIComponent(downloadName)}`
-        viewUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}`
+        downloadUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}`
     }
 
     try {
+        // Fetch el archivo para evitar problemas CORS
+        const response = await fetch(downloadUrl)
+        const blob = await response.blob()
+
+        // Crear URL local del blob
+        const blobUrl = URL.createObjectURL(blob)
+
+        // Crear y hacer click en el link de descarga
         const downloadLink = document.createElement('a')
-        downloadLink.href = downloadUrl
+        downloadLink.href = blobUrl
         downloadLink.download = downloadName
         document.body.appendChild(downloadLink)
         downloadLink.click()
         document.body.removeChild(downloadLink)
 
+        // Liberar memoria después de un breve delay
         setTimeout(() => {
-            window.open(viewUrl, '_blank')
+            URL.revokeObjectURL(blobUrl)
         }, 100)
     } catch (error) {
         console.error('Error al descargar ficha técnica:', error)
+        // Fallback: intentar descarga directa si el fetch falla
+        const downloadLink = document.createElement('a')
+        downloadLink.href = downloadUrl
+        downloadLink.download = downloadName
+        downloadLink.target = '_blank'
+        document.body.appendChild(downloadLink)
+        downloadLink.click()
+        document.body.removeChild(downloadLink)
     }
 }
 </script>
