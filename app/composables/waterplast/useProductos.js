@@ -499,8 +499,9 @@ export const useWaterplastProductos = () => {
     const getCaracteristicaImageUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
-        return `${supabaseUrl}/storage/v1/object/public/waterplast-productos-caracteristicas/${imagePath}`
+        // Usar directamente bucketUrl que ya incluye la parte de storage
+        const baseUrl = config.public.bucketUrl || `${config.public.supabase?.url}/storage/v1/object/public`
+        return `${baseUrl}/waterplast-productos-caracteristicas/${imagePath}`
     }
 
     const fetchProductosRelacionados = async (productosRelacionadosIds) => {
