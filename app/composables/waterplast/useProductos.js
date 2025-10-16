@@ -501,7 +501,9 @@ export const useWaterplastProductos = () => {
         if (imagePath.startsWith('http')) return imagePath
         // Usar directamente bucketUrl que ya incluye la parte de storage
         const baseUrl = config.public.bucketUrl || `${config.public.supabase?.url}/storage/v1/object/public`
-        return `${baseUrl}/waterplast-productos-caracteristicas/${imagePath}`
+        const fullUrl = `${baseUrl}/waterplast-productos-caracteristicas/${imagePath}`
+        console.log('[getCaracteristicaImageUrl]', { imagePath, baseUrl, fullUrl, bucketUrl: config.public.bucketUrl, supabaseUrl: config.public.supabase?.url })
+        return fullUrl
     }
 
     const fetchProductosRelacionados = async (productosRelacionadosIds) => {
@@ -542,7 +544,12 @@ export const useWaterplastProductos = () => {
     }
 
     const fetchCaracteristicasAdicionales = async (productoId) => {
-        if (!productoId) return []
+        if (!productoId) {
+            console.log('[fetchCaracteristicasAdicionales] No productoId')
+            return []
+        }
+
+        console.log('[fetchCaracteristicasAdicionales] Fetching for productoId:', productoId)
 
         try {
             const { data, error: supabaseError } = await supabase
@@ -551,16 +558,23 @@ export const useWaterplastProductos = () => {
                 .eq('producto_id', productoId)
                 .order('orden', { ascending: true })
 
-            if (supabaseError) throw supabaseError
+            if (supabaseError) {
+                console.error('[fetchCaracteristicasAdicionales] Supabase error:', supabaseError)
+                throw supabaseError
+            }
+
+            console.log('[fetchCaracteristicasAdicionales] Data received:', data?.length || 0, 'items', data)
 
             const caracteristicasWithUrls = (data || []).map(caracteristica => ({
                 ...caracteristica,
                 imagen: caracteristica.imagen ? getCaracteristicaImageUrl(caracteristica.imagen) : null
             }))
 
+            console.log('[fetchCaracteristicasAdicionales] Final result:', caracteristicasWithUrls)
+
             return caracteristicasWithUrls
         } catch (err) {
-            console.error('Error al obtener características adicionales:', err)
+            console.error('[fetchCaracteristicasAdicionales] Error:', err)
             return []
         }
     }
