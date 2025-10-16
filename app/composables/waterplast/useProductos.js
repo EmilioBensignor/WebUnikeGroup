@@ -10,7 +10,8 @@ export const useWaterplastProductos = () => {
     const getProductoImageUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${imagePath}`
+        const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
+        return `${supabaseUrl}/storage/v1/object/public/waterplast-productos/${imagePath}`
     }
 
     const fetchProductos = async () => {
@@ -498,7 +499,8 @@ export const useWaterplastProductos = () => {
     const getCaracteristicaImageUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos-caracteristicas/${imagePath}`
+        const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
+        return `${supabaseUrl}/storage/v1/object/public/waterplast-productos-caracteristicas/${imagePath}`
     }
 
     const fetchProductosRelacionados = async (productosRelacionadosIds) => {
@@ -575,6 +577,7 @@ export const useWaterplastProductos = () => {
 
             if (error || !files || files.length === 0) return []
 
+            const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
             const imagenesRedes = files
                 .filter(file => {
                     const ext = file.name.split('.').pop().toLowerCase()
@@ -582,7 +585,7 @@ export const useWaterplastProductos = () => {
                 })
                 .map(file => ({
                     name: file.name,
-                    url: `${config.public.supabase.url}/storage/v1/object/public/waterplast-categorias/${categoriaSlug}/imagenes-redes/${file.name}`
+                    url: `${supabaseUrl}/storage/v1/object/public/waterplast-categorias/${categoriaSlug}/imagenes-redes/${file.name}`
                 }))
 
             return imagenesRedes
