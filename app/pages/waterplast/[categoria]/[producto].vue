@@ -192,10 +192,8 @@ const fetchProducto = async () => {
     }
 
     if (data && data.id) {
-      console.log('[fetchProducto] Producto ID:', data.id, 'Slug:', data.slug)
       try {
         caracteristicasAdicionales.value = await fetchCaracteristicasAdicionales(data.id)
-        console.log('[fetchProducto] Características cargadas:', caracteristicasAdicionales.value.length)
       } catch (caracteristicasError) {
         console.warn('Error loading additional characteristics:', caracteristicasError)
       }
