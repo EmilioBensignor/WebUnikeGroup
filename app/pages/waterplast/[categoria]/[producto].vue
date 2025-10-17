@@ -24,7 +24,83 @@
                 <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}</p>
               </NuxtLink>
             </div>
-            <!-- Características -->
+            <!-- Especificaciones del Producto -->
+            <div v-if="producto && hasEspecificaciones"
+              class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
+              <!-- Dimensiones -->
+              <div v-if="[producto.altura_cm, producto.ancho_cm, producto.largo_cm].filter(Boolean).length >= 2" class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Dimensiones"
+                    class="w-10 h-10 object-contain" loading="lazy" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">
+                  Dimensiones {{ [producto.altura_cm, producto.ancho_cm, producto.largo_cm].filter(Boolean).join('cm x ') }}cm
+                </p>
+              </div>
+
+              <!-- Capacidad -->
+              <div v-if="producto.capacidad_lts" class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg src="/images/waterplast/producto/capacidad.svg" alt="Capacidad"
+                    class="w-10 h-10 object-contain" loading="lazy" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">
+                  Capacidad {{ producto.capacidad_lts }} lts
+                </p>
+              </div>
+
+              <!-- Orientación -->
+              <div v-if="producto.orientacion" class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Orientación"
+                    class="w-10 h-10 object-contain" loading="lazy" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">
+                  Orientación {{ producto.orientacion }}
+                </p>
+              </div>
+
+              <!-- Color -->
+              <div v-if="producto.color" class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Color"
+                    class="w-10 h-10 object-contain" loading="lazy" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">
+                  Color {{ producto.color }}
+                </p>
+              </div>
+
+              <!-- Tecnología -->
+              <div v-if="producto.tecnologia" class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Tecnología"
+                    class="w-10 h-10 object-contain" loading="lazy" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">
+                  Tecnología {{ producto.tecnologia }}
+                </p>
+              </div>
+
+              <!-- Opción -->
+              <div v-if="producto.opcion" class="flex flex-col items-center gap-3 md:gap-4">
+                <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                  :style="{ backgroundColor: categoriaColor }">
+                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Opción"
+                    class="w-10 h-10 object-contain" loading="lazy" />
+                </div>
+                <p class="text-xs lg:text-sm text-center font-medium text-terciary">
+                  {{ formatOpcion(producto.opcion) }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Características Adicionales -->
             <div v-if="caracteristicasAdicionales.length > 0"
               class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
               <div v-for="caracteristica in caracteristicasAdicionales" :key="caracteristica.id"
@@ -81,6 +157,32 @@ const imagenesRedes = ref([])
 const categoriaColor = computed(() => {
   return producto.value?.categoria?.color || '#FFFFFF'
 })
+
+const hasEspecificaciones = computed(() => {
+  if (!producto.value) return false
+
+  const dimensionesCount = [
+    producto.value.altura_cm,
+    producto.value.ancho_cm,
+    producto.value.largo_cm
+  ].filter(Boolean).length
+
+  return !!(
+    dimensionesCount >= 2 ||
+    producto.value.capacidad_lts ||
+    producto.value.orientacion ||
+    producto.value.color ||
+    producto.value.tecnologia ||
+    producto.value.opcion
+  )
+})
+
+const formatOpcion = (opcion) => {
+  if (!opcion) return ''
+  if (opcion === 'para_exteriores') return 'Para exteriores'
+  if (opcion === 'es_cisterna') return 'Es cisterna'
+  return opcion
+}
 
 const getRelacionadoStyle = (relacionado, index) => {
   const isSelected = relacionado.slug === route.params.producto
