@@ -33,8 +33,8 @@ export default defineNuxtConfig({
   },
   site: {
     url: 'https://unikegroup.com.ar',
-    name: 'Unike Group',
-    description: 'Innovación y tecnología aplicada al desarrollo de productos de vanguardia. · Tanques, cisternas, biodigestores y accesorios para garantizar la mejor agua.',
+    name: 'Waterplast - Unike Group',
+    description: 'En Unike Group desarrollamos soluciones innovadoras para el almacenamiento y tratamiento del agua en Argentina. Nuestros tanques Waterplast garantizan calidad, durabilidad y protección antibacteriana. Descubrí nuestra red de distribuidores y asesorate con nuestros expertos en soluciones hídricas sustentables.',
     defaultLocale: 'es'
   },
   seo: {
