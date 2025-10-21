@@ -17,6 +17,9 @@
                     <iframe :src="get3DViewerUrl()" allowfullscreen scrolling="no" class="xr-iframe"></iframe>
                 </div>
             </div>
+            <div class="w-full flex justify-center">
+                <Icon name="material-symbols:360-rounded" class="w-6 h-6 text-primary flex-shrink-0 mx-auto" />
+            </div>
         </div>
 
         <div v-else-if="producto.xr_status === 'pending'" class="text-center py-8">
