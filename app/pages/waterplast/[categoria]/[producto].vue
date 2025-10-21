@@ -55,7 +55,7 @@
               <div v-if="producto.orientacion" class="flex flex-col items-center gap-3 md:gap-4">
                 <div class="w-16 h-16 flex justify-center items-center rounded-full"
                   :style="{ backgroundColor: categoriaColor }">
-                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Orientación"
+                  <NuxtImg :src="getOrientacionIcon(producto.orientacion)" alt="Orientación"
                     class="w-10 h-10 object-contain" loading="lazy" />
                 </div>
                 <p class="text-xs lg:text-sm text-center font-medium text-terciary">
@@ -67,7 +67,7 @@
               <div v-if="producto.color" class="flex flex-col items-center gap-3 md:gap-4">
                 <div class="w-16 h-16 flex justify-center items-center rounded-full"
                   :style="{ backgroundColor: categoriaColor }">
-                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Color"
+                  <NuxtImg src="/images/waterplast/producto/color.svg" alt="Color"
                     class="w-10 h-10 object-contain" loading="lazy" />
                 </div>
                 <p class="text-xs lg:text-sm text-center font-medium text-terciary">
@@ -79,7 +79,7 @@
               <div v-if="producto.tecnologia" class="flex flex-col items-center gap-3 md:gap-4">
                 <div class="w-16 h-16 flex justify-center items-center rounded-full"
                   :style="{ backgroundColor: categoriaColor }">
-                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Tecnología"
+                  <NuxtImg :src="getTecnologiaIcon(producto.tecnologia)" alt="Tecnología"
                     class="w-10 h-10 object-contain" loading="lazy" />
                 </div>
                 <p class="text-xs lg:text-sm text-center font-medium text-terciary">
@@ -91,7 +91,7 @@
               <div v-if="producto.opcion" class="flex flex-col items-center gap-3 md:gap-4">
                 <div class="w-16 h-16 flex justify-center items-center rounded-full"
                   :style="{ backgroundColor: categoriaColor }">
-                  <NuxtImg src="/images/waterplast/producto/dimensiones.svg" alt="Opción"
+                  <NuxtImg :src="getOpcionIcon(producto.opcion)" alt="Opción"
                     class="w-10 h-10 object-contain" loading="lazy" />
                 </div>
                 <p class="text-xs lg:text-sm text-center font-medium text-terciary">
@@ -182,6 +182,32 @@ const formatOpcion = (opcion) => {
   if (opcion === 'para_exteriores') return 'Para exteriores'
   if (opcion === 'es_cisterna') return 'Es cisterna'
   return opcion
+}
+
+const getOrientacionIcon = (orientacion) => {
+  if (!orientacion) return '/images/waterplast/producto/dimensiones.svg'
+  const normalizado = orientacion.toLowerCase()
+  if (normalizado.includes('vertical')) return '/images/waterplast/producto/vertical.svg'
+  if (normalizado.includes('horizontal')) return '/images/waterplast/producto/horizontal.svg'
+  return '/images/waterplast/producto/dimensiones.svg'
+}
+
+const getTecnologiaIcon = (tecnologia) => {
+  if (!tecnologia) return '/images/waterplast/producto/dimensiones.svg'
+  const normalizado = tecnologia.toLowerCase()
+  if (normalizado.includes('soplado')) return '/images/waterplast/producto/soplado.svg'
+  if (normalizado.includes('rotomolde')) return '/images/waterplast/producto/rotomoldeado.svg'
+  if (normalizado.includes('soldad')) return '/images/waterplast/producto/soldado.svg'
+  if (normalizado.includes('inyeccion')) return '/images/waterplast/producto/inyeccion.svg'
+  return '/images/waterplast/producto/dimensiones.svg'
+}
+
+const getOpcionIcon = (opcion) => {
+  if (!opcion) return '/images/waterplast/producto/dimensiones.svg'
+  const normalizado = opcion.toLowerCase()
+  if (normalizado.includes('exterior')) return '/images/waterplast/producto/exterior.svg'
+  if (normalizado.includes('cisterna')) return '/images/waterplast/producto/cisterna.svg'
+  return '/images/waterplast/producto/dimensiones.svg'
 }
 
 const getRelacionadoStyle = (relacionado, index) => {
