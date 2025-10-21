@@ -29,7 +29,7 @@ const footerSections = [
             },
             {
                 nombre: "Waterplast",
-                route: ROUTES_NAMES.UNIKE.WATERPLAST
+                route: ROUTES_NAMES.WATERPLAST
             },
             {
                 nombre: "Rohermet",
