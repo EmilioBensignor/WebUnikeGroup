@@ -139,20 +139,32 @@
 definePageMeta({ layout: 'waterplast' })
 
 import { useWaterplastProductos } from '~/composables/waterplast/useProductos'
+import { useWaterplastSeo } from '~/composables/useSeoMeta'
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 
 const route = useRoute()
 const supabase = useSupabaseClient()
+const config = useRuntimeConfig()
 const {
   fetchProductosRelacionados,
   fetchCaracteristicasAdicionales,
   fetchImagenesRedes
 } = useWaterplastProductos()
 
+const { setSeoForProducto } = useWaterplastSeo()
+
 const producto = ref(null)
 const productosRelacionados = ref([])
 const caracteristicasAdicionales = ref([])
 const imagenesRedes = ref([])
+
+// Función para procesar URLs de imágenes de productos
+const getProductoImageUrl = (imagePath) => {
+  if (!imagePath) return null
+  if (imagePath.startsWith('http')) return imagePath
+  const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
+  return `${supabaseUrl}/storage/v1/object/public/waterplast-productos/${imagePath}`
+}
 
 const categoriaColor = computed(() => {
   return producto.value?.categoria?.color || '#FFFFFF'
@@ -305,18 +317,32 @@ const fetchProducto = async () => {
       .single()
 
     if (error) throw error
-    producto.value = data
+    
+    // Procesar las URLs de las imágenes antes de asignar
+    const productoConUrls = {
+      ...data,
+      imagen_principal: data.imagen_principal ? getProductoImageUrl(data.imagen_principal) : null,
+      imagen: data.imagen ? getProductoImageUrl(data.imagen) : null,
+      imagen_ficha_tecnica: data.imagen_ficha_tecnica ? getProductoImageUrl(data.imagen_ficha_tecnica) : null
+    }
+    
+    producto.value = productoConUrls
+
+    // Configurar meta tags SEO para el producto con las URLs procesadas
+    if (productoConUrls) {
+      setSeoForProducto(productoConUrls, productoConUrls.categoria)
+    }
 
     if (data && data.productos_relacionados && data.productos_relacionados.length > 0) {
       try {
         const relacionados = await fetchProductosRelacionados(data.productos_relacionados)
-        productosRelacionados.value = [data, ...relacionados]
+        productosRelacionados.value = [productoConUrls, ...relacionados]
       } catch (relacionadosError) {
         console.warn('Error loading related products:', relacionadosError)
-        productosRelacionados.value = [data]
+        productosRelacionados.value = [productoConUrls]
       }
     } else {
-      productosRelacionados.value = [data]
+      productosRelacionados.value = [productoConUrls]
     }
 
     if (data && data.id) {

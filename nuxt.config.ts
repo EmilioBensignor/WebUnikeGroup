@@ -39,7 +39,6 @@ export default defineNuxtConfig({
   },
   seo: {
     fallbackTitle: false,
-    // Chequear
     redirectToCanonicalSiteUrl: false
   },
   fonts: {

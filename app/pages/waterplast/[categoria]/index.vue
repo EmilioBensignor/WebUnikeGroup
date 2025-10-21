@@ -57,6 +57,7 @@
 <script setup>
 import { useWaterplastProductos } from '~/composables/waterplast/useProductos'
 import { useWaterplastCategorias } from '~/composables/waterplast/useCategorias'
+import { useWaterplastSeo } from '~/composables/useSeoMeta'
 
 definePageMeta({
   layout: 'waterplast'
@@ -67,6 +68,7 @@ const categoria = route.params.categoria
 
 const { productos, loading, error, fetchProductosByCategoria } = useWaterplastProductos()
 const { fetchCategoriaBySlug, getCategoriaImageUrl } = useWaterplastCategorias()
+const { setSeoForCategoria } = useWaterplastSeo()
 
 const categoriaData = ref(null)
 const isClient = ref(false)
@@ -85,6 +87,11 @@ onMounted(async () => {
   isClient.value = true
   try {
     categoriaData.value = await fetchCategoriaBySlug(categoria)
+    
+    if (categoriaData.value) {
+      setSeoForCategoria(categoriaData.value)
+    }
+    
     await fetchProductosByCategoria(categoria)
     setTimeout(() => {
       contentReady.value = true
