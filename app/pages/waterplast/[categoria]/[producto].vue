@@ -158,7 +158,6 @@ const productosRelacionados = ref([])
 const caracteristicasAdicionales = ref([])
 const imagenesRedes = ref([])
 
-// Función para procesar URLs de imágenes de productos
 const getProductoImageUrl = (imagePath) => {
   if (!imagePath) return null
   if (imagePath.startsWith('http')) return imagePath
@@ -318,7 +317,6 @@ const fetchProducto = async () => {
 
     if (error) throw error
     
-    // Procesar las URLs de las imágenes antes de asignar
     const productoConUrls = {
       ...data,
       imagen_principal: data.imagen_principal ? getProductoImageUrl(data.imagen_principal) : null,
@@ -328,7 +326,6 @@ const fetchProducto = async () => {
     
     producto.value = productoConUrls
 
-    // Configurar meta tags SEO para el producto con las URLs procesadas
     if (productoConUrls) {
       setSeoForProducto(productoConUrls, productoConUrls.categoria)
     }

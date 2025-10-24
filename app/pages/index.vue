@@ -6,7 +6,7 @@
         <WaterplastOpiniones />
         <WaterplastDistribuidores />
         <WaterplastFAQs />
-        <WaterplastBlog />
+        <Blog />
     </DefaultMain>
 </template>
 

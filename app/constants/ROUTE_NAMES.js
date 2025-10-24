@@ -9,6 +9,8 @@ export const ROUTES_NAMES = {
         SOBRE: "#",
         ROHERMET: "#",
         MURALLON: "#",
+        BLOG: "/blog",
+        BLOG_DETALLE: (slug) => `/blog/${slug}`,
     },
     AYUDA: {
         FAQS: "#",
