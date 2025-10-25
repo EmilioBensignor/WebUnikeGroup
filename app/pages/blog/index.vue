@@ -26,6 +26,10 @@ import { useBlog } from '~/composables/useBlog'
 
 const { blogs, loading, error, fetchBlogs } = useBlog()
 
+definePageMeta({
+    layout: 'waterplast'
+});
+
 onMounted(() => {
     fetchBlogs()
 })

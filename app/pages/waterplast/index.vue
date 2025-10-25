@@ -19,7 +19,7 @@ import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 
 definePageMeta({
   layout: 'waterplast'
-})
+});
 
 useSeoMeta({
   title: 'Waterplast - Tanques de Agua y Sistemas de Almacenamiento | Unike Group',
@@ -31,9 +31,9 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
   twitterTitle: 'Waterplast - Tanques de Agua y Sistemas de Almacenamiento',
   twitterDescription: 'En Unike Group desarrollamos soluciones innovadoras para el almacenamiento y tratamiento del agua en Argentina. Nuestros tanques Waterplast garantizan calidad, durabilidad y protección antibacteriana. Descubrí nuestra red de distribuidores y asesorate con nuestros expertos en soluciones hídricas sustentables.',
-})
+});
 
 useHead({
   titleTemplate: null
-})
+});
 </script>
