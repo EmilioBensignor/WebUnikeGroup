@@ -45,16 +45,22 @@
                             <div class="flex flex-col gap-4">
                                 <!-- Altura -->
                                 <div class="flex flex-col gap-1.5">
-                                    <label for="altura" class="text-sm lg:text-base font-bold">Altura</label>
-                                    <div class="relative">
-                                        <input id="altura" name="altura" v-model="filtros.altura" type="number"
-                                            placeholder="Ingrese un número"
-                                            class="w-full bg-gray-light border border-terciary rounded-full text-terciary placeholder:text-gray-dark text-sm font-medium outline-none p-3 pr-12">
-                                        <span
-                                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-terciary text-sm">cm</span>
+                                    <h3 class="text-sm lg:text-base font-bold">Altura</h3>
+                                    <div class="flex flex-col gap-1.5">
+                                        <div v-for="rango in alturaRangos" :key="rango.label"
+                                            class="flex items-center justify-between">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ rango.label }}</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input :id="`altura-${rango.label}`"
+                                                    :name="`altura-${rango.label}`"
+                                                    v-model="filtros.altura[rango.label]" type="checkbox"
+                                                    class="sr-only peer">
+                                                <div
+                                                    class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <p class="text-xs text-gray-dark">Te mostraremos productos con ±10 cm de diferencia.
-                                    </p>
                                 </div>
 
                                 <!-- Ancho -->
@@ -87,30 +93,42 @@
 
                                 <!-- Diámetro -->
                                 <div class="flex flex-col gap-1.5">
-                                    <label for="diametro" class="text-sm lg:text-base font-bold">Diámetro</label>
-                                    <div class="relative">
-                                        <input id="diametro" name="diametro" v-model="filtros.diametro" type="number"
-                                            placeholder="Ingrese un número"
-                                            class="w-full bg-gray-light border border-terciary rounded-full text-terciary placeholder:text-gray-dark text-sm font-medium outline-none p-3 pr-12">
-                                        <span
-                                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-terciary text-sm">cm</span>
+                                    <h3 class="text-sm lg:text-base font-bold">Diámetro</h3>
+                                    <div class="flex flex-col gap-1.5">
+                                        <div v-for="rango in diametroRangos" :key="rango.label"
+                                            class="flex items-center justify-between">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ rango.label }}</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input :id="`diametro-${rango.label}`"
+                                                    :name="`diametro-${rango.label}`"
+                                                    v-model="filtros.diametro[rango.label]" type="checkbox"
+                                                    class="sr-only peer">
+                                                <div
+                                                    class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <p class="text-xs text-gray-dark">Te mostraremos productos con ±10 cm de diferencia.
-                                    </p>
                                 </div>
 
                                 <!-- Capacidad -->
                                 <div class="flex flex-col gap-1.5">
-                                    <label for="capacidad" class="text-sm lg:text-base font-bold">Capacidad</label>
-                                    <div class="relative">
-                                        <input id="capacidad" name="capacidad" v-model="filtros.capacidad" type="number"
-                                            placeholder="Ingrese un número"
-                                            class="w-full bg-gray-light border border-terciary rounded-full text-terciary placeholder:text-gray-dark text-sm font-medium outline-none p-3 pr-12">
-                                        <span
-                                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-terciary text-sm">lts</span>
+                                    <h3 class="text-sm lg:text-base font-bold">Capacidad</h3>
+                                    <div class="flex flex-col gap-1.5">
+                                        <div v-for="rango in capacidadRangos" :key="rango.label"
+                                            class="flex items-center justify-between">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ rango.label }}</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input :id="`capacidad-${rango.label}`"
+                                                    :name="`capacidad-${rango.label}`"
+                                                    v-model="filtros.capacidad[rango.label]" type="checkbox"
+                                                    class="sr-only peer">
+                                                <div
+                                                    class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <p class="text-xs text-gray-dark">Te mostraremos productos con ±10 cm de diferencia.
-                                    </p>
                                 </div>
                             </div>
 
@@ -255,12 +273,60 @@ onUnmounted(() => {
     window.removeEventListener('resize', actualizarTamanoPantalla)
 })
 
+const alturaRangos = [
+    { label: 'Menos de 0.80 m', min: 0, max: 80 },
+    { label: 'Entre 0.80 y 1.10 m', min: 80, max: 110 },
+    { label: 'Entre 1.10 y 1.50 m', min: 110, max: 150 },
+    { label: 'Entre 1.50 y 1.80 m', min: 150, max: 180 },
+    { label: 'Entre 1.80 y 2.20 m', min: 180, max: 220 },
+    { label: 'Más de 2.20 m', min: 220, max: Infinity }
+]
+
+const diametroRangos = [
+    { label: 'Menos de 80 cm', min: 0, max: 80 },
+    { label: 'Entre 80 y 100 cm', min: 80, max: 100 },
+    { label: 'Entre 100 y 120 cm', min: 100, max: 120 },
+    { label: 'Entre 120 y 150 cm', min: 120, max: 150 },
+    { label: 'Entre 150 y 200 cm', min: 150, max: 200 },
+    { label: 'Más de 200 cm', min: 200, max: Infinity }
+]
+
+const capacidadRangos = [
+    { label: 'Menos de 300 lts', min: 0, max: 300 },
+    { label: 'Entre 300 y 600 lts', min: 300, max: 600 },
+    { label: 'Entre 600 y 1100 lts', min: 600, max: 1100 },
+    { label: 'Entre 1100 y 2000 lts', min: 1100, max: 2000 },
+    { label: 'Entre 2000 y 5000 lts', min: 2000, max: 5000 },
+    { label: 'Más de 5000 lts', min: 5000, max: Infinity }
+]
+
 const filtros = ref({
-    altura: '',
+    altura: {
+        'Menos de 0.80 m': false,
+        'Entre 0.80 y 1.10 m': false,
+        'Entre 1.10 y 1.50 m': false,
+        'Entre 1.50 y 1.80 m': false,
+        'Entre 1.80 y 2.20 m': false,
+        'Más de 2.20 m': false
+    },
     ancho: '',
     largo: '',
-    diametro: '',
-    capacidad: '',
+    diametro: {
+        'Menos de 80 cm': false,
+        'Entre 80 y 100 cm': false,
+        'Entre 100 y 120 cm': false,
+        'Entre 120 y 150 cm': false,
+        'Entre 150 y 200 cm': false,
+        'Más de 200 cm': false
+    },
+    capacidad: {
+        'Menos de 300 lts': false,
+        'Entre 300 y 600 lts': false,
+        'Entre 600 y 1100 lts': false,
+        'Entre 1100 y 2000 lts': false,
+        'Entre 2000 y 5000 lts': false,
+        'Más de 5000 lts': false
+    },
     orientacion: {
         'Vertical': false,
         'Horizontal': false
@@ -300,11 +366,26 @@ const filtrosAplicados = computed(() => {
         aplicados.push(props.categoriaActual.nombre)
     }
 
-    if (filtros.value.altura) aplicados.push(`Altura: ${filtros.value.altura}cm`)
+    Object.keys(filtros.value.altura).forEach(rango => {
+        if (filtros.value.altura[rango]) {
+            aplicados.push(rango)
+        }
+    })
+
     if (filtros.value.ancho) aplicados.push(`Ancho: ${filtros.value.ancho}cm`)
     if (filtros.value.largo) aplicados.push(`Largo: ${filtros.value.largo}cm`)
-    if (filtros.value.diametro) aplicados.push(`Diámetro: ${filtros.value.diametro}cm`)
-    if (filtros.value.capacidad) aplicados.push(`Capacidad: ${filtros.value.capacidad}lts`)
+
+    Object.keys(filtros.value.diametro).forEach(rango => {
+        if (filtros.value.diametro[rango]) {
+            aplicados.push(rango)
+        }
+    })
+
+    Object.keys(filtros.value.capacidad).forEach(rango => {
+        if (filtros.value.capacidad[rango]) {
+            aplicados.push(rango)
+        }
+    })
 
     Object.keys(filtros.value.orientacion).forEach(orientacion => {
         if (filtros.value.orientacion[orientacion]) {
@@ -337,11 +418,18 @@ const productosFiltrados = computed(() => {
     if (!props.productos?.length) return []
 
     return props.productos.filter(producto => {
-        const altura = filtros.value.altura ? parseFloat(filtros.value.altura) : null
-        if (altura) {
+        // Filtro de altura por rangos
+        const alturaRangosSeleccionados = Object.keys(filtros.value.altura).filter(rango => filtros.value.altura[rango])
+        if (alturaRangosSeleccionados.length > 0) {
             if (producto.altura_cm == null) return false
             const productoAltura = parseFloat(producto.altura_cm)
-            if (isNaN(productoAltura) || Math.abs(productoAltura - altura) > 10) return false
+            if (isNaN(productoAltura)) return false
+
+            const cumpleAlguno = alturaRangosSeleccionados.some(rangoLabel => {
+                const rango = alturaRangos.find(r => r.label === rangoLabel)
+                return productoAltura >= rango.min && productoAltura < rango.max
+            })
+            if (!cumpleAlguno) return false
         }
 
         const ancho = filtros.value.ancho ? parseFloat(filtros.value.ancho) : null
@@ -358,18 +446,32 @@ const productosFiltrados = computed(() => {
             if (isNaN(productoLargo) || Math.abs(productoLargo - largo) > 10) return false
         }
 
-        const diametro = filtros.value.diametro ? parseFloat(filtros.value.diametro) : null
-        if (diametro) {
+        // Filtro de diámetro por rangos
+        const diametroRangosSeleccionados = Object.keys(filtros.value.diametro).filter(rango => filtros.value.diametro[rango])
+        if (diametroRangosSeleccionados.length > 0) {
             if (producto.diametro_cm == null) return false
             const productoDiametro = parseFloat(producto.diametro_cm)
-            if (isNaN(productoDiametro) || Math.abs(productoDiametro - diametro) > 10) return false
+            if (isNaN(productoDiametro)) return false
+
+            const cumpleAlguno = diametroRangosSeleccionados.some(rangoLabel => {
+                const rango = diametroRangos.find(r => r.label === rangoLabel)
+                return productoDiametro >= rango.min && productoDiametro < rango.max
+            })
+            if (!cumpleAlguno) return false
         }
 
-        const capacidad = filtros.value.capacidad ? parseFloat(filtros.value.capacidad) : null
-        if (capacidad) {
+        // Filtro de capacidad por rangos
+        const capacidadRangosSeleccionados = Object.keys(filtros.value.capacidad).filter(rango => filtros.value.capacidad[rango])
+        if (capacidadRangosSeleccionados.length > 0) {
             if (producto.capacidad_lts == null) return false
             const productoCapacidad = parseFloat(producto.capacidad_lts)
-            if (isNaN(productoCapacidad) || Math.abs(productoCapacidad - capacidad) > 10) return false
+            if (isNaN(productoCapacidad)) return false
+
+            const cumpleAlguno = capacidadRangosSeleccionados.some(rangoLabel => {
+                const rango = capacidadRangos.find(r => r.label === rangoLabel)
+                return productoCapacidad >= rango.min && productoCapacidad < rango.max
+            })
+            if (!cumpleAlguno) return false
         }
 
         const orientacionesSeleccionadas = Object.keys(filtros.value.orientacion).filter(orientacion => filtros.value.orientacion[orientacion])
@@ -431,11 +533,32 @@ const toggleFiltros = () => {
 
 const limpiarFiltros = () => {
     filtros.value = {
-        altura: '',
+        altura: {
+            'Menos de 0.80 m': false,
+            'Entre 0.80 y 1.10 m': false,
+            'Entre 1.10 y 1.50 m': false,
+            'Entre 1.50 y 1.80 m': false,
+            'Entre 1.80 y 2.20 m': false,
+            'Más de 2.20 m': false
+        },
         ancho: '',
         largo: '',
-        diametro: '',
-        capacidad: '',
+        diametro: {
+            'Menos de 80 cm': false,
+            'Entre 80 y 100 cm': false,
+            'Entre 100 y 120 cm': false,
+            'Entre 120 y 150 cm': false,
+            'Entre 150 y 200 cm': false,
+            'Más de 200 cm': false
+        },
+        capacidad: {
+            'Menos de 300 lts': false,
+            'Entre 300 y 600 lts': false,
+            'Entre 600 y 1100 lts': false,
+            'Entre 1100 y 2000 lts': false,
+            'Entre 2000 y 5000 lts': false,
+            'Más de 5000 lts': false
+        },
         orientacion: {
             'Vertical': false,
             'Horizontal': false
@@ -467,11 +590,17 @@ const limpiarFiltros = () => {
 const removerFiltro = (index) => {
     const filtro = filtrosAplicados.value[index]
 
-    if (filtro.includes('Altura:')) filtros.value.altura = ''
+    if (filtros.value.altura.hasOwnProperty(filtro)) {
+        filtros.value.altura[filtro] = false
+    }
     else if (filtro.includes('Ancho:')) filtros.value.ancho = ''
     else if (filtro.includes('Largo:')) filtros.value.largo = ''
-    else if (filtro.includes('Diámetro:')) filtros.value.diametro = ''
-    else if (filtro.includes('Capacidad:')) filtros.value.capacidad = ''
+    else if (filtros.value.diametro.hasOwnProperty(filtro)) {
+        filtros.value.diametro[filtro] = false
+    }
+    else if (filtros.value.capacidad.hasOwnProperty(filtro)) {
+        filtros.value.capacidad[filtro] = false
+    }
     else if (orientaciones.includes(filtro)) {
         filtros.value.orientacion[filtro] = false
     }
