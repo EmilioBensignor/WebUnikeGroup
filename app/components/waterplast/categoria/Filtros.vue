@@ -418,7 +418,6 @@ const productosFiltrados = computed(() => {
     if (!props.productos?.length) return []
 
     return props.productos.filter(producto => {
-        // Filtro de altura por rangos
         const alturaRangosSeleccionados = Object.keys(filtros.value.altura).filter(rango => filtros.value.altura[rango])
         if (alturaRangosSeleccionados.length > 0) {
             if (producto.altura_cm == null) return false
@@ -446,7 +445,6 @@ const productosFiltrados = computed(() => {
             if (isNaN(productoLargo) || Math.abs(productoLargo - largo) > 10) return false
         }
 
-        // Filtro de diámetro por rangos
         const diametroRangosSeleccionados = Object.keys(filtros.value.diametro).filter(rango => filtros.value.diametro[rango])
         if (diametroRangosSeleccionados.length > 0) {
             if (producto.diametro_cm == null) return false
@@ -460,7 +458,6 @@ const productosFiltrados = computed(() => {
             if (!cumpleAlguno) return false
         }
 
-        // Filtro de capacidad por rangos
         const capacidadRangosSeleccionados = Object.keys(filtros.value.capacidad).filter(rango => filtros.value.capacidad[rango])
         if (capacidadRangosSeleccionados.length > 0) {
             if (producto.capacidad_lts == null) return false

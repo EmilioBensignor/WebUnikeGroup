@@ -38,9 +38,9 @@
                                 </p>
                             </NuxtLink>
                         </div>
-                        <img v-if="imagenBanner" :src="getImagenDestacadaUrl(imagenBanner.imagen_mediana)" :alt="imagenBanner.nombre"
+                        <img v-if="imagenBanner" :src="imagenBanner.imagen_mediana" :alt="imagenBanner.nombre"
                             class="w-[17.5rem] h-[18.125rem] xxl:hidden object-cover rounded-2xl shadow-lg" />
-                        <img v-if="imagenBanner" :src="getImagenDestacadaUrl(imagenBanner.imagen_grande)" :alt="imagenBanner.nombre"
+                        <img v-if="imagenBanner" :src="imagenBanner.imagen_grande" :alt="imagenBanner.nombre"
                             class="w-[17.5rem] xxl:w-[40.25rem] hidden xxl:block h-[18.125rem] object-cover rounded-2xl shadow-lg" />
                     </div>
                 </li>
@@ -79,7 +79,7 @@ const { useWaterplastCategorias } = await import('~/composables/waterplast/useCa
 const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = useWaterplastCategorias()
 
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
-const { fetchImagenDestacadaBySlug, getImagenDestacadaUrl } = useWaterplastImagenesDestacadas()
+const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
 
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)

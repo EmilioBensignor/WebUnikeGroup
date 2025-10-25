@@ -1,11 +1,12 @@
 <template>
     <DefaultSection class="relative lg:-mt-32">
         <picture class="w-full">
-            <source media="(min-width: 1440px)" srcset="/images/waterplast/Hero-Waterplast-1440.webp">
-            <source media="(min-width: 1080px)" srcset="/images/waterplast/Hero-Waterplast-1080.webp">
-            <source media="(min-width: 768px)" srcset="/images/waterplast/Hero-Waterplast-768.webp">
-            <img src="/images/waterplast/Hero-Waterplast-320.webp" alt="Waterplast"
-                class="w-full h-40 sm:h-full md:h-96 lg:h-[38rem] xl:h-[40rem] object-cover">
+            <img v-if="imagenHeroHome?.imagen_grande" :src="imagenHeroHome.imagen_grande" alt="Waterplast"
+                class="hidden lg:block w-full h-[38rem] xl:h-[40rem] object-cover">
+            <img v-if="imagenHeroHome?.imagen_mediana" :src="imagenHeroHome.imagen_mediana" alt="Waterplast"
+                class="hidden md:block lg:hidden w-full h-96 object-cover">
+            <img v-if="imagenHeroHome?.imagen_chica" :src="imagenHeroHome.imagen_chica" alt="Waterplast"
+                class="block md:hidden w-full h-40 object-cover">
         </picture>
         <div
             class="xxl:w-full xxl:max-w-[1304px] lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-24 lg:pt-12 pb-24 md:px-8 lg:px-16 xxl:px-0 xxl:mx-auto">
@@ -43,7 +44,7 @@
                 class="flex flex-col items-center relative bg-white shadow-md shadow-dark/20 rounded-2xl lg:rounded-3xl p-2 pb-9 md:first:ml-8 lg:first:ml-0 md:last:mr-8 lg:last:mr-0">
                 <div
                     class="w-full h-[6.25rem] md:h-32 lg:h-40 rounded-xl lg:rounded-2xl overflow-hidden relative z-[2]">
-                    <img :src="categoria.imagen_hero_home" :alt="categoria.nombre"
+                    <img :src="getCategoriaImageUrl(categoria.imagen_hero_home)" :alt="categoria.nombre"
                         class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110" />
                 </div>
                 <div class="w-full absolute bottom-0 rounded-b-2xl lg:rounded-b-3xl text-center text-white font-semibold pt-6 lg:pt-16 pb-2"
@@ -59,9 +60,23 @@
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
-const { categorias, loading, error, fetchCategorias } = useWaterplastCategorias()
+const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = useWaterplastCategorias()
 
-onMounted(() => {
+const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
+const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
+
+const imagenHeroHome = ref(null)
+
+onMounted(async () => {
     fetchCategorias()
+
+    try {
+        const imagenHero = await fetchImagenDestacadaBySlug('imagen-hero-home')
+        if (imagenHero) {
+            imagenHeroHome.value = imagenHero
+        }
+    } catch (error) {
+        console.log(error);
+    }
 })
 </script>

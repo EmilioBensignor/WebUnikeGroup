@@ -76,7 +76,7 @@
                                 </div>
                                 <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias"
                                     :key="categoria.id || index" @click="$emit('close')" class="relative">
-                                    <img :src="categoria.imagen_menu"
+                                    <img :src="getCategoriaImageUrl(categoria.imagen_menu)"
                                         :alt="`Categoria ${categoria.nombre}`" class="w-full h-[8.5rem] md:h-[9.25rem] object-cover rounded-2xl shadow-lg" />
                                     <p
                                         class="absolute top-4 left-0 right-0 text-center text-sm text-white font-semibold">
@@ -141,7 +141,7 @@ import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
 
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
-const { categorias, loading, error, fetchCategorias } = useWaterplastCategorias()
+const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = useWaterplastCategorias()
 
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
 const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
