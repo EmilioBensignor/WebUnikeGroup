@@ -1,5 +1,5 @@
 <template>
-    <DefaultSection class="md:bg-gray-light md:pt-0 md:pb-8 lg:pb-12 md:px-8 lg:px-16">
+    <DefaultSection id="blog" class="md:bg-gray-light md:pt-0 md:pb-8 lg:pb-12 md:px-8 lg:px-16">
         <div class="xxl:max-w-[1304px] xxl:w-full md:flex md:flex-col md:gap-6 xxl:gap-8 relative md:rounded-[48px] pb-6 md:py-8 md:px-12 lg:px-16 overflow-hidden">
             <picture class="absolute inset-0 w-full h-full hidden md:block">
                 <source media="(min-width: 1440px)" srcset="/images/waterplast/blog/Blog-1440.webp">

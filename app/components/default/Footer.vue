@@ -1,5 +1,5 @@
 <template>
-    <footer class="w-full flex flex-col items-center gap-6 bg-primary-gradient rounded-t-3xl pt-12 xxl:px-16">
+    <footer id="footer" class="w-full flex flex-col items-center gap-6 bg-primary-gradient rounded-t-3xl pt-12 xxl:px-16">
         <div
             class="lg:w-full xxl:max-w-[1304px] flex flex-col xxl:flex-row items-center gap-6 md:gap-12 xxl:gap-28 px-4 md:px-8 lg:px-16 xxl:px-0">
             <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group"
@@ -25,12 +25,12 @@
                                 <span>{{ item.map }}</span>
                             </div>
                             <NuxtLink v-else-if="item.route && item.nombre" :to="item.route"
-                                class="text-white hover:underline">
+                                class="text-white underline-animated">
                                 {{ item.nombre }}
                             </NuxtLink>
                             <NuxtLink v-else-if="item.route && item.img && section.title === 'Redes Sociales'"
-                                :to="item.route" target="_blank" class="text-white hover:underline">
-                                <NuxtImg :src="`/images/redes/${item.img}.svg`" :alt="item.img" class="w-8 h-8" />
+                                :to="item.route" target="_blank" class="text-white">
+                                <NuxtImg :src="`/images/redes/${item.img}.svg`" :alt="item.img" class="w-8 h-8 opacity-100 hover:opacity-70 transition-opacity duration-300" />
                             </NuxtLink>
                         </li>
                     </ul>

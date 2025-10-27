@@ -2,11 +2,11 @@
     <DefaultSection class="relative lg:-mt-32">
         <picture class="w-full">
             <img v-if="imagenHeroHome?.imagen_grande" :src="imagenHeroHome.imagen_grande" alt="Waterplast"
-                class="hidden lg:block w-full h-[38rem] xl:h-[40rem] object-cover">
+                class="hidden lg:block w-full h-[38rem] xl:h-[40rem] object-cover object-right xxl:object-center">
             <img v-if="imagenHeroHome?.imagen_mediana" :src="imagenHeroHome.imagen_mediana" alt="Waterplast"
                 class="hidden md:block lg:hidden w-full h-96 object-cover">
             <img v-if="imagenHeroHome?.imagen_chica" :src="imagenHeroHome.imagen_chica" alt="Waterplast"
-                class="block md:hidden w-full h-40 object-cover">
+                class="block md:hidden w-full h-40 sm:h-60 object-cover">
         </picture>
         <div
             class="xxl:w-full xxl:max-w-[1304px] lg:h-full flex flex-col lg:justify-center gap-4 md:absolute bg-primary-gradient md:bg-none pt-4 md:pt-24 lg:pt-12 pb-24 md:px-8 lg:px-16 xxl:px-0 xxl:mx-auto">
@@ -40,7 +40,8 @@
             <div v-else-if="error" class="text-center text-white py-8">
                 <p>Error al cargar las categorías: {{ error }}</p>
             </div>
-            <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias" :key="categoria.id || index"
+            <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)"
+                v-for="(categoria, index) in categorias" :key="categoria.id || index"
                 class="flex flex-col items-center relative bg-white shadow-md shadow-dark/20 rounded-2xl lg:rounded-3xl p-2 pb-9 md:first:ml-8 lg:first:ml-0 md:last:mr-8 lg:last:mr-0">
                 <div
                     class="w-full h-[6.25rem] md:h-32 lg:h-40 rounded-xl lg:rounded-2xl overflow-hidden relative z-[2]">

@@ -12,8 +12,7 @@
         <div v-else-if="currentBlog">
             <span
                 class="lg:w-full lg:h-[12.75rem] hidden lg:block lg:absolute lg:top-0 bg-gradient-to-b from-primary to-transparent"></span>
-            <DefaultSection
-                class="w-full py-6 md:py-8 px-4 lg:pt-32 lg:pb-12 xxl:pb-16 md:px-16">
+            <DefaultSection class="w-full py-6 md:py-8 px-4 lg:pt-32 lg:pb-12 xxl:pb-16 md:px-16">
                 <div class="w-full max-w-[1144px] flex flex-col gap-6 lg:gap-12 xxl:gap-16">
                     <HeadingH1 class="w-full text-terciary">{{ currentBlog.titulo }}</HeadingH1>
                     <NuxtImg v-if="imageUrl" :src="imageUrl" :alt="currentBlog.titulo"
@@ -24,8 +23,7 @@
             </DefaultSection>
         </div>
 
-        <DefaultSection v-if="relatedBlogs.length > 0"
-            class="md:bg-gray-light md:pt-0 md:pb-8 lg:pb-12 md:px-8 lg:px-16">
+        <DefaultSection v-if="relatedBlogs.length > 0" class="md:pt-0 md:pb-8 lg:pb-12 md:px-8 lg:px-16">
             <div
                 class="xxl:max-w-[1304px] xxl:w-full md:flex md:flex-col md:gap-6 xxl:gap-8 relative md:rounded-[48px] pb-6 md:py-8 md:px-12 lg:px-16 overflow-hidden md:bg-primary-gradient">
                 <div

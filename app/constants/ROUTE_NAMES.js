@@ -27,9 +27,9 @@ export const ROUTES_NAMES = {
     WATERPLAST: {
         HOME: "/waterplast",
         PRODUCTOS: "#",
-        DISTRIBUIDORES: "#",
-        BLOG: "#",
-        CONTACTO: "#",
+        DISTRIBUIDORES: "#distribuidores",
+        BLOG: "#blog",
+        CONTACTO: "#footer",
         CATEGORIA: (slug) => `/waterplast/${slug}`,
         PRODUCTO: (categoria, producto) => `/waterplast/${categoria}/${producto}`,
     },
