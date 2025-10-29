@@ -1,6 +1,13 @@
 export const usePreloadData = () => {
   const { getFromCache, saveToCache } = useSupabaseCache();
 
+  const FIELD_MAPPINGS = {
+    categorias: 'id,slug,nombre,color,imagen_hero_home,imagen_s_categorias,imagen_m_categorias,imagen_l_categorias,imagen_xl_categorias,orden',
+    imagenes_destacadas: 'id,slug,imagen_chica,imagen_mediana,imagen_grande',
+    blogs_list: 'id,titulo,slug,imagen_principal,fecha,creado_por,descripcion',
+    distribuidores: 'id,nombre,direccion,telefono,email,ciudad,provincia,latitud,longitud'
+  };
+
   const preloadCriticalData = async () => {
     try {
       const cacheKey = 'waterplast_categorias';
@@ -9,9 +16,9 @@ export const usePreloadData = () => {
       if (!categorias) {
         const supabase = useSupabaseClient();
         const { data } = await supabase
-          .from('categorias')
-          .select('*')
-          .eq('activa', true)
+          .from('waterplast-categorias')
+          .select(FIELD_MAPPINGS.categorias)
+          .eq('estado', true)
           .order('orden', { ascending: true });
 
         if (data) {
@@ -35,15 +42,15 @@ export const usePreloadData = () => {
       if (!images) {
         const supabase = useSupabaseClient();
         const { data } = await supabase
-          .from('imagenes_destacadas')
-          .select('*')
+          .from('waterplast-imagenes-destacadas')
+          .select(FIELD_MAPPINGS.imagenes_destacadas)
           .in('slug', ['imagen-hero-home', 'imagen-menu']);
 
         if (data) {
           images = data;
           await saveToCache(cacheKey, images, 24 * 60);
 
-          if (process.client) {
+          if (import.meta.client) {
             data.forEach(img => {
               ['imagen_chica', 'imagen_mediana', 'imagen_grande'].forEach(size => {
                 if (img[size]) {
@@ -74,9 +81,8 @@ export const usePreloadData = () => {
       if (!posts) {
         const supabase = useSupabaseClient();
         const { data } = await supabase
-          .from('blogs')
-          .select('id, titulo, slug, imagen_principal, fecha, creado_por')
-          .eq('publicado', true)
+          .from('blog')
+          .select(FIELD_MAPPINGS.blogs_list)
           .order('fecha', { ascending: false })
           .limit(limit);
 
@@ -101,9 +107,8 @@ export const usePreloadData = () => {
       if (!distributors) {
         const supabase = useSupabaseClient();
         const { data } = await supabase
-          .from('distribuidores')
-          .select('*')
-          .eq('activo', true);
+          .from('waterplast-distribuidores')
+          .select(FIELD_MAPPINGS.distribuidores);
 
         if (data) {
           distributors = data;
@@ -119,7 +124,7 @@ export const usePreloadData = () => {
   };
 
   const preloadAll = async () => {
-    if (!process.client) return;
+    if (!import.meta.client) return;
 
     try {
       await Promise.all([

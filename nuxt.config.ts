@@ -23,8 +23,10 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', href: '/images/Unike-Group-Logo.svg' },
         { rel: 'prefetch', as: 'image', href: '/images/logos/Logo-Waterplast-Blanco.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-        { rel: 'preconnect', href: 'https://fxytgajevhfuzwlyaorb.supabase.co' }
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+        { rel: 'preconnect', href: 'https://fxytgajevhfuzwlyaorb.supabase.co' },
+        { rel: 'dns-prefetch', href: 'https://maps.googleapis.com' },
+        { rel: 'dns-prefetch', href: 'https://maps.gstatic.com' }
       ]
     }
   },
@@ -70,7 +72,8 @@ export default defineNuxtConfig({
       default: {
         modifiers: {
           format: 'webp',
-          quality: '80'
+          quality: '75',
+          fit: 'cover'
         }
       }
     }

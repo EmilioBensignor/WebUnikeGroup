@@ -1,11 +1,18 @@
 const FIELD_MAPPINGS = {
   categorias: 'id,slug,nombre,color,imagen_hero_home,imagen_s_categorias,imagen_m_categorias,imagen_l_categorias,imagen_xl_categorias,orden',
   blogs: 'id,titulo,slug,imagen_principal,fecha,creado_por,contenido,descripcion',
-  blogs_list: 'id,titulo,slug,imagen_principal,fecha,creado_por,descripcion', // Para listados
+  blogs_list: 'id,titulo,slug,imagen_principal,fecha,creado_por,descripcion',
   imagenes_destacadas: 'id,slug,imagen_chica,imagen_mediana,imagen_grande',
   productos: 'id,nombre,slug,categoria_id,imagen,imagen_principal,descripcion,caracteristicas,precio',
+  productos_list: 'id,nombre,slug,categoria_id,imagen_principal,descripcion',
   distribuidores: 'id,nombre,direccion,telefono,email,ciudad,provincia,latitud,longitud',
-  especificaciones: '*',
+  especificaciones: 'id,producto_id,descripcion,imagen',
+};
+
+const QUERY_LIMITS = {
+  blogsList: 12,
+  productosList: 20,
+  distribuidoresList: 30
 };
 
 export const useOptimizedQueries = () => {
@@ -14,9 +21,9 @@ export const useOptimizedQueries = () => {
   const fetchCategorias = async () => {
     try {
       const { data, error } = await supabase
-        .from('categorias')
+        .from('waterplast-categorias')
         .select(FIELD_MAPPINGS.categorias)
-        .eq('activa', true)
+        .eq('estado', true)
         .order('orden', { ascending: true });
 
       if (error) throw error;
@@ -27,14 +34,15 @@ export const useOptimizedQueries = () => {
     }
   };
 
-  const fetchBlogsList = async (limit = 10, offset = 0) => {
+  const fetchBlogsList = async (limit = QUERY_LIMITS.blogsList, offset = 0) => {
     try {
+      const safeLimit = Math.min(limit, QUERY_LIMITS.blogsList);
+
       const { data, error, count } = await supabase
-        .from('blogs')
+        .from('blog')
         .select(FIELD_MAPPINGS.blogs_list, { count: 'exact' })
-        .eq('publicado', true)
         .order('fecha', { ascending: false })
-        .range(offset, offset + limit - 1);
+        .range(offset, offset + safeLimit - 1);
 
       if (error) throw error;
       return { data: data || [], count: count || 0 };
@@ -47,10 +55,9 @@ export const useOptimizedQueries = () => {
   const fetchBlogDetail = async (slug) => {
     try {
       const { data, error } = await supabase
-        .from('blogs')
+        .from('blog')
         .select(FIELD_MAPPINGS.blogs)
         .eq('slug', slug)
-        .eq('publicado', true)
         .single();
 
       if (error) throw error;
@@ -64,7 +71,7 @@ export const useOptimizedQueries = () => {
   const fetchProductosByCategoria = async (categoriaSlug) => {
     try {
       const { data: categoria, error: catError } = await supabase
-        .from('categorias')
+        .from('waterplast-categorias')
         .select('id')
         .eq('slug', categoriaSlug)
         .single();
@@ -72,10 +79,10 @@ export const useOptimizedQueries = () => {
       if (catError) throw catError;
 
       const { data, error } = await supabase
-        .from('productos')
+        .from('waterplast-productos')
         .select(FIELD_MAPPINGS.productos)
         .eq('categoria_id', categoria.id)
-        .eq('activo', true)
+        .eq('estado', true)
         .order('nombre', { ascending: true });
 
       if (error) throw error;
@@ -89,13 +96,13 @@ export const useOptimizedQueries = () => {
   const fetchProductoDetail = async (categoriaSlug, productoSlug) => {
     try {
       const { data: categoria } = await supabase
-        .from('categorias')
+        .from('waterplast-categorias')
         .select('id')
         .eq('slug', categoriaSlug)
         .single();
 
       const { data: producto, error } = await supabase
-        .from('productos')
+        .from('waterplast-productos')
         .select(FIELD_MAPPINGS.productos)
         .eq('categoria_id', categoria.id)
         .eq('slug', productoSlug)
@@ -105,8 +112,8 @@ export const useOptimizedQueries = () => {
 
       if (producto?.id) {
         const { data: specs } = await supabase
-          .from('especificaciones')
-          .select('*')
+          .from('waterplast-productos-caracteristicas-adicionales')
+          .select(FIELD_MAPPINGS.especificaciones)
           .eq('producto_id', producto.id);
 
         producto.especificaciones = specs || [];
@@ -122,7 +129,7 @@ export const useOptimizedQueries = () => {
   const fetchImagenesDestacadas = async (slugs = []) => {
     try {
       let query = supabase
-        .from('imagenes_destacadas')
+        .from('waterplast-imagenes-destacadas')
         .select(FIELD_MAPPINGS.imagenes_destacadas);
 
       if (slugs.length > 0) {
@@ -142,9 +149,8 @@ export const useOptimizedQueries = () => {
   const fetchDistribuidores = async (filters = {}) => {
     try {
       let query = supabase
-        .from('distribuidores')
-        .select(FIELD_MAPPINGS.distribuidores)
-        .eq('activo', true);
+        .from('waterplast-distribuidores')
+        .select(FIELD_MAPPINGS.distribuidores);
 
       if (filters.provincia) {
         query = query.eq('provincia', filters.provincia);

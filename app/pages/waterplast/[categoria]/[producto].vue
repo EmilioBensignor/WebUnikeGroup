@@ -16,17 +16,19 @@
           </div>
 
           <div class="flex flex-col gap-6 xxl:gap-8">
-            <div v-if="productosRelacionados.length > 1" class="grid grid-cols-4 items-end">
-              <NuxtLink v-for="(relacionado, index) in productosRelacionados" :key="relacionado.id"
-                :to="`${ROUTES_NAMES.WATERPLAST.HOME}/${relacionado.categoria?.slug}/${relacionado.slug}`"
-                :style="getRelacionadoStyle(relacionado, index)" :class="getRelacionadoBorderClass(relacionado, index)"
-                class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
-                <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}</p>
-              </NuxtLink>
+            <div class="min-h-[88px]">
+              <div v-if="productosRelacionados.length > 1" class="grid grid-cols-4 items-end">
+                <NuxtLink v-for="(relacionado, index) in productosRelacionados" :key="relacionado.id"
+                  :to="`${ROUTES_NAMES.WATERPLAST.HOME}/${relacionado.categoria?.slug}/${relacionado.slug}`"
+                  :style="getRelacionadoStyle(relacionado, index)" :class="getRelacionadoBorderClass(relacionado, index)"
+                  class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
+                  <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}</p>
+                </NuxtLink>
+              </div>
             </div>
-            <!-- Especificaciones del Producto -->
-            <div v-if="producto && hasEspecificaciones"
-              class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
+            <div class="min-h-[280px]">
+              <div v-if="producto && hasEspecificaciones"
+                class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
               <!-- Dimensiones -->
               <div v-if="[producto.altura_cm, producto.ancho_cm, producto.largo_cm].filter(Boolean).length >= 2" class="flex flex-col items-center gap-3 md:gap-4">
                 <div class="w-16 h-16 flex justify-center items-center rounded-full"
@@ -100,18 +102,22 @@
               </div>
             </div>
 
-            <!-- Características Adicionales -->
-            <div v-if="caracteristicasAdicionales.length > 0"
-              class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
-              <div v-for="caracteristica in caracteristicasAdicionales" :key="caracteristica.id"
-                class="flex flex-col items-center gap-3 md:gap-4">
-                <div class="w-16 h-16 flex justify-center items-center rounded-full"
-                  :style="{ backgroundColor: categoriaColor }">
-                  <NuxtImg v-if="caracteristica.imagen" :src="caracteristica.imagen" :alt="caracteristica.descripcion"
-                    class="w-10 h-10 object-contain" loading="lazy"
-                    @error="(e) => handleImageError(e, caracteristica)" />
+            </div>
+
+            <!-- Características Adicionales - Con altura mínima para evitar CLS -->
+            <div class="min-h-[160px]">
+              <div v-if="caracteristicasAdicionales.length > 0"
+                class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xxl:grid-cols-5 gap-4 lg:gap-6">
+                <div v-for="caracteristica in caracteristicasAdicionales" :key="caracteristica.id"
+                  class="flex flex-col items-center gap-3 md:gap-4">
+                  <div class="w-16 h-16 flex justify-center items-center rounded-full"
+                    :style="{ backgroundColor: categoriaColor }">
+                    <NuxtImg v-if="caracteristica.imagen" :src="caracteristica.imagen" :alt="caracteristica.descripcion"
+                      class="w-10 h-10 object-contain" loading="lazy"
+                      @error="(e) => handleImageError(e, caracteristica)" />
+                  </div>
+                  <p class="text-xs lg:text-sm text-center font-medium text-terciary">{{ caracteristica.descripcion }}</p>
                 </div>
-                <p class="text-xs lg:text-sm text-center font-medium text-terciary">{{ caracteristica.descripcion }}</p>
               </div>
             </div>
 

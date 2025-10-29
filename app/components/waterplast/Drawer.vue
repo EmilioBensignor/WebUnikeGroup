@@ -210,7 +210,6 @@ onMounted(async () => {
         console.log(error);
     }
 
-    // Agregar passive listener para mejorar performance
     document.addEventListener('keydown', handleEscape, { passive: true })
 })
 

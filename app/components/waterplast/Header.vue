@@ -113,7 +113,6 @@ onMounted(async () => {
         console.log(error);
     }
 
-    // Passive event listener para mejor scroll performance
     window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
