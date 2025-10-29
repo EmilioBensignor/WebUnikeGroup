@@ -14,7 +14,7 @@
         <div v-else-if="has3DViewer">
             <div class="xr-wrap">
                 <div class="xr-box">
-                    <iframe :src="get3DViewerUrl()" allowfullscreen scrolling="no" class="xr-iframe"></iframe>
+                    <iframe :src="get3DViewerUrl()" :title="`Visor 3D - ${producto.nombre}`" allowfullscreen scrolling="no" class="xr-iframe"></iframe>
                 </div>
             </div>
             <div class="w-full flex justify-center">

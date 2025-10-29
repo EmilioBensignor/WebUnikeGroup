@@ -10,7 +10,7 @@ export default {
         extend: {
             colors: {
                 primary: "#005CB9",
-                secondary: "#3CB4E5",
+                secondary: "#279ece",
                 terciary: "#212C54",
                 dark: "#010101",
                 error: "#F03A36",
@@ -18,7 +18,7 @@ export default {
                     light: "#F9F9F9",
                     mid: "#E9E9E9",
                     blue: "#E1E7F3",
-                    dark: "#9D9C9C",
+                    dark: "#959393",
                 }
             },
             backgroundImage: {

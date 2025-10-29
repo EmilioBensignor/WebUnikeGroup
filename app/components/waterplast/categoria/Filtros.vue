@@ -47,10 +47,10 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Altura</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="rango in alturaRangos" :key="rango.label"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ rango.label }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                        <label v-for="rango in alturaRangos" :key="rango.label"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ rango.label }}</span>
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`altura-${rango.label}`"
                                                     :name="`altura-${rango.label}`"
                                                     v-model="filtros.altura[rango.label]" type="checkbox"
@@ -58,8 +58,8 @@
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -95,10 +95,10 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Diámetro</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="rango in diametroRangos" :key="rango.label"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ rango.label }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                        <label v-for="rango in diametroRangos" :key="rango.label"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ rango.label }}</span>
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`diametro-${rango.label}`"
                                                     :name="`diametro-${rango.label}`"
                                                     v-model="filtros.diametro[rango.label]" type="checkbox"
@@ -106,8 +106,8 @@
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -115,10 +115,10 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Capacidad</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="rango in capacidadRangos" :key="rango.label"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ rango.label }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                        <label v-for="rango in capacidadRangos" :key="rango.label"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ rango.label }}</span>
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`capacidad-${rango.label}`"
                                                     :name="`capacidad-${rango.label}`"
                                                     v-model="filtros.capacidad[rango.label]" type="checkbox"
@@ -126,8 +126,8 @@
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -138,11 +138,11 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Orientación</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="orientacion in orientaciones" :key="orientacion"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ orientacion
+                                        <label v-for="orientacion in orientaciones" :key="orientacion"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ orientacion
                                                 }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`orientacion-${orientacion}`"
                                                     :name="`orientacion-${orientacion}`"
                                                     v-model="filtros.orientacion[orientacion]" type="checkbox"
@@ -150,8 +150,8 @@
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -159,19 +159,19 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Color</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="color in colores" :key="color"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ color
+                                        <label v-for="color in colores" :key="color"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ color
                                                 }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`color-${color}`" :name="`color-${color}`"
                                                     v-model="filtros.color[color]" type="checkbox"
                                                     class="sr-only peer" />
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -179,18 +179,18 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Tecnología</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="tech in tecnologias" :key="tech"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ tech }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                        <label v-for="tech in tecnologias" :key="tech"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ tech }}</span>
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`tecnologia-${tech}`" :name="`tecnologia-${tech}`"
                                                     v-model="filtros.tecnologia[tech]" type="checkbox"
                                                     class="sr-only peer" />
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -198,19 +198,19 @@
                                 <div class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Opción</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <div v-for="opcion in opciones" :key="opcion"
-                                            class="flex items-center justify-between">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium">{{ opcion
+                                        <label v-for="opcion in opciones" :key="opcion"
+                                            class="flex items-center justify-between cursor-pointer group">
+                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ opcion
                                                 }}</span>
-                                            <label class="relative inline-flex items-center cursor-pointer">
+                                            <div class="relative inline-flex items-center">
                                                 <input :id="`opcion-${opcion}`" :name="`opcion-${opcion}`"
                                                     v-model="filtros.opcion[opcion]" type="checkbox"
                                                     class="sr-only peer" />
                                                 <div
                                                     class="w-12 h-7 bg-gray-mid peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-secondary transition-colors duration-300">
                                                 </div>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
