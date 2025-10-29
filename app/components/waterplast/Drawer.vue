@@ -42,6 +42,7 @@
 
                     <div class="flex justify-center">
                         <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
+                            fetchpriority="high"
                             class="w-36 md:w-[13.5rem] h-12 md:h-[4.5rem]" />
                     </div>
                 </div>
@@ -88,6 +89,7 @@
                         </div>
                         <div class="flex justify-center pb-12">
                             <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
+                                fetchpriority="high"
                                 class="w-36 md:w-[13.5rem] h-12 md:h-[4.5rem]" />
                         </div>
                     </div>
@@ -127,6 +129,7 @@
                         </ul>
                         <div class="flex justify-center pb-5">
                             <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
+                                fetchpriority="high"
                                 class="w-36 md:w-[13.5rem] h-12 md:h-[4.5rem]" />
                         </div>
                     </nav>
@@ -207,10 +210,11 @@ onMounted(async () => {
         console.log(error);
     }
 
-    document.addEventListener('keydown', handleEscape)
+    // Agregar passive listener para mejorar performance
+    document.addEventListener('keydown', handleEscape, { passive: true })
 })
 
 onUnmounted(() => {
-    document.removeEventListener('keydown', handleEscape)
+    document.removeEventListener('keydown', handleEscape, { passive: true })
 })
 </script>

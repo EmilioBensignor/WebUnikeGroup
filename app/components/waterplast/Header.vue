@@ -5,10 +5,13 @@
     ]">
         <NuxtLink :to="ROUTES_NAMES.HOME">
             <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
-            class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
+                fetchpriority="high"
+                class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
         </NuxtLink>
-        <button @click="toggleDrawer" class="w-12 h-12 lg:hidden flex justify-center items-center p-4 cursor-pointer touch-manipulation active:opacity-70">
-            <Icon name="material-symbols:menu-rounded" class="w-6 md:w-8 h-6 md:h-8 flex-shrink-0 text-white pointer-events-none" />
+        <button @click="toggleDrawer" aria-label="Toggle Menu"
+            class="w-12 h-12 lg:hidden flex justify-center items-center p-4 cursor-pointer touch-manipulation active:opacity-70">
+            <Icon name="material-symbols:menu-rounded"
+                class="w-6 md:w-8 h-6 md:h-8 flex-shrink-0 text-white pointer-events-none" />
         </button>
         <nav class="hidden lg:flex">
             <ul class="flex items-center text-white font-bold">
@@ -26,11 +29,11 @@
                             <div v-else-if="error" class="col-span-4 text-center text-red-500 py-8">
                                 <p>Error al cargar categorías</p>
                             </div>
-                            <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)" v-for="(categoria, index) in categorias"
-                                :key="categoria.id || index" class="relative">
+                            <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)"
+                                v-for="(categoria, index) in categorias" :key="categoria.id || index" class="relative">
                                 <div class="w-[9.25rem] h-[8.75rem] rounded-2xl overflow-hidden shadow-lg">
                                     <img :src="getCategoriaImageUrl(categoria.imagen_menu)"
-                                        :alt="`Categoria ${categoria.nombre}`"
+                                        :alt="`Waterplast Categoríaa ${categoria.nombre}`"
                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
                                 </div>
                                 <p class="absolute top-4 left-0 right-0 text-center text-white font-semibold">
@@ -48,23 +51,23 @@
                     class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 xxl:px-6">
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
-                <div class="relative ml-2 group">
-                    <ButtonSecondary>
-                        Somos Unike Group
-                    </ButtonSecondary>
-                    <div
-                        class="w-full flex flex-col absolute top-full left-0 z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
-                        <NuxtLink to="#"
-                            class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
-                            Rohermet
-                        </NuxtLink>
-                        <NuxtLink to="#"
-                            class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
-                            Murallón
-                        </NuxtLink>
-                    </div>
-                </div>
             </ul>
+            <div class="relative ml-2 group">
+                <ButtonSecondary>
+                    Somos Unike Group
+                </ButtonSecondary>
+                <div
+                    class="w-full flex flex-col absolute top-full left-0 z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
+                    <NuxtLink to="#"
+                        class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
+                        Rohermet
+                    </NuxtLink>
+                    <NuxtLink to="#"
+                        class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
+                        Murallón
+                    </NuxtLink>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -110,10 +113,11 @@ onMounted(async () => {
         console.log(error);
     }
 
-    window.addEventListener('scroll', handleScroll)
+    // Passive event listener para mejor scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('scroll', handleScroll, { passive: true })
 })
 </script>

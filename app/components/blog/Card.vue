@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="ROUTES_NAMES.UNIKE.BLOG_DETALLE(post.slug)" class="flex flex-col gap-2 bg-gray-light rounded-2xl lg:rounded-3xl shadow-md shadow-dark/20 p-2 pb-3">
-        <NuxtImg v-if="imageUrl" :src="imageUrl" :alt="post.titulo" class="w-full h-28 lg:h-36 xxl:h-44 object-cover rounded-xl lg:rounded-2xl" />
+        <NuxtImg v-if="imageUrl" :src="imageUrl" :alt="post.titulo" loading="lazy" sizes="sm:100vw md:50vw lg:33vw" class="w-full h-28 lg:h-36 xxl:h-44 object-cover rounded-xl lg:rounded-2xl" />
         <div class="flex flex-col gap-4 text-terciary px-3 md:px-2">
             <p class="text-sm lg:text-base font-semibold">{{ post.titulo }}</p>
             <p class="text-xs lg:text-sm font-medium">Por {{ post.creado_por }} - {{ formatDate(post.fecha) }}</p>

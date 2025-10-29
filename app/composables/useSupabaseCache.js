@@ -1,27 +1,100 @@
 export const useSupabaseCache = () => {
-    const getFromCache = (key) => {
+    let db = null;
+    const DB_NAME = 'UnikeGroupCache';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'data_cache';
+
+    const initDB = () => {
+        if (typeof indexedDB === 'undefined') return null;
+
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => {
+                db = request.result;
+                resolve(db);
+            };
+
+            request.onupgradeneeded = (event) => {
+                const database = event.target.result;
+                if (!database.objectStoreNames.contains(STORE_NAME)) {
+                    database.createObjectStore(STORE_NAME, { keyPath: 'key' });
+                }
+            };
+        });
+    };
+
+    const getFromCache = async (key) => {
         try {
             const cachedData = localStorage.getItem(key);
-            if (!cachedData) return null;
-
-            const { data, expiry } = JSON.parse(cachedData);
-            if (Date.now() > expiry) {
+            if (cachedData) {
+                const { data, expiry } = JSON.parse(cachedData);
+                if (Date.now() <= expiry) {
+                    return data;
+                }
                 localStorage.removeItem(key);
-                return null;
             }
 
-            return data;
+            if (typeof indexedDB !== 'undefined') {
+                const database = db || await initDB();
+                if (database) {
+                    return await new Promise((resolve) => {
+                        const transaction = database.transaction(STORE_NAME, 'readonly');
+                        const store = transaction.objectStore(STORE_NAME);
+                        const request = store.get(key);
+
+                        request.onsuccess = () => {
+                            const result = request.result;
+                            if (result && Date.now() <= result.expiry) {
+                                resolve(result.data);
+                            } else if (result) {
+                                store.delete(key);
+                                resolve(null);
+                            } else {
+                                resolve(null);
+                            }
+                        };
+
+                        request.onerror = () => resolve(null);
+                    });
+                }
+            }
+
+            return null;
         } catch (error) {
             console.error('Error al recuperar datos de cache:', error);
-            localStorage.removeItem(key);
             return null;
         }
     };
 
-    const saveToCache = (key, data, ttlMinutes = 60) => {
+    const saveToCache = async (key, data, ttlMinutes = 60) => {
         try {
             const expiry = Date.now() + (ttlMinutes * 60 * 1000);
-            localStorage.setItem(key, JSON.stringify({ data, expiry }));
+            const cacheData = { data, expiry };
+
+            const dataSize = JSON.stringify(cacheData).length;
+
+            if (dataSize < 102400) {
+                localStorage.setItem(key, JSON.stringify(cacheData));
+            } else {
+                if (typeof indexedDB !== 'undefined') {
+                    const database = db || await initDB();
+                    if (database) {
+                        return new Promise((resolve) => {
+                            const transaction = database.transaction(STORE_NAME, 'readwrite');
+                            const store = transaction.objectStore(STORE_NAME);
+                            const request = store.put({ key, ...cacheData });
+
+                            request.onsuccess = () => resolve();
+                            request.onerror = () => {
+                                console.error('Error al guardar en IndexedDB');
+                                resolve();
+                            };
+                        });
+                    }
+                }
+            }
         } catch (error) {
             console.error('Error al guardar en cache:', error);
         }

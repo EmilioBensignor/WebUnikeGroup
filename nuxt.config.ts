@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes',
       htmlAttrs: {
         lang: 'es'
       },
@@ -20,7 +20,11 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/images/Unike-Group-Logo.svg' }
+        { rel: 'apple-touch-icon', href: '/images/Unike-Group-Logo.svg' },
+        { rel: 'prefetch', as: 'image', href: '/images/logos/Logo-Waterplast-Blanco.svg' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+        { rel: 'preconnect', href: 'https://fxytgajevhfuzwlyaorb.supabase.co' }
       ]
     }
   },
@@ -49,6 +53,27 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify',
     collections: ['material-symbols']
+  },
+  image: {
+    formats: ['webp', 'original'],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      '2xl': 1536
+    },
+    densities: [1, 2],
+    presets: {
+      default: {
+        modifiers: {
+          format: 'webp',
+          quality: '80'
+        }
+      }
+    }
   },
   supabase: {
     redirect: false,
