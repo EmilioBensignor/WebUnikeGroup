@@ -19,7 +19,7 @@
             <div class="min-h-[88px]">
               <div v-if="productosRelacionados.length > 1" class="grid grid-cols-4 items-end">
                 <NuxtLink v-for="(relacionado, index) in productosRelacionados" :key="relacionado.id"
-                  :to="`${ROUTES_NAMES.WATERPLAST.HOME}/${relacionado.categoria?.slug}/${relacionado.slug}`"
+                  :to="`${ROUTES_NAMES.WATERPLAST.HOME}/${relacionado.categoria?.slug}/${relacionado.slug}`" :aria-label="`Ver producto {{ relacionado.nombre }}`"
                   :style="getRelacionadoStyle(relacionado, index)" :class="getRelacionadoBorderClass(relacionado, index)"
                   class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
                   <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}</p>
@@ -133,7 +133,7 @@
       <HeadingH2 class="text-primary">Seguinos en nuestras redes</HeadingH2>
       <CarouselStatic :slides-per-view="{ base: 1.4, sm: 2.5, md: 3, lg: 3, xl: 4, xxl: 4 }">
         <NuxtLink v-for="imagen in imagenesRedes" :key="imagen.name" :to="ROUTES_NAMES.REDES.INSTAGRAM" target="_blank"
-          rel="noopener noreferrer">
+          rel="noopener noreferrer" :aria-label="`Seguir en Instagram - ${imagen.name}`">
           <NuxtImg :src="imagen.url" :alt="imagen.name" class="h-full rounded-3xl object-cover" />
         </NuxtLink>
       </CarouselStatic>

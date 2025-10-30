@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { createClient } from '@supabase/supabase-js'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -51,11 +53,67 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: [
-        '/api/sitemap-routes'
-      ],
+        '/',
+        '/waterplast',
+        '/blog',
+        '/sitemap.xml'
+      ]
     },
     routeRules: {
       '/**': { cache: { maxAge: 60 * 60 * 24 * 7 } }
+    }
+  },
+  hooks: {
+    async 'nitro:config'(nitroConfig: any) {
+      const supabaseUrl = process.env.SUPABASE_URL
+      const supabaseKey = process.env.SUPABASE_KEY
+
+      if (!supabaseUrl || !supabaseKey) {
+        console.warn('⚠️  SUPABASE_URL y SUPABASE_KEY son requeridos para prerender')
+        return
+      }
+
+      try {
+        const client = createClient(supabaseUrl, supabaseKey)
+
+        const { data: categorias } = await client
+          .from('waterplast-categorias')
+          .select('slug')
+          .eq('estado', true)
+
+        if (categorias && Array.isArray(categorias)) {
+          categorias.forEach((cat: any) => {
+            nitroConfig.prerender.routes.push(`/waterplast/${cat.slug}`)
+          })
+        }
+
+        const { data: productos } = await client
+          .from('waterplast-productos')
+          .select('slug, categoria:categoria_id (slug)')
+          .eq('estado', true)
+
+        if (productos && Array.isArray(productos)) {
+          productos.forEach((prod: any) => {
+            if (prod.categoria?.slug) {
+              nitroConfig.prerender.routes.push(`/waterplast/${prod.categoria.slug}/${prod.slug}`)
+            }
+          })
+        }
+
+        const { data: blogs } = await client
+          .from('blogs')
+          .select('slug')
+          .eq('estado', true)
+
+        if (blogs && Array.isArray(blogs)) {
+          blogs.forEach((blog: any) => {
+            nitroConfig.prerender.routes.push(`/blog/${blog.slug}`)
+          })
+        }
+
+      } catch (error: any) {
+        console.error('❌ Error al cargar rutas dinámicas:', error?.message || 'Error desconocido')
+      }
     }
   },
   fonts: {

@@ -1,13 +1,13 @@
 <template>
-    <NuxtLink v-if="to" :to="to"
+    <NuxtLink v-if="to" :to="to" :aria-label="ariaLabel"
         class="bg-primary rounded-full text-white text-base font-bold transition duration-300 py-[0.906rem] px-5 sm:px-10">
         <slot />
     </NuxtLink>
-    <a v-else-if="href" :href="href" :target="target" :rel="rel" :download="download"
+    <a v-else-if="href" :href="href" :target="target" :rel="rel" :download="download" :aria-label="ariaLabel"
         class="bg-primary rounded-full text-white text-base font-bold transition duration-300 py-[0.906rem] px-5 sm:px-10">
         <slot />
     </a>
-    <button v-else type="button"
+    <button v-else type="button" :aria-label="ariaLabel"
         class="bg-primary rounded-full text-white text-base font-bold transition duration-300 py-[0.906rem] px-5 sm:px-10">
         <slot />
     </button>
@@ -33,6 +33,10 @@ defineProps({
     },
     download: {
         type: [String, Boolean],
+        default: null
+    },
+    ariaLabel: {
+        type: String,
         default: null
     }
 })
