@@ -26,17 +26,17 @@
                                 <button @click="navigateToPanel(2)"
                                     class="w-full text-start py-4 px-3">Productos</button>
                             </li>
-                            <li v-for="(item, index) in menu" :key="index" @click="$emit('close')"
+                            <li v-for="(item, index) in conditionalMenu" :key="index" @click="$emit('close')"
                                 class="w-full text-start py-4 px-3">
-                                <NuxtLink :to="item.route">
+                                <NuxtLink :to="item.route" class="text-white">
                                     {{ item.nombre }}
                                 </NuxtLink>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <button @click="navigateToPanel(3)" class="w-full text-start py-4 px-3">
                                     Somos Unike Group
                                 </button>
-                            </li>
+                            </li> -->
                         </ul>
                     </nav>
 
@@ -140,6 +140,7 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
 
@@ -148,6 +149,8 @@ const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = us
 
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
 const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
+
+const route = useRoute()
 
 const imagenBanner = ref(null)
 
@@ -166,6 +169,31 @@ const currentPanel = ref(1)
 const navigateToPanel = (panelNumber) => {
     currentPanel.value = panelNumber
 }
+
+const isOnHome = computed(() => {
+    return route.path === '/' || route.path === '/waterplast'
+})
+
+const conditionalMenu = computed(() => {
+    return menu.map(item => {
+        // Si estamos en la home, mantener los hash fragments
+        if (isOnHome.value) {
+            return item
+        } else {
+            // En otras páginas:
+            // - Contacto siempre lleva al footer (#footer)
+            // - Otros items llevan a la home (/)
+            if (item.nombre === 'Contacto') {
+                return item // Mantener #footer
+            } else {
+                return {
+                    ...item,
+                    route: '/'
+                }
+            }
+        }
+    })
+})
 
 
 watch(() => props.isOpen, (newVal) => {

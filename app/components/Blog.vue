@@ -13,11 +13,11 @@
                     <HeadingH2>Blog Unike Group</HeadingH2>
                     <p class="text-sm lg:text-xl font-medium">Enterate de las últimas novedades que tenemos para vos</p>
                 </div>
-                <NuxtLink :to="ROUTES_NAMES.UNIKE.BLOG">
+                <!-- <NuxtLink :to="ROUTES_NAMES.UNIKE.BLOG">
                     <ButtonPrimary class="sm:self-start relative z-10 !bg-white md:!bg-primary !text-primary md:!text-white !px-12">Ir al
                         blog
                     </ButtonPrimary>
-                </NuxtLink>
+                </NuxtLink> -->
             </div>
             <div v-if="blogs.length === 0" class="text-center py-8 text-gray-dark">
                 Cargando blogs...

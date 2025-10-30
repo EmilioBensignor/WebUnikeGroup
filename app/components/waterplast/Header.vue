@@ -21,7 +21,7 @@
                         Productos
                     </div>
                     <div
-                        class="w-[59.5rem] xxl:w-[82.25rem] flex gap-6 absolute top-full -left-[200%] xxl:-left-[425%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
+                        class="w-[59.5rem] xxl:w-[82.25rem] flex gap-6 absolute top-full -left-[384%] xxl:-left-[554%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
                         <div class="grid grid-cols-4 gap-3">
                             <div v-if="loading" class="col-span-4 flex justify-center items-center py-8">
                                 <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
@@ -33,7 +33,7 @@
                                 v-for="(categoria, index) in categorias" :key="categoria.id || index" class="relative">
                                 <div class="w-[9.25rem] h-[8.75rem] rounded-2xl overflow-hidden shadow-lg">
                                     <img :src="getCategoriaImageUrl(categoria.imagen_menu)"
-                                        :alt="`Waterplast Categoríaa ${categoria.nombre}`"
+                                        :alt="`Waterplast Categoría ${categoria.nombre}`"
                                         class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
                                 </div>
                                 <p class="absolute top-4 left-0 right-0 text-center text-white font-semibold">
@@ -47,12 +47,12 @@
                             class="w-[17.5rem] xxl:w-[40.25rem] hidden xxl:block h-[18.125rem] object-cover rounded-2xl shadow-lg" />
                     </div>
                 </li>
-                <li v-for="(item, index) in menu" :key="index"
+                <li v-for="(item, index) in conditionalMenu" :key="index"
                     class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 xxl:px-6">
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
-            <div class="relative ml-2 group">
+            <!-- <div class="relative ml-2 group">
                 <ButtonSecondary>
                     Somos Unike Group
                 </ButtonSecondary>
@@ -67,7 +67,7 @@
                         Murallón
                     </NuxtLink>
                 </div>
-            </div>
+            </div> -->
         </nav>
     </header>
 
@@ -75,6 +75,7 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
 
@@ -84,9 +85,36 @@ const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = us
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
 const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
 
+const route = useRoute()
+
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
 const imagenBanner = ref(null)
+
+const isOnHome = computed(() => {
+    return route.path === '/' || route.path === '/waterplast'
+})
+
+const conditionalMenu = computed(() => {
+    return menu.map(item => {
+        // Si estamos en la home, mantener los hash fragments
+        if (isOnHome.value) {
+            return item
+        } else {
+            // En otras páginas:
+            // - Contacto siempre lleva al footer (#footer)
+            // - Otros items llevan a la home (/)
+            if (item.nombre === 'Contacto') {
+                return item // Mantener #footer
+            } else {
+                return {
+                    ...item,
+                    route: '/'
+                }
+            }
+        }
+    })
+})
 
 
 const toggleDrawer = () => {

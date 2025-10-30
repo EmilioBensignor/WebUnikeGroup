@@ -20,27 +20,27 @@ const footerSections = [
             },
         ]
     },
-    {
-        title: "Unike Group",
-        items: [
-            {
-                nombre: "Sobre nosotros",
-                route: ROUTES_NAMES.UNIKE.SOBRE
-            },
-            {
-                nombre: "Waterplast",
-                route: ROUTES_NAMES.WATERPLAST
-            },
-            {
-                nombre: "Rohermet",
-                route: ROUTES_NAMES.UNIKE.ROHERMET
-            },
-            {
-                nombre: "Murallón",
-                route: ROUTES_NAMES.UNIKE.MURALLON
-            },
-        ]
-    },
+    // {
+    //     title: "Unike Group",
+    //     items: [
+    //         {
+    //             nombre: "Sobre nosotros",
+    //             route: ROUTES_NAMES.UNIKE.SOBRE
+    //         },
+    //         {
+    //             nombre: "Waterplast",
+    //             route: ROUTES_NAMES.WATERPLAST
+    //         },
+    //         {
+    //             nombre: "Rohermet",
+    //             route: ROUTES_NAMES.UNIKE.ROHERMET
+    //         },
+    //         {
+    //             nombre: "Murallón",
+    //             route: ROUTES_NAMES.UNIKE.MURALLON
+    //         },
+    //     ]
+    // },
     {
         title: "Ayuda",
         items: [

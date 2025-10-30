@@ -11,6 +11,12 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
+import { useHomeScroll } from '~/composables/useHomeScroll'
+
+const route = useRoute()
+const { scrollToSection } = useHomeScroll()
+
 definePageMeta({
     layout: 'waterplast'
 });
@@ -30,4 +36,28 @@ useSeoMeta({
 useHead({
     titleTemplate: null
 });
+
+// Manejar scroll a secciones cuando hay hash
+watch(
+    () => route.hash,
+    (newHash) => {
+        if (newHash) {
+            // Esperar a que los componentes se monten
+            nextTick(() => {
+                setTimeout(() => {
+                    scrollToSection(newHash)
+                }, 100)
+            })
+        }
+    }
+);
+
+onMounted(() => {
+    // Si hay hash al cargar la página, hacer scroll
+    if (route.hash) {
+        setTimeout(() => {
+            scrollToSection(route.hash)
+        }, 200)
+    }
+})
 </script>

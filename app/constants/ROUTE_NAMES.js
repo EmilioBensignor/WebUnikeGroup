@@ -13,10 +13,10 @@ export const ROUTES_NAMES = {
         BLOG_DETALLE: (slug) => `/blog/${slug}`,
     },
     AYUDA: {
-        FAQS: "#",
+        FAQS: "#faqs",
         TUTORIALES: "https://www.youtube.com/channel/UCf7ptluQ34qdjBTtvmMhKmA",
-        DISTRIBUIDORES: "#",
-        BLOG: "#",
+        DISTRIBUIDORES: "#distribuidores",
+        BLOG: "#blog",
     },
     REDES: {
         INSTAGRAM: "https://www.instagram.com/unikegroupsa/",
