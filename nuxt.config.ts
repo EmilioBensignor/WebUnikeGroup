@@ -47,6 +47,17 @@ export default defineNuxtConfig({
     fallbackTitle: false,
     redirectToCanonicalSiteUrl: false
   },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: [
+        '/api/sitemap-routes'
+      ],
+    },
+    routeRules: {
+      '/**': { cache: { maxAge: 60 * 60 * 24 * 7 } }
+    }
+  },
   fonts: {
     defaults: {
       weights: [300, 400, 500, 600, 700, 800],
