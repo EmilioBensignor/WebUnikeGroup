@@ -1,5 +1,6 @@
 export const useWaterplastOpiniones = () => {
     const supabase = useSupabaseClient()
+    const config = useRuntimeConfig()
 
     const loading = ref(false)
     const opiniones = ref([])
@@ -9,7 +10,7 @@ export const useWaterplastOpiniones = () => {
     const getOpinionImageUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `/image-proxy/waterplast-opiniones/${imagePath}`
+        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-opiniones/${imagePath}`
     }
 
     const fetchOpiniones = async () => {

@@ -10,7 +10,7 @@ export const useWaterplastProductos = () => {
     const getProductoImageUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `/image-proxy/waterplast-productos/${imagePath}`
+        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${imagePath}`
     }
 
     const fetchProductos = async () => {
@@ -279,7 +279,7 @@ export const useWaterplastProductos = () => {
     }
 
     const getImageBaseUrl = (cleanName, imagesFolder = null) => {
-        const baseUrl = `/image-proxy/waterplast-productos/${cleanName}/images`
+        const baseUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${cleanName}/images`
 
         if (imagesFolder) {
             return `${baseUrl}/${imagesFolder}`
@@ -457,7 +457,7 @@ export const useWaterplastProductos = () => {
         try {
             let htmlUrl = producto.archivo_html
             if (!htmlUrl.startsWith('http')) {
-                htmlUrl = `/image-proxy/waterplast-productos/${htmlUrl}`
+                htmlUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${htmlUrl}`
             }
 
             const htmlResponse = await $fetch(htmlUrl)

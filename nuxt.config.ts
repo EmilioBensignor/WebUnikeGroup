@@ -49,6 +49,71 @@ export default defineNuxtConfig({
     fallbackTitle: false,
     redirectToCanonicalSiteUrl: false
   },
+  sitemap: {
+    urls: async () => {
+      const supabaseUrl = process.env.SUPABASE_URL
+      const supabaseKey = process.env.SUPABASE_KEY
+
+      const urls: any[] = [
+        { loc: '/', priority: 1.0 as const },
+        { loc: '/waterplast', priority: 0.9 as const },
+        { loc: '/blog', priority: 0.8 as const }
+      ]
+
+      if (!supabaseUrl || !supabaseKey) {
+        console.warn('⚠️ Supabase credentials not available for sitemap generation')
+        return urls
+      }
+
+      try {
+        const { createClient } = await import('@supabase/supabase-js')
+        const client = createClient(supabaseUrl, supabaseKey)
+
+        // Categories
+        const { data: categorias } = await client
+          .from('waterplast-categorias')
+          .select('slug')
+          .eq('estado', true)
+
+        if (categorias) {
+          categorias.forEach((cat: any) => {
+            urls.push({ loc: `/waterplast/${cat.slug}`, priority: 0.7 as const })
+          })
+        }
+
+        // Products
+        const { data: productos } = await client
+          .from('waterplast-productos')
+          .select('slug, categoria:categoria_id (slug)')
+          .eq('estado', true)
+
+        if (productos) {
+          productos.forEach((prod: any) => {
+            if (prod.categoria?.slug) {
+              urls.push({ loc: `/waterplast/${prod.categoria.slug}/${prod.slug}`, priority: 0.6 as const })
+            }
+          })
+        }
+
+        // Blogs
+        const { data: blogs } = await client
+          .from('blog')
+          .select('slug')
+
+        if (blogs) {
+          blogs.forEach((blog: any) => {
+            urls.push({ loc: `/blog/${blog.slug}`, priority: 0.6 as const })
+          })
+        }
+
+        console.log(`✅ Sitemap URLs: ${urls.length} rutas generadas`)
+      } catch (error) {
+        console.error('Error generating sitemap URLs:', error)
+      }
+
+      return urls
+    }
+  },
   nitro: {
     prerender: {
       crawlLinks: true,
@@ -117,7 +182,8 @@ export default defineNuxtConfig({
         }
 
         const finalRouteCount = nitroConfig.prerender.routes.length
-        const addedRoutes = finalRouteCount - initialRouteCount
+        console.log(`\n✅ Prerender hook completado: ${finalRouteCount - initialRouteCount} rutas dinámicas agregadas`)
+        console.log(`📋 Total routes: ${finalRouteCount}`)
       } catch (error: any) {
         console.error(error)
       }
