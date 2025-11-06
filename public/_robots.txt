@@ -6,4 +6,4 @@ Disallow: /admin/
 Disallow: /.nuxt/
 
 # Sitemap
-Sitemap: https://unikegroup.com.ar/sitemap.xml
+Sitemap: https://web-unike-group.vercel.app/sitemap.xml
