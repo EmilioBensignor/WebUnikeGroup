@@ -10,7 +10,7 @@ export const useWaterplastImagenesDestacadas = () => {
     const getImagenDestacadaUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `/image-proxy/waterplast-imagenes-destacadas/${imagePath}`
+        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-imagenes-destacadas/${imagePath}`
     }
 
     const fetchImagenesDestacadas = async () => {

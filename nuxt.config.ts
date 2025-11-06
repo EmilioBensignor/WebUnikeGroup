@@ -69,30 +69,34 @@ export default defineNuxtConfig({
       const supabaseKey = process.env.SUPABASE_KEY
 
       if (!supabaseUrl || !supabaseKey) {
-        console.warn('⚠️  SUPABASE_URL y SUPABASE_KEY son requeridos para prerender')
         return
       }
 
       try {
         const client = createClient(supabaseUrl, supabaseKey)
+        const initialRouteCount = nitroConfig.prerender.routes.length
 
-        const { data: categorias } = await client
+        const { data: categorias, error: catError } = await client
           .from('waterplast-categorias')
           .select('slug')
           .eq('estado', true)
 
-        if (categorias && Array.isArray(categorias)) {
+        if (catError) {
+          console.error('❌ Error fetching categorias:', catError.message)
+        } else if (categorias && Array.isArray(categorias)) {
           categorias.forEach((cat: any) => {
             nitroConfig.prerender.routes.push(`/waterplast/${cat.slug}`)
           })
         }
 
-        const { data: productos } = await client
+        const { data: productos, error: prodError } = await client
           .from('waterplast-productos')
           .select('slug, categoria:categoria_id (slug)')
           .eq('estado', true)
 
-        if (productos && Array.isArray(productos)) {
+        if (prodError) {
+          console.error('❌ Error fetching productos:', prodError.message)
+        } else if (productos && Array.isArray(productos)) {
           productos.forEach((prod: any) => {
             if (prod.categoria?.slug) {
               nitroConfig.prerender.routes.push(`/waterplast/${prod.categoria.slug}/${prod.slug}`)
@@ -100,19 +104,22 @@ export default defineNuxtConfig({
           })
         }
 
-        const { data: blogs } = await client
-          .from('blogs')
+        const { data: blogs, error: blogError } = await client
+          .from('blog')
           .select('slug')
-          .eq('estado', true)
 
-        if (blogs && Array.isArray(blogs)) {
+        if (blogError) {
+          console.error('❌ Error fetching blogs:', blogError.message)
+        } else if (blogs && Array.isArray(blogs)) {
           blogs.forEach((blog: any) => {
             nitroConfig.prerender.routes.push(`/blog/${blog.slug}`)
           })
         }
 
+        const finalRouteCount = nitroConfig.prerender.routes.length
+        const addedRoutes = finalRouteCount - initialRouteCount
       } catch (error: any) {
-        console.error('❌ Error al cargar rutas dinámicas:', error?.message || 'Error desconocido')
+        console.error(error)
       }
     }
   },

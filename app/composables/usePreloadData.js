@@ -41,6 +41,7 @@ export const usePreloadData = () => {
 
       if (!images) {
         const supabase = useSupabaseClient();
+        const config = useRuntimeConfig();
         const { data } = await supabase
           .from('waterplast-imagenes-destacadas')
           .select(FIELD_MAPPINGS.imagenes_destacadas)
@@ -57,7 +58,7 @@ export const usePreloadData = () => {
                   const link = document.createElement('link');
                   link.rel = 'preload';
                   link.as = 'image';
-                  link.href = `/image-proxy/waterplast-imagenes-destacadas/${img[size]}`;
+                  link.href = `${config.public.supabase.url}/storage/v1/object/public/waterplast-imagenes-destacadas/${img[size]}`;
                   document.head.appendChild(link);
                 }
               });
