@@ -1,6 +1,5 @@
 export const useWaterplastCategorias = () => {
     const supabase = useSupabaseClient()
-    const config = useRuntimeConfig()
 
     const loading = ref(false)
     const categorias = ref([])
@@ -10,19 +9,19 @@ export const useWaterplastCategorias = () => {
     const getCategoriaImageUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-categorias/${imagePath}`
+        return `/image-proxy/waterplast-categorias/${imagePath}`
     }
 
     const getCategoriaIconUrl = (iconPath) => {
         if (!iconPath) return null
         if (iconPath.startsWith('http')) return iconPath
-        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-categorias/${iconPath}`
+        return `/image-proxy/waterplast-categorias/${iconPath}`
     }
 
     const getCategoriaImagenRedUrl = (imagePath) => {
         if (!imagePath) return null
         if (imagePath.startsWith('http')) return imagePath
-        return `${config.public.supabase.url}/storage/v1/object/public/waterplast-categorias/${imagePath}`
+        return `/image-proxy/waterplast-categorias/${imagePath}`
     }
 
     const fetchCategorias = async () => {

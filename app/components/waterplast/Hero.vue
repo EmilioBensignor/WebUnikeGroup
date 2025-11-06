@@ -73,7 +73,9 @@ const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
 const imagenHeroHome = ref(null)
 
 onMounted(async () => {
-    fetchCategorias()
+    setTimeout(() => {
+        fetchCategorias()
+    }, 0)
 
     try {
         const imagenHero = await fetchImagenDestacadaBySlug('imagen-hero-home')

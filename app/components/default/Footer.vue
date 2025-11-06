@@ -62,16 +62,13 @@ const isOnHome = computed(() => {
 
 const filteredSections = computed(() => {
     return footerSections.map((section) => {
-        // Si es la sección de Ayuda, aplicar lógica condicional a los items
         if (section.title === 'Ayuda') {
             return {
                 ...section,
                 items: section.items.map((item) => {
-                    // Si estamos en la home, mantener las rutas originales
                     if (isOnHome.value) {
                         return item;
                     } else {
-                        // En otras páginas, cambiar rutas hash a la home
                         if (item.route && item.route.startsWith('#')) {
                             return {
                                 ...item,

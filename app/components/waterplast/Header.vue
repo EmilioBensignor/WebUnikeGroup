@@ -97,15 +97,11 @@ const isOnHome = computed(() => {
 
 const conditionalMenu = computed(() => {
     return menu.map(item => {
-        // Si estamos en la home, mantener los hash fragments
         if (isOnHome.value) {
             return item
         } else {
-            // En otras páginas:
-            // - Contacto siempre lleva al footer (#footer)
-            // - Otros items llevan a la home (/)
             if (item.nombre === 'Contacto') {
-                return item // Mantener #footer
+                return item
             } else {
                 return {
                     ...item,
@@ -130,7 +126,9 @@ const handleScroll = () => {
 }
 
 onMounted(async () => {
-    fetchCategorias()
+    setTimeout(() => {
+        fetchCategorias()
+    }, 0)
 
     try {
         const imagenMenu = await fetchImagenDestacadaBySlug('imagen-menu')

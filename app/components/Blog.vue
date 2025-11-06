@@ -51,6 +51,8 @@ import { useBlog } from '~/composables/useBlog'
 const { blogs, fetchBlogs } = useBlog()
 
 onMounted(() => {
-    fetchBlogs()
+    setTimeout(() => {
+        fetchBlogs()
+    }, 100)
 })
 </script>

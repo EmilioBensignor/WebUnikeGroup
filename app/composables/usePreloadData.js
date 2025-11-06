@@ -57,7 +57,7 @@ export const usePreloadData = () => {
                   const link = document.createElement('link');
                   link.rel = 'preload';
                   link.as = 'image';
-                  link.href = img[size];
+                  link.href = `/image-proxy/waterplast-imagenes-destacadas/${img[size]}`;
                   document.head.appendChild(link);
                 }
               });
