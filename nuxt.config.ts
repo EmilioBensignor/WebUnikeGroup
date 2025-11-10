@@ -1,10 +1,24 @@
 import { createClient } from '@supabase/supabase-js'
 
 export default defineNuxtConfig({
+  // 🔧 Fix para Unlighthouse y páginas dinámicas
+  experimental: {
+    payloadExtraction: false
+  },
+
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  css: ["~/assets/css/main.css"],
-  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/tailwindcss', '@nuxtjs/seo', '@nuxtjs/supabase'],
+  css: ['~/assets/css/main.css'],
+
+  modules: [
+    '@nuxt/fonts',
+    '@nuxt/icon',
+    '@nuxt/image',
+    '@pinia/nuxt',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/seo',
+    '@nuxtjs/supabase'
+  ],
 
   app: {
     head: {
@@ -34,13 +48,14 @@ export default defineNuxtConfig({
       supabase: {
         url: process.env.SUPABASE_URL
       }
-    },
+    }
   },
 
   site: {
     url: 'https://web-unike-group.vercel.app',
     name: 'Waterplast - Unike Group',
-    description: 'En Unike Group desarrollamos soluciones innovadoras para el almacenamiento y tratamiento del agua en Argentina. Nuestros tanques Waterplast garantizan calidad, durabilidad y protección antibacteriana. Descubrí nuestra red de distribuidores y asesorate con nuestros expertos en soluciones hídricas sustentables.',
+    description:
+      'En Unike Group desarrollamos soluciones innovadoras para el almacenamiento y tratamiento del agua en Argentina. Nuestros tanques Waterplast garantizan calidad, durabilidad y protección antibacteriana. Descubrí nuestra red de distribuidores y asesorate con nuestros expertos en soluciones hídricas sustentables.',
     defaultLocale: 'es'
   },
 
@@ -79,6 +94,7 @@ export default defineNuxtConfig({
             urls.push({ loc: `/waterplast/${cat.slug}`, priority: 0.7 })
           })
         }
+
         const { data: productos } = await client
           .from('waterplast-productos')
           .select('slug, categoria:categoria_id (slug)')
@@ -87,21 +103,21 @@ export default defineNuxtConfig({
         if (productos) {
           productos.forEach((prod: any) => {
             if (prod.categoria?.slug) {
-              urls.push({ loc: `/waterplast/${prod.categoria.slug}/${prod.slug}`, priority: 0.6 })
+              urls.push({
+                loc: `/waterplast/${prod.categoria.slug}/${prod.slug}`,
+                priority: 0.6
+              })
             }
           })
         }
 
-        const { data: blogs } = await client
-          .from('blog')
-          .select('slug')
+        const { data: blogs } = await client.from('blog').select('slug')
 
         if (blogs) {
           blogs.forEach((blog: any) => {
             urls.push({ loc: `/blog/${blog.slug}`, priority: 0.6 })
           })
         }
-
       } catch (error) {
         console.error('Error generating sitemap:', error)
       }
@@ -132,7 +148,6 @@ export default defineNuxtConfig({
 
       try {
         const client = createClient(supabaseUrl, supabaseKey)
-        const initialCount = nitroConfig.prerender.routes.length
 
         const { data: categorias } = await client
           .from('waterplast-categorias')
@@ -153,21 +168,20 @@ export default defineNuxtConfig({
         if (productos) {
           productos.forEach((prod: any) => {
             if (prod.categoria?.slug) {
-              nitroConfig.prerender.routes.push(`/waterplast/${prod.categoria.slug}/${prod.slug}`)
+              nitroConfig.prerender.routes.push(
+                `/waterplast/${prod.categoria.slug}/${prod.slug}`
+              )
             }
           })
         }
 
-        const { data: blogs } = await client
-          .from('blog')
-          .select('slug')
+        const { data: blogs } = await client.from('blog').select('slug')
 
         if (blogs) {
           blogs.forEach((blog: any) => {
             nitroConfig.prerender.routes.push(`/blog/${blog.slug}`)
           })
         }
-
       } catch (error) {
         console.error('❌ Error prerendering routes:', error)
       }
@@ -176,7 +190,7 @@ export default defineNuxtConfig({
 
   fonts: {
     defaults: {
-      weights: [300, 400, 500, 600, 700, 800],
+      weights: [300, 400, 500, 600, 700, 800]
     }
   },
 
@@ -208,6 +222,6 @@ export default defineNuxtConfig({
   },
 
   supabase: {
-    redirect: false,
-  },
+    redirect: false
+  }
 })
