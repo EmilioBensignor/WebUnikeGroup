@@ -9,7 +9,7 @@
           <div class="flex flex-col md:flex-row-reverse gap-6">
             <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6 xxl:gap-8">
               <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
-              <p class="text-sm lg:text-xl text-terciary font-medium">{{ producto?.descripcion }}</p>
+              <p class="text-sm lg:text-xl text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}</p>
               <WaterplastProductoBotones v-if="producto" :producto="producto" class="hidden md:flex lg:hidden" />
             </div>
             <WaterplastProductoModelo class="lg:hidden" />
