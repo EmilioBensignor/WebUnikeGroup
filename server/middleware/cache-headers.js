@@ -1,6 +1,8 @@
 export default defineEventHandler((event) => {
   const path = event.node.req.url || ''
 
+  if (path.startsWith('/_nuxt/')) return
+
   if (path.includes('/storage/v1/object/public/')) {
     setHeader(event, 'Cache-Control', 'public, max-age=5184000, immutable')
     setHeader(event, 'CDN-Cache-Control', 'max-age=5184000')
@@ -22,10 +24,5 @@ export default defineEventHandler((event) => {
   if (/\.(js|css)$/i.test(path)) {
     setHeader(event, 'Cache-Control', 'public, max-age=31536000, immutable')
     setHeader(event, 'CDN-Cache-Control', 'max-age=31536000')
-  }
-
-  const contentLength = event.node.res.getHeader('content-length')
-  if (contentLength && parseInt(contentLength) > 1024) {
-    setHeader(event, 'Vary', 'Accept-Encoding')
   }
 })
