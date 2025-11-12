@@ -106,12 +106,6 @@ watch(() => currentBlog.value, (newBlog) => {
             title: `${newBlog.titulo} | Blog Unike Group`,
             meta: [
                 { name: 'description', content: newBlog.titulo }
-            ],
-            link: [
-                {
-                    rel: 'canonical',
-                    href: `${config.public.siteUrl || 'https://web-unike-group.vercel.app'}/blog/${slug}`
-                }
             ]
         })
     }

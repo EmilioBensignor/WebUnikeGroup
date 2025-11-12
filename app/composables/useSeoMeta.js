@@ -1,7 +1,6 @@
 export const useWaterplastSeo = () => {
   const config = useRuntimeConfig()
 
-  // Garantizar que siempre tengamos una UR base válida
   const getBaseUrl = () => {
     return config.public.siteUrl || 'https://web-unike-group.vercel.app'
   }
@@ -9,15 +8,15 @@ export const useWaterplastSeo = () => {
     if (!categoriaData) return
 
     const title = `${categoriaData.nombre} - Waterplast | Unike Group`
-    
+
     const caracteristicas = [
       categoriaData.caracteristica1,
       categoriaData.caracteristica2,
       categoriaData.caracteristica3
     ].filter(Boolean).join('. ')
-    
+
     const description = `Descubre nuestros productos de ${categoriaData.nombre} Waterplast en Argentina. ${caracteristicas}. Soluciones innovadoras para almacenamiento y tratamiento de agua con calidad garantizada.`
-    
+
     const keywords = [
       categoriaData.nombre,
       'Waterplast',
@@ -48,13 +47,13 @@ export const useWaterplastSeo = () => {
       ogSiteName: 'Waterplast - Unike Group',
       ogType: 'website',
       ogUrl: `${baseUrl}/waterplast/${categoriaData.slug}`,
-      
+
       twitterCard: 'summary_large_image',
       twitterTitle: `${categoriaData.nombre} - Waterplast`,
       twitterDescription: description.length > 200 ? description.substring(0, 197) + '...' : description,
       twitterImage: ogImage,
       twitterImageAlt: `${categoriaData.nombre} - Productos Waterplast`,
-      
+
       robots: 'index, follow',
       author: 'Unike Group',
       language: 'es-AR'
@@ -76,18 +75,18 @@ export const useWaterplastSeo = () => {
 
     const categoriaNombre = categoriaData?.nombre || productoData.categoria?.nombre || ''
     const categoriaSlug = categoriaData?.slug || productoData.categoria?.slug || ''
-    
-    const title = categoriaNombre 
+
+    const title = categoriaNombre
       ? `${productoData.nombre} - ${categoriaNombre} Waterplast | Unike Group`
       : `${productoData.nombre} - Waterplast | Unike Group`
-    
+
     let description = ''
     if (productoData.descripcion) {
       description = `${productoData.descripcion} - ${categoriaNombre} Waterplast. `
     } else {
       description = `${productoData.nombre} - ${categoriaNombre} Waterplast. `
     }
-    
+
     const caracteristicas = []
     if (productoData.capacidad_lts) {
       caracteristicas.push(`Capacidad ${productoData.capacidad_lts} litros`)
@@ -98,13 +97,13 @@ export const useWaterplastSeo = () => {
     if (productoData.color) {
       caracteristicas.push(`Color ${productoData.color}`)
     }
-    
+
     if (caracteristicas.length > 0) {
       description += caracteristicas.join('. ') + '. '
     }
-    
+
     description += 'Calidad, durabilidad y garantía en productos para almacenamiento de agua en Argentina.'
-    
+
     const keywords = [
       productoData.nombre,
       categoriaNombre,
@@ -127,7 +126,7 @@ export const useWaterplastSeo = () => {
       title,
       description,
       keywords,
-      
+
       ogTitle: categoriaNombre ? `${productoData.nombre} - ${categoriaNombre}` : productoData.nombre,
       ogDescription: description,
       ogImage,
@@ -135,13 +134,13 @@ export const useWaterplastSeo = () => {
       ogSiteName: 'Waterplast - Unike Group',
       ogType: 'product',
       ogUrl: categoriaSlug ? `${baseUrl}/waterplast/${categoriaSlug}/${productoData.slug}` : undefined,
-      
+
       twitterCard: 'summary_large_image',
       twitterTitle: categoriaNombre ? `${productoData.nombre} - ${categoriaNombre}` : productoData.nombre,
       twitterDescription: description.length > 200 ? description.substring(0, 197) + '...' : description,
       twitterImage: ogImage,
       twitterImageAlt: `${productoData.nombre} - ${categoriaNombre} Waterplast`,
-      
+
       robots: 'index, follow',
       author: 'Unike Group',
       language: 'es-AR'

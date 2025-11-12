@@ -37,12 +37,6 @@ const config = useRuntimeConfig()
 
 useHead({
     titleTemplate: null,
-    link: [
-        {
-            rel: 'canonical',
-            href: `${config.public.siteUrl || 'https://web-unike-group.vercel.app'}`
-        }
-    ]
 });
 
 watch(

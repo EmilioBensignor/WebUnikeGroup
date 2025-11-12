@@ -43,7 +43,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteUrl: process.env.SITE_URL || 'https://web-unike-group.vercel.app',
+      siteUrl: 'https://web-unike-group.vercel.app',
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
       supabase: {
         url: process.env.SUPABASE_URL
