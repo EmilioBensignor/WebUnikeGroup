@@ -1,10 +1,10 @@
 export const useWaterplastSeo = () => {
   const config = useRuntimeConfig()
 
-  /**
-   * Configura los meta tags SEO para una página de categoría
-   * @param {Object} categoriaData - Datos de la categoría desde el CMS
-   */
+  // Garantizar que siempre tengamos una UR base válida
+  const getBaseUrl = () => {
+    return config.public.siteUrl || 'https://web-unike-group.vercel.app'
+  }
   const setSeoForCategoria = (categoriaData) => {
     if (!categoriaData) return
 
@@ -31,22 +31,23 @@ export const useWaterplastSeo = () => {
       'soluciones innovadoras'
     ].filter(Boolean).join(', ')
 
-    const ogImage = categoriaData.imagen_menu 
+    const baseUrl = getBaseUrl()
+    const ogImage = categoriaData.imagen_menu
       ? categoriaData.imagen_menu
-      : `${config.public.siteUrl}/images/waterplast/og-default.jpg`
+      : `${baseUrl}/images/waterplast/og-default.jpg`
 
     useSeoMeta({
       title,
       description,
       keywords,
-      
+
       ogTitle: `${categoriaData.nombre} - Waterplast`,
       ogDescription: description,
       ogImage,
       ogImageAlt: `${categoriaData.nombre} - Productos Waterplast`,
       ogSiteName: 'Waterplast - Unike Group',
       ogType: 'website',
-      ogUrl: `${config.public.siteUrl}/waterplast/${categoriaData.slug}`,
+      ogUrl: `${baseUrl}/waterplast/${categoriaData.slug}`,
       
       twitterCard: 'summary_large_image',
       twitterTitle: `${categoriaData.nombre} - Waterplast`,
@@ -60,21 +61,16 @@ export const useWaterplastSeo = () => {
     })
 
     useHead({
-      titleTemplate: null, 
+      titleTemplate: null,
       link: [
         {
           rel: 'canonical',
-          href: `${config.public.siteUrl}/waterplast/${categoriaData.slug}`
+          href: `${baseUrl}/waterplast/${categoriaData.slug}`
         }
       ]
     })
   }
 
-  /**
-   * Configura los meta tags SEO para una página de producto
-   * @param {Object} productoData - Datos del producto desde el CMS
-   * @param {Object} categoriaData - Datos de la categoría del producto (opcional)
-   */
   const setSeoForProducto = (productoData, categoriaData = null) => {
     if (!productoData) return
 
@@ -122,9 +118,10 @@ export const useWaterplastSeo = () => {
       'calidad garantizada'
     ].filter(Boolean).join(', ')
 
-    const ogImage = productoData.imagen_principal 
+    const baseUrl = getBaseUrl()
+    const ogImage = productoData.imagen_principal
       ? productoData.imagen_principal
-      : (productoData.imagen ? productoData.imagen : `${config.public.siteUrl}/images/waterplast/og-default.jpg`)
+      : (productoData.imagen ? productoData.imagen : `${baseUrl}/images/waterplast/og-default.jpg`)
 
     useSeoMeta({
       title,
@@ -137,7 +134,7 @@ export const useWaterplastSeo = () => {
       ogImageAlt: `${productoData.nombre} - ${categoriaNombre} Waterplast`,
       ogSiteName: 'Waterplast - Unike Group',
       ogType: 'product',
-      ogUrl: categoriaSlug ? `${config.public.siteUrl}/waterplast/${categoriaSlug}/${productoData.slug}` : undefined,
+      ogUrl: categoriaSlug ? `${baseUrl}/waterplast/${categoriaSlug}/${productoData.slug}` : undefined,
       
       twitterCard: 'summary_large_image',
       twitterTitle: categoriaNombre ? `${productoData.nombre} - ${categoriaNombre}` : productoData.nombre,
@@ -152,17 +149,17 @@ export const useWaterplastSeo = () => {
 
     if (categoriaSlug && productoData.slug) {
       useHead({
-        titleTemplate: null, 
+        titleTemplate: null,
         link: [
           {
             rel: 'canonical',
-            href: `${config.public.siteUrl}/waterplast/${categoriaSlug}/${productoData.slug}`
+            href: `${baseUrl}/waterplast/${categoriaSlug}/${productoData.slug}`
           }
         ]
       })
     } else {
       useHead({
-        titleTemplate: null 
+        titleTemplate: null
       })
     }
   }

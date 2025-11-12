@@ -33,7 +33,15 @@ useSeoMeta({
   twitterDescription: 'En Unike Group desarrollamos soluciones innovadoras para el almacenamiento y tratamiento del agua en Argentina. Nuestros tanques Waterplast garantizan calidad, durabilidad y protección antibacteriana. Descubrí nuestra red de distribuidores y asesorate con nuestros expertos en soluciones hídricas sustentables.',
 });
 
+const config = useRuntimeConfig()
+
 useHead({
-  titleTemplate: null
+  titleTemplate: null,
+  link: [
+    {
+      rel: 'canonical',
+      href: `${config.public.siteUrl || 'https://web-unike-group.vercel.app'}/waterplast`
+    }
+  ]
 });
 </script>

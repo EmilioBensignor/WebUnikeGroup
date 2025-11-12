@@ -1,7 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
 export default defineNuxtConfig({
-  // 🔧 Fix para Unlighthouse y páginas dinámicas
   experimental: {
     payloadExtraction: false
   },
@@ -44,6 +43,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      siteUrl: process.env.SITE_URL || 'https://web-unike-group.vercel.app',
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
       supabase: {
         url: process.env.SUPABASE_URL

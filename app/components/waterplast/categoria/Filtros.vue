@@ -29,7 +29,7 @@
                     class="flex flex-col gap-3 lg:gap-4 bg-gray-light rounded-[18px] shadow-md shadow-black/30 text-terciary p-4 lg:p-6">
                     <div class="flex justify-between items-center">
                         <p class="font-bold lg:text-xl">Filtros</p>
-                        <button @click="toggleFiltros"
+                        <button @click="toggleFiltros" aria-label="Toggle Filtros Productos"
                             class="w-6 h-6 flex justify-center items-center bg-white rounded-full shadow-md shadow-black/20 text-secondary md:hidden">
                             <Icon name="tabler:chevron-down" class="w-5 h-5 transition-transform duration-200"
                                 :class="filtrosAbiertos ? 'rotate-180' : ''" />
@@ -49,10 +49,11 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="rango in alturaRangos" :key="rango.label"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ rango.label }}</span>
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                rango.label }}</span>
                                             <div class="relative inline-flex items-center">
-                                                <input :id="`altura-${rango.label}`"
-                                                    :name="`altura-${rango.label}`"
+                                                <input :id="`altura-${rango.label}`" :name="`altura-${rango.label}`"
                                                     v-model="filtros.altura[rango.label]" type="checkbox"
                                                     class="sr-only peer">
                                                 <div
@@ -97,10 +98,11 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="rango in diametroRangos" :key="rango.label"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ rango.label }}</span>
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                rango.label }}</span>
                                             <div class="relative inline-flex items-center">
-                                                <input :id="`diametro-${rango.label}`"
-                                                    :name="`diametro-${rango.label}`"
+                                                <input :id="`diametro-${rango.label}`" :name="`diametro-${rango.label}`"
                                                     v-model="filtros.diametro[rango.label]" type="checkbox"
                                                     class="sr-only peer">
                                                 <div
@@ -117,7 +119,9 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="rango in capacidadRangos" :key="rango.label"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ rango.label }}</span>
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                rango.label }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`capacidad-${rango.label}`"
                                                     :name="`capacidad-${rango.label}`"
@@ -140,7 +144,9 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="orientacion in orientaciones" :key="orientacion"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ orientacion
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                    orientacion
                                                 }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`orientacion-${orientacion}`"
@@ -161,7 +167,9 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="color in colores" :key="color"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ color
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                    color
                                                 }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`color-${color}`" :name="`color-${color}`"
@@ -181,7 +189,9 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="tech in tecnologias" :key="tech"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ tech }}</span>
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                tech }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`tecnologia-${tech}`" :name="`tecnologia-${tech}`"
                                                     v-model="filtros.tecnologia[tech]" type="checkbox"
@@ -200,7 +210,9 @@
                                     <div class="flex flex-col gap-1.5">
                                         <label v-for="opcion in opciones" :key="opcion"
                                             class="flex items-center justify-between cursor-pointer group">
-                                            <span class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{ opcion
+                                            <span
+                                                class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
+                                                    opcion
                                                 }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`opcion-${opcion}`" :name="`opcion-${opcion}`"
@@ -224,11 +236,14 @@
                 </HeadingH2>
                 <div v-if="productosFiltrados.length === 0"
                     class="flex flex-col items-center text-center gap-4 lg:gap-5 xxl:gap-6 bg-gray-blue rounded-lg p-3 md:p-5 lg:p-6 xxl:p-8">
-                    <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu búsqueda.</p>
+                    <p class="text-sm lg:text-base xxl:text-xl font-bold">No hay productos que coincidan con tu
+                        búsqueda.</p>
                     <ButtonSecondary @click="limpiarFiltros">
                         Limpiar filtros
                     </ButtonSecondary>
-                    <p class="text-xs lg:text-sm xxl:text-base font-medium">O <NuxtLink :to="`tel:${ROUTES_NAMES.CONTACTO.TELEFONO}`" class="text-primary underline">ponete en contacto</NuxtLink> con nosotros.</p>
+                    <p class="text-xs lg:text-sm xxl:text-base font-medium">O <NuxtLink
+                            :to="`tel:${ROUTES_NAMES.CONTACTO.TELEFONO}`" class="text-primary underline">ponete en
+                            contacto</NuxtLink> con nosotros.</p>
                 </div>
                 <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-2 lg:gap-y-4">
                     <WaterplastCategoriaCard v-for="producto in productosVisibles" :key="producto.id"
