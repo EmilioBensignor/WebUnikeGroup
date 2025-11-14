@@ -9,7 +9,7 @@
           <div class="flex flex-col md:flex-row-reverse gap-6">
             <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6 xxl:gap-8">
               <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
-              <p class="text-sm lg:text-xl text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}</p>
+              <p class="text-sm lg:text-md text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}</p>
               <WaterplastProductoBotones v-if="producto" :producto="producto" class="hidden md:flex lg:hidden" />
             </div>
             <WaterplastProductoModelo class="lg:hidden" />
@@ -123,7 +123,7 @@
     </DefaultSection>
     <WaterplastOpiniones />
     <DefaultSection v-if="imagenesRedes.length > 0"
-      class="w-full flex flex-col items-center gap-3 md:gap-6 xxl:gap-8 py-6 lg:py-12 md:px-16">
+      class="hidden w-full flex-col items-center gap-3 md:gap-6 xxl:gap-8 py-6 lg:py-12 md:px-16">
       <HeadingH2 class="text-primary">Seguinos en nuestras redes</HeadingH2>
       <CarouselStatic :slides-per-view="{ base: 1.4, sm: 2.5, md: 3, lg: 3, xl: 4, xxl: 4 }">
         <NuxtLink v-for="imagen in imagenesRedes" :key="imagen.name" :to="ROUTES_NAMES.REDES.INSTAGRAM" target="_blank"

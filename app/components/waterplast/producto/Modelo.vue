@@ -11,7 +11,7 @@
             </p>
         </div>
 
-        <div v-else-if="has3DViewer">
+        <div v-else-if="has3DViewer" class="lg:scale-[140%] lg:mt-12 xxl:mt-20">
             <div class="xr-wrap">
                 <div class="xr-box">
                     <iframe :src="get3DViewerUrl()" :title="`Visor 3D - ${producto.nombre}`" allowfullscreen scrolling="no" class="xr-iframe"></iframe>
