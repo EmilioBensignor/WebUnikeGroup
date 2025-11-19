@@ -23,7 +23,7 @@
         </div>
         <div class="flex flex-col gap-1 xxl:gap-2 text-xs lg:text-sm text-terciary">
             <p class="font-bold">{{ tituloOpinion }}</p>
-            <p class="font-medium">{{ textoCompleto }}</p>
+            <p class="font-medium line-clamp-4">{{ textoCompleto }}</p>
         </div>
     </div>
 </template>

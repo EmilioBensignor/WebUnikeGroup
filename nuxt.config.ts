@@ -128,7 +128,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/waterplast', '/blog', '/sitemap.xml']
+      routes: ['/', '/waterplast', '/blog', '/sitemap.xml'],
+      ignore: ['/admin']
     },
     routeRules: {
       '/**': { cache: { maxAge: 60 * 60 * 24 * 7 } }
