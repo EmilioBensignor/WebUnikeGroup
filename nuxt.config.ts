@@ -1,12 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
 export default defineNuxtConfig({
-  experimental: {
-    payloadExtraction: false
-  },
-
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  ssr: true,
   css: ['~/assets/css/main.css'],
 
   modules: [
@@ -36,6 +33,8 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', href: '/images/Unike-Group-Logo.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+        { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
+        { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
         { rel: 'preconnect', href: 'https://fxytgajevhfuzwlyaorb.supabase.co' }
       ]
     }

@@ -3,12 +3,14 @@
         <picture class="w-full">
             <img v-if="imagenHeroHome?.imagen_grande" :src="imagenHeroHome.imagen_grande" alt="Waterplast"
                 fetchpriority="high"
+                decoding="async"
                 class="hidden lg:block w-full h-[38rem] xl:h-[40rem] object-cover object-right xxl:object-center">
             <img v-if="imagenHeroHome?.imagen_mediana" :src="imagenHeroHome.imagen_mediana" alt="Waterplast"
                 fetchpriority="high"
+                decoding="async"
                 class="hidden md:block lg:hidden w-full h-96 object-cover">
             <img v-if="imagenHeroHome?.imagen_chica" :src="imagenHeroHome.imagen_chica" alt="Waterplast"
-                fetchpriority="high"
+                decoding="async"
                 class="block md:hidden w-full h-40 sm:h-60 object-cover">
         </picture>
         <div
@@ -21,7 +23,7 @@
                 </p>
             </div>
         </div>
-        <CarouselStatic :slides-per-view="{ base: 1.7, sm: 2.7, md: 3.7, lg: 4, xl: 4, xxl: 5 }" :button-position="{
+        <CarouselStatic v-if="!loading" :slides-per-view="{ base: 1.7, sm: 2.7, md: 3.7, lg: 4, xl: 4, xxl: 5 }" :button-position="{
             top: '47%',
             transform: 'translateY(-50%)',
             left: {
@@ -37,10 +39,7 @@
                 xxl: '-2rem',
             }
         }" class="-mt-[4.5rem] lg:-mt-[6.5rem]">
-            <div v-if="loading" class="flex justify-center items-center min-h-[200px]">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-            </div>
-            <div v-else-if="error" class="text-center text-white py-8">
+            <div v-if="error" class="text-center text-white py-8">
                 <p>Error al cargar las categorías: {{ error }}</p>
             </div>
             <NuxtLink v-else :to="ROUTES_NAMES.WATERPLAST.CATEGORIA(categoria.slug)"
@@ -58,6 +57,7 @@
                 </div>
             </NuxtLink>
         </CarouselStatic>
+        <SkeletonCategoryCarousel v-else class="px-4 md:px-8 lg:px-16 xxl:px-0 xxl:max-w-[1304px] xxl:mx-auto" />
     </DefaultSection>
 </template>
 
