@@ -126,7 +126,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'static',
+    preset: 'vercel-static',
     prerender: {
       crawlLinks: true,
       routes: ['/', '/waterplast', '/blog', '/sitemap.xml'],
