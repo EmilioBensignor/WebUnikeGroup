@@ -8,6 +8,10 @@ dist
 
 # Node dependencies
 node_modules
+node_modules/.cache
+
+# Vercel
+.vercel
 
 # Logs
 logs
