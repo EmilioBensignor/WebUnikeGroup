@@ -126,6 +126,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'static',
     prerender: {
       crawlLinks: true,
       routes: ['/', '/waterplast', '/blog', '/sitemap.xml'],
@@ -223,5 +224,8 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false
+  },
+  experimental: {
+    payloadExtraction: false
   }
 })
