@@ -4,7 +4,7 @@
       :style="{ '--categoria-color': categoriaColor }"></span>
     <DefaultSection class="py-6 px-4 md:p-16 md:pb-8 lg:pt-44 lg:pb-12 lg:px-16 xxl:py-32">
       <div class="w-full xxl:max-w-[1304px] flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xxl:gap-16">
-        <WaterplastProductoModelo class="hidden lg:block xxl:w-[40%]" />
+        <ProductoModelo class="hidden lg:block xxl:w-[40%]" />
         <div class="lg:w-1/2 xxl:w-[60%] flex flex-col gap-6 xxl:gap-8">
           <div class="flex flex-col md:flex-row-reverse gap-6">
             <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6 xxl:gap-8">
@@ -12,7 +12,7 @@
               <p class="text-sm lg:text-md text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}</p>
               <WaterplastProductoBotones v-if="producto" :producto="producto" class="hidden md:flex lg:hidden" />
             </div>
-            <WaterplastProductoModelo class="lg:hidden" />
+            <ProductoModelo class="lg:hidden" />
           </div>
 
           <div class="flex flex-col gap-6 xxl:gap-8">
