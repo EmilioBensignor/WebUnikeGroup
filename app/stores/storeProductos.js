@@ -3,7 +3,7 @@ import { ref, readonly } from 'vue'
 
 const CACHE_KEY_ALL = 'waterplast_productos_all'
 const CACHE_KEY_BY_CATEGORIA = 'waterplast_productos_categoria_'
-const CACHE_TTL = 24 * 60
+const CACHE_TTL = 1 * 60
 
 export const useStoreProductos = defineStore('productos', () => {
   const supabase = useSupabaseClient()
@@ -168,6 +168,7 @@ export const useStoreProductos = defineStore('productos', () => {
           )
         `)
         .eq('slug', slug)
+        .eq('estado', true)
         .single()
 
       if (supabaseError) throw supabaseError
@@ -199,10 +200,11 @@ export const useStoreProductos = defineStore('productos', () => {
       if (categoriaError) throw categoriaError
 
       const { data, error: supabaseError } = await supabase
-        .from('waterplast-productos')
+        .from('waterplast-produtos')
         .select('*')
         .eq('slug', productoSlug)
         .eq('categoria_id', categoriaData.id)
+        .eq('estado', true)
         .single()
 
       if (supabaseError) throw supabaseError

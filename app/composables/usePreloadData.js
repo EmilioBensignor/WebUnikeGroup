@@ -18,12 +18,11 @@ export const usePreloadData = () => {
         const { data } = await supabase
           .from('waterplast-categorias')
           .select(FIELD_MAPPINGS.categorias)
-          .eq('estado', true)
           .order('orden', { ascending: true });
 
         if (data) {
           categorias = data;
-          await saveToCache(cacheKey, categorias, 24 * 60);
+          await saveToCache(cacheKey, categorias, 1 * 60);
         }
       }
 
@@ -49,7 +48,7 @@ export const usePreloadData = () => {
 
         if (data) {
           images = data;
-          await saveToCache(cacheKey, images, 24 * 60);
+          await saveToCache(cacheKey, images, 1 * 60);
 
           if (import.meta.client) {
             data.forEach(img => {
@@ -113,7 +112,7 @@ export const usePreloadData = () => {
 
         if (data) {
           distributors = data;
-          await saveToCache(cacheKey, distributors, 24 * 60);
+          await saveToCache(cacheKey, distributors, 1 * 60);
         }
       }
 
