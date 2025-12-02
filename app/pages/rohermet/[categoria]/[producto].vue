@@ -33,6 +33,7 @@ onMounted(async () => {
       .from('rohermet-productos')
       .select('*')
       .eq('slug', route.params.producto)
+      .eq('estado', true)
       .single()
 
     if (err) throw err

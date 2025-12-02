@@ -52,6 +52,7 @@ export const useRohermetCategorias = () => {
                 .from('rohermet-categorias')
                 .select('*')
                 .eq('slug', slug)
+                .eq('estado', true)
                 .single()
 
             if (supabaseError) throw supabaseError

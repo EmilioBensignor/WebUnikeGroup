@@ -98,6 +98,7 @@ const fetchProducto = async () => {
                 )
             `)
             .eq('slug', route.params.producto)
+            .eq('estado', true)
             .single()
 
         if (error) throw error
