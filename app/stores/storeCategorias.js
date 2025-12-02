@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, readonly } from 'vue'
 
 const CACHE_KEY = 'waterplast_categorias'
-const CACHE_TTL = 24 * 60
+const CACHE_TTL = 1 * 60
 
 export const useStoreCategorias = defineStore('categorias', () => {
   const supabase = useSupabaseClient()
@@ -70,7 +70,6 @@ export const useStoreCategorias = defineStore('categorias', () => {
       const { data, error: supabaseError } = await supabase
         .from('waterplast-categorias')
         .select('*')
-        .eq('estado', true)
         .order('orden', { ascending: true })
 
       if (supabaseError) throw supabaseError
