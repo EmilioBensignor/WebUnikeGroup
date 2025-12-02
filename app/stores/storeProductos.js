@@ -168,6 +168,7 @@ export const useStoreProductos = defineStore('productos', () => {
           )
         `)
         .eq('slug', slug)
+        .eq('estado', true)
         .single()
 
       if (supabaseError) throw supabaseError
@@ -199,10 +200,11 @@ export const useStoreProductos = defineStore('productos', () => {
       if (categoriaError) throw categoriaError
 
       const { data, error: supabaseError } = await supabase
-        .from('waterplast-productos')
+        .from('waterplast-produtos')
         .select('*')
         .eq('slug', productoSlug)
         .eq('categoria_id', categoriaData.id)
+        .eq('estado', true)
         .single()
 
       if (supabaseError) throw supabaseError
