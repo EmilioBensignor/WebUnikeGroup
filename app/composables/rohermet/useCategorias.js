@@ -21,7 +21,6 @@ export const useRohermetCategorias = () => {
             const { data, error: supabaseError } = await supabase
                 .from('rohermet-categorias')
                 .select('*')
-                .eq('estado', true)
                 .order('orden', { ascending: true })
 
             if (supabaseError) throw supabaseError
@@ -52,7 +51,6 @@ export const useRohermetCategorias = () => {
                 .from('rohermet-categorias')
                 .select('*')
                 .eq('slug', slug)
-                .eq('estado', true)
                 .single()
 
             if (supabaseError) throw supabaseError

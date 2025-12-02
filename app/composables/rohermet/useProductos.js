@@ -36,7 +36,6 @@ export const useRohermetProductos = () => {
                         slug
                     )
                 `)
-                .eq('estado', true)
                 .eq('categoria_id', categoriaData.id)
 
             if (supabaseError) throw supabaseError
@@ -74,7 +73,6 @@ export const useRohermetProductos = () => {
                     )
                 `)
                 .eq('slug', slug)
-                .eq('estado', true)
                 .single()
 
             if (supabaseError) throw supabaseError
@@ -105,7 +103,6 @@ export const useRohermetProductos = () => {
                 .from('rohermet-productos')
                 .select('*')
                 .or(`slug.eq.${slugOrId},id.eq.${slugOrId}`)
-                .eq('estado', true)
                 .single()
 
             if (supabaseError) throw supabaseError
