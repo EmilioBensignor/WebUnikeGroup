@@ -10,7 +10,7 @@
             <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6 xxl:gap-8">
               <div class="flex flex-col gap-1 lg:gap-3">
                 <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
-                <p class="lg:text-[1.75rem] text-terciary font-semibold">{{ producto?.capacidad_lts
+                <p v-if="producto?.capacidad_lts" class="lg:text-[1.75rem] text-terciary font-semibold">{{ producto?.capacidad_lts
                   }} lts</p>
               </div>
               <p class="text-sm lg:text-md text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}
