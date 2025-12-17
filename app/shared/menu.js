@@ -7,7 +7,7 @@ const footerSections = [
             {
                 icon: 'phone-in-talk-outline-rounded',
                 link: 'tel:' + ROUTES_NAMES.CONTACTO.TELEFONO,
-                text: '+54 (011) 4225.1531/7449',
+                text: '+54 9 11 7013 3286',
             },
             {
                 icon: 'mail-outline-rounded',
