@@ -382,16 +382,28 @@ const alturaRangosDisponibles = computed(() => {
     })
 })
 
-const tieneAlturaFiltro = computed(() => alturaRangosDisponibles.value.length > 0)
+const tieneAlturaFiltro = computed(() => alturaRangosDisponibles.value.length > 1)
 
 const tieneAnchoFiltro = computed(() => {
     if (!props.productos?.length) return false
-    return props.productos.some(producto => producto.ancho_cm != null && !isNaN(parseFloat(producto.ancho_cm)))
+    const anchosUnicos = new Set()
+    props.productos.forEach(producto => {
+        if (producto.ancho_cm != null && !isNaN(parseFloat(producto.ancho_cm))) {
+            anchosUnicos.add(parseFloat(producto.ancho_cm))
+        }
+    })
+    return anchosUnicos.size > 1
 })
 
 const tieneLargoFiltro = computed(() => {
     if (!props.productos?.length) return false
-    return props.productos.some(producto => producto.largo_cm != null && !isNaN(parseFloat(producto.largo_cm)))
+    const largosUnicos = new Set()
+    props.productos.forEach(producto => {
+        if (producto.largo_cm != null && !isNaN(parseFloat(producto.largo_cm))) {
+            largosUnicos.add(parseFloat(producto.largo_cm))
+        }
+    })
+    return largosUnicos.size > 1
 })
 
 const diametroRangosDisponibles = computed(() => {
@@ -406,7 +418,7 @@ const diametroRangosDisponibles = computed(() => {
     })
 })
 
-const tieneDiametroFiltro = computed(() => diametroRangosDisponibles.value.length > 0)
+const tieneDiametroFiltro = computed(() => diametroRangosDisponibles.value.length > 1)
 
 const capacidadRangosDisponibles = computed(() => {
     if (!props.productos?.length) return []
@@ -420,7 +432,7 @@ const capacidadRangosDisponibles = computed(() => {
     })
 })
 
-const tieneCapacidadFiltro = computed(() => capacidadRangosDisponibles.value.length > 0)
+const tieneCapacidadFiltro = computed(() => capacidadRangosDisponibles.value.length > 1)
 
 const orientacionesDisponibles = computed(() => {
     if (!props.productos?.length) return []
@@ -428,12 +440,13 @@ const orientacionesDisponibles = computed(() => {
     const orientacionesUnicas = new Set()
     props.productos.forEach(producto => {
         if (producto.orientacion) {
-            const orientacion = producto.orientacion.charAt(0).toUpperCase() + producto.orientacion.slice(1).toLowerCase()
-            orientacionesUnicas.add(orientacion)
+            orientacionesUnicas.add(producto.orientacion.toLowerCase())
         }
     })
 
-    return Array.from(orientacionesUnicas)
+    return Array.from(orientacionesUnicas).map(orientacion =>
+        orientacion.charAt(0).toUpperCase() + orientacion.slice(1)
+    )
 })
 
 const tieneOrientacionFiltro = computed(() => orientacionesDisponibles.value.length > 1)
@@ -444,12 +457,13 @@ const coloresDisponibles = computed(() => {
     const coloresUnicos = new Set()
     props.productos.forEach(producto => {
         if (producto.color) {
-            const color = producto.color.charAt(0).toUpperCase() + producto.color.slice(1).toLowerCase()
-            coloresUnicos.add(color)
+            coloresUnicos.add(producto.color.toLowerCase())
         }
     })
 
-    return Array.from(coloresUnicos)
+    return Array.from(coloresUnicos).map(color =>
+        color.charAt(0).toUpperCase() + color.slice(1)
+    )
 })
 
 const tieneColorFiltro = computed(() => coloresDisponibles.value.length > 1)
@@ -460,12 +474,13 @@ const tecnologiasDisponibles = computed(() => {
     const tecnologiasUnicas = new Set()
     props.productos.forEach(producto => {
         if (producto.tecnologia) {
-            const tecnologia = producto.tecnologia.charAt(0).toUpperCase() + producto.tecnologia.slice(1).toLowerCase()
-            tecnologiasUnicas.add(tecnologia)
+            tecnologiasUnicas.add(producto.tecnologia.toLowerCase())
         }
     })
 
-    return Array.from(tecnologiasUnicas)
+    return Array.from(tecnologiasUnicas).map(tecnologia =>
+        tecnologia.charAt(0).toUpperCase() + tecnologia.slice(1)
+    )
 })
 
 const tieneTecnologiaFiltro = computed(() => tecnologiasDisponibles.value.length > 1)
@@ -599,21 +614,24 @@ const productosFiltrados = computed(() => {
 
         const orientacionesSeleccionadas = Object.keys(filtros.value.orientacion).filter(orientacion => filtros.value.orientacion[orientacion])
         if (orientacionesSeleccionadas.length > 0) {
-            if (!producto.orientacion || !orientacionesSeleccionadas.map(o => o.toLowerCase()).includes(producto.orientacion)) {
+            if (!producto.orientacion) return false
+            if (!orientacionesSeleccionadas.map(o => o.toLowerCase()).includes(producto.orientacion.toLowerCase())) {
                 return false
             }
         }
 
         const coloresSeleccionados = Object.keys(filtros.value.color).filter(color => filtros.value.color[color])
         if (coloresSeleccionados.length > 0) {
-            if (!producto.color || !coloresSeleccionados.map(c => c.toLowerCase()).includes(producto.color)) {
+            if (!producto.color) return false
+            if (!coloresSeleccionados.map(c => c.toLowerCase()).includes(producto.color.toLowerCase())) {
                 return false
             }
         }
 
         const tecnologiasSeleccionadas = Object.keys(filtros.value.tecnologia).filter(tech => filtros.value.tecnologia[tech])
         if (tecnologiasSeleccionadas.length > 0) {
-            if (!producto.tecnologia || !tecnologiasSeleccionadas.map(t => t.toLowerCase()).includes(producto.tecnologia)) {
+            if (!producto.tecnologia) return false
+            if (!tecnologiasSeleccionadas.map(t => t.toLowerCase()).includes(producto.tecnologia.toLowerCase())) {
                 return false
             }
         }

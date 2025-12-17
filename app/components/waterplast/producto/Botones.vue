@@ -14,7 +14,7 @@
             <span class="hidden xxl:inline font-bold">Descargar ficha técnica</span>
         </ButtonPrimary>
 
-        <ButtonPrimary  aria-label="Descargar manual de instalación" @click="downloadArchivo('manual_instalacion')"
+        <ButtonPrimary v-if="producto.manual_instalacion" aria-label="Descargar manual de instalación" @click="downloadArchivo('manual_instalacion')"
             class="min-w-72 lg:min-w-[13.75rem] flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6 cursor-pointer">
             <Icon name="material-symbols:description-outline-rounded" class="w-6 h-6 flex-shrink-0" />
             <span class="xxl:hidden font-bold">Manual de instalación</span>

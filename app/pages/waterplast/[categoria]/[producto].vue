@@ -29,8 +29,8 @@
                   :class="getRelacionadoBorderClass(relacionado, index)"
                   class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
                   <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{
-                    relacionado.capacidad_lts || relacionado.nombre }} lts
-                  </p>
+                    relacionado.capacidad_lts ? `${relacionado.capacidad_lts} lts` : relacionado.nombre
+                  }}</p>
                 </NuxtLink>
               </div>
             </div>
@@ -340,7 +340,6 @@ const fetchProducto = async () => {
       try {
         const relacionados = await fetchProductosRelacionados(data.productos_relacionados)
         const todosLosProductos = [productoConUrls, ...relacionados]
-        // Ordenar por capacidad_lts de menor a mayor
         productosRelacionados.value = todosLosProductos.sort((a, b) => {
           const capacidadA = parseFloat(a.capacidad_lts) || 0
           const capacidadB = parseFloat(b.capacidad_lts) || 0
