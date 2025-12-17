@@ -1,7 +1,7 @@
 export const ROUTES_NAMES = {
     HOME: '/',
     CONTACTO: {
-        TELEFONO: "+541142251531",
+        TELEFONO: "+5491170133286",
         MAIL: "info@unikegroup.com.ar",
         UBICACION: "Av. San Martín 2768, Lanús Buenos Aires, Argentina",
     },

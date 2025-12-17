@@ -4,15 +4,20 @@
       :style="{ '--categoria-color': categoriaColor }"></span>
     <DefaultSection class="py-6 px-4 md:p-16 md:pb-8 lg:pt-44 lg:pb-12 lg:px-16 xxl:py-32">
       <div class="w-full xxl:max-w-[1304px] flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xxl:gap-16">
-        <WaterplastProductoModelo class="hidden lg:block xxl:w-[40%]" />
+        <ProductoModelo class="hidden lg:block xxl:w-[40%]" />
         <div class="lg:w-1/2 xxl:w-[60%] flex flex-col gap-6 xxl:gap-8">
           <div class="flex flex-col md:flex-row-reverse gap-6">
             <div class="md:w-1/2 lg:w-full flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6 xxl:gap-8">
-              <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
-              <p class="text-sm lg:text-md text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}</p>
+              <div class="flex flex-col gap-1 lg:gap-3">
+                <HeadingH1 class="text-terciary">{{ producto?.nombre || route.params.producto }}</HeadingH1>
+                <p v-if="producto?.capacidad_lts" class="lg:text-[1.75rem] text-terciary font-semibold">{{ producto?.capacidad_lts
+                  }} lts</p>
+              </div>
+              <p class="text-sm lg:text-md text-terciary font-medium whitespace-pre-line">{{ producto?.descripcion }}
+              </p>
               <WaterplastProductoBotones v-if="producto" :producto="producto" class="hidden md:flex lg:hidden" />
             </div>
-            <WaterplastProductoModelo class="lg:hidden" />
+            <ProductoModelo class="lg:hidden" />
           </div>
 
           <div class="flex flex-col gap-6 xxl:gap-8">
@@ -23,8 +28,9 @@
                   :aria-label="`Ver producto {{ relacionado.nombre }}`" :style="getRelacionadoStyle(relacionado, index)"
                   :class="getRelacionadoBorderClass(relacionado, index)"
                   class="flex justify-center md:justify-start items-center py-3 px-4 lg:px-6">
-                  <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{ relacionado.nombre }}
-                  </p>
+                  <p class="max-w-36 text-center text-xs lg:text-sm font-bold text-terciary">{{
+                    relacionado.capacidad_lts ? `${relacionado.capacidad_lts} lts` : relacionado.nombre
+                  }}</p>
                 </NuxtLink>
               </div>
             </div>
@@ -333,7 +339,12 @@ const fetchProducto = async () => {
     if (data && data.productos_relacionados && data.productos_relacionados.length > 0) {
       try {
         const relacionados = await fetchProductosRelacionados(data.productos_relacionados)
-        productosRelacionados.value = [productoConUrls, ...relacionados]
+        const todosLosProductos = [productoConUrls, ...relacionados]
+        productosRelacionados.value = todosLosProductos.sort((a, b) => {
+          const capacidadA = parseFloat(a.capacidad_lts) || 0
+          const capacidadB = parseFloat(b.capacidad_lts) || 0
+          return capacidadA - capacidadB
+        })
       } catch (relacionadosError) {
         console.warn('Error loading related products:', relacionadosError)
         productosRelacionados.value = [productoConUrls]

@@ -44,14 +44,14 @@
                         <div v-if="filtrosAbiertos || esPantallaGrande" class="flex flex-col gap-6 text-terciary">
                             <div class="flex flex-col gap-4">
                                 <!-- Altura -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneAlturaFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Altura</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="rango in alturaRangos" :key="rango.label"
+                                        <label v-for="rango in alturaRangosDisponibles" :key="rango.label"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
-                                                rango.label }}</span>
+                                                    rango.label }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`altura-${rango.label}`" :name="`altura-${rango.label}`"
                                                     v-model="filtros.altura[rango.label]" type="checkbox"
@@ -65,7 +65,7 @@
                                 </div>
 
                                 <!-- Ancho -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneAnchoFiltro" class="flex flex-col gap-1.5">
                                     <label for="ancho" class="text-sm lg:text-base font-bold">Ancho</label>
                                     <div class="relative">
                                         <input id="ancho" name="ancho" v-model="filtros.ancho" type="number"
@@ -79,7 +79,7 @@
                                 </div>
 
                                 <!-- Largo -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneLargoFiltro" class="flex flex-col gap-1.5">
                                     <label for="largo" class="text-sm lg:text-base font-bold">Largo</label>
                                     <div class="relative">
                                         <input id="largo" name="largo" v-model="filtros.largo" type="number"
@@ -93,14 +93,14 @@
                                 </div>
 
                                 <!-- Diámetro -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneDiametroFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Diámetro</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="rango in diametroRangos" :key="rango.label"
+                                        <label v-for="rango in diametroRangosDisponibles" :key="rango.label"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
-                                                rango.label }}</span>
+                                                    rango.label }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`diametro-${rango.label}`" :name="`diametro-${rango.label}`"
                                                     v-model="filtros.diametro[rango.label]" type="checkbox"
@@ -114,14 +114,14 @@
                                 </div>
 
                                 <!-- Capacidad -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneCapacidadFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Capacidad</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="rango in capacidadRangos" :key="rango.label"
+                                        <label v-for="rango in capacidadRangosDisponibles" :key="rango.label"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
-                                                rango.label }}</span>
+                                                    rango.label }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`capacidad-${rango.label}`"
                                                     :name="`capacidad-${rango.label}`"
@@ -139,10 +139,10 @@
                             <!-- Filtros de switches -->
                             <div class="flex flex-col gap-4">
                                 <!-- Orientación -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneOrientacionFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Orientación</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="orientacion in orientaciones" :key="orientacion"
+                                        <label v-for="orientacion in orientacionesDisponibles" :key="orientacion"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
@@ -162,10 +162,10 @@
                                 </div>
 
                                 <!-- Color -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneColorFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Color</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="color in colores" :key="color"
+                                        <label v-for="color in coloresDisponibles" :key="color"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
@@ -184,14 +184,14 @@
                                 </div>
 
                                 <!-- Tecnología -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneTecnologiaFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Tecnología</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="tech in tecnologias" :key="tech"
+                                        <label v-for="tech in tecnologiasDisponibles" :key="tech"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
-                                                tech }}</span>
+                                                    tech }}</span>
                                             <div class="relative inline-flex items-center">
                                                 <input :id="`tecnologia-${tech}`" :name="`tecnologia-${tech}`"
                                                     v-model="filtros.tecnologia[tech]" type="checkbox"
@@ -205,10 +205,10 @@
                                 </div>
 
                                 <!-- Opción -->
-                                <div class="flex flex-col gap-1.5">
+                                <div v-if="tieneOpcionesFiltro" class="flex flex-col gap-1.5">
                                     <h3 class="text-sm lg:text-base font-bold">Opción</h3>
                                     <div class="flex flex-col gap-1.5">
-                                        <label v-for="opcion in opciones" :key="opcion"
+                                        <label v-for="opcion in opcionesDisponibles" :key="opcion"
                                             class="flex items-center justify-between cursor-pointer group">
                                             <span
                                                 class="text-xs lg:text-sm text-terciary font-medium group-hover:text-secondary transition-colors">{{
@@ -245,7 +245,7 @@
                             :to="`tel:${ROUTES_NAMES.CONTACTO.TELEFONO}`" class="text-primary underline">ponete en
                             contacto</NuxtLink> con nosotros.</p>
                 </div>
-                <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-2 lg:gap-y-4">
+                <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-2 lg:gap-x-6 lg:gap-y-4">
                     <WaterplastCategoriaCard v-for="producto in productosVisibles" :key="producto.id"
                         :producto="producto" />
                 </div>
@@ -369,10 +369,136 @@ const filtros = ref({
     }
 })
 
-const orientaciones = ['Vertical', 'Horizontal']
-const colores = ['Arena', 'Negro', 'Celeste', 'Gris', 'Blanco', 'Rojo', 'Azul', 'Verde', 'Naranja']
-const tecnologias = ['Soplado', 'Rotomoldeo', 'Soldadura', 'Inyección']
-const opciones = ['Para exteriores', 'Es cisterna']
+// Computed properties para determinar qué filtros mostrar
+const alturaRangosDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    return alturaRangos.filter(rango => {
+        return props.productos.some(producto => {
+            if (producto.altura_cm == null) return false
+            const altura = parseFloat(producto.altura_cm)
+            return !isNaN(altura) && altura >= rango.min && altura < rango.max
+        })
+    })
+})
+
+const tieneAlturaFiltro = computed(() => alturaRangosDisponibles.value.length > 1)
+
+const tieneAnchoFiltro = computed(() => {
+    if (!props.productos?.length) return false
+    const anchosUnicos = new Set()
+    props.productos.forEach(producto => {
+        if (producto.ancho_cm != null && !isNaN(parseFloat(producto.ancho_cm))) {
+            anchosUnicos.add(parseFloat(producto.ancho_cm))
+        }
+    })
+    return anchosUnicos.size > 1
+})
+
+const tieneLargoFiltro = computed(() => {
+    if (!props.productos?.length) return false
+    const largosUnicos = new Set()
+    props.productos.forEach(producto => {
+        if (producto.largo_cm != null && !isNaN(parseFloat(producto.largo_cm))) {
+            largosUnicos.add(parseFloat(producto.largo_cm))
+        }
+    })
+    return largosUnicos.size > 1
+})
+
+const diametroRangosDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    return diametroRangos.filter(rango => {
+        return props.productos.some(producto => {
+            if (producto.diametro_cm == null) return false
+            const diametro = parseFloat(producto.diametro_cm)
+            return !isNaN(diametro) && diametro >= rango.min && diametro < rango.max
+        })
+    })
+})
+
+const tieneDiametroFiltro = computed(() => diametroRangosDisponibles.value.length > 1)
+
+const capacidadRangosDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    return capacidadRangos.filter(rango => {
+        return props.productos.some(producto => {
+            if (producto.capacidad_lts == null) return false
+            const capacidad = parseFloat(producto.capacidad_lts)
+            return !isNaN(capacidad) && capacidad >= rango.min && capacidad < rango.max
+        })
+    })
+})
+
+const tieneCapacidadFiltro = computed(() => capacidadRangosDisponibles.value.length > 1)
+
+const orientacionesDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    const orientacionesUnicas = new Set()
+    props.productos.forEach(producto => {
+        if (producto.orientacion) {
+            orientacionesUnicas.add(producto.orientacion.toLowerCase())
+        }
+    })
+
+    return Array.from(orientacionesUnicas).map(orientacion =>
+        orientacion.charAt(0).toUpperCase() + orientacion.slice(1)
+    )
+})
+
+const tieneOrientacionFiltro = computed(() => orientacionesDisponibles.value.length > 1)
+
+const coloresDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    const coloresUnicos = new Set()
+    props.productos.forEach(producto => {
+        if (producto.color) {
+            coloresUnicos.add(producto.color.toLowerCase())
+        }
+    })
+
+    return Array.from(coloresUnicos).map(color =>
+        color.charAt(0).toUpperCase() + color.slice(1)
+    )
+})
+
+const tieneColorFiltro = computed(() => coloresDisponibles.value.length > 1)
+
+const tecnologiasDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    const tecnologiasUnicas = new Set()
+    props.productos.forEach(producto => {
+        if (producto.tecnologia) {
+            tecnologiasUnicas.add(producto.tecnologia.toLowerCase())
+        }
+    })
+
+    return Array.from(tecnologiasUnicas).map(tecnologia =>
+        tecnologia.charAt(0).toUpperCase() + tecnologia.slice(1)
+    )
+})
+
+const tieneTecnologiaFiltro = computed(() => tecnologiasDisponibles.value.length > 1)
+
+const opcionesDisponibles = computed(() => {
+    if (!props.productos?.length) return []
+
+    const opcionesArr = []
+    const tieneExteriores = props.productos.some(p => p.opcion === 'para_exteriores')
+    const tieneCisterna = props.productos.some(p => p.opcion === 'es_cisterna')
+
+    if (tieneExteriores) opcionesArr.push('Para exteriores')
+    if (tieneCisterna) opcionesArr.push('Es cisterna')
+
+    return opcionesArr
+})
+
+const tieneOpcionesFiltro = computed(() => opcionesDisponibles.value.length > 1)
 
 const filtrosAplicados = computed(() => {
     const aplicados = []
@@ -432,7 +558,7 @@ const filtrosAplicados = computed(() => {
 const productosFiltrados = computed(() => {
     if (!props.productos?.length) return []
 
-    return props.productos.filter(producto => {
+    const filtrados = props.productos.filter(producto => {
         const alturaRangosSeleccionados = Object.keys(filtros.value.altura).filter(rango => filtros.value.altura[rango])
         if (alturaRangosSeleccionados.length > 0) {
             if (producto.altura_cm == null) return false
@@ -488,21 +614,24 @@ const productosFiltrados = computed(() => {
 
         const orientacionesSeleccionadas = Object.keys(filtros.value.orientacion).filter(orientacion => filtros.value.orientacion[orientacion])
         if (orientacionesSeleccionadas.length > 0) {
-            if (!producto.orientacion || !orientacionesSeleccionadas.map(o => o.toLowerCase()).includes(producto.orientacion)) {
+            if (!producto.orientacion) return false
+            if (!orientacionesSeleccionadas.map(o => o.toLowerCase()).includes(producto.orientacion.toLowerCase())) {
                 return false
             }
         }
 
         const coloresSeleccionados = Object.keys(filtros.value.color).filter(color => filtros.value.color[color])
         if (coloresSeleccionados.length > 0) {
-            if (!producto.color || !coloresSeleccionados.map(c => c.toLowerCase()).includes(producto.color)) {
+            if (!producto.color) return false
+            if (!coloresSeleccionados.map(c => c.toLowerCase()).includes(producto.color.toLowerCase())) {
                 return false
             }
         }
 
         const tecnologiasSeleccionadas = Object.keys(filtros.value.tecnologia).filter(tech => filtros.value.tecnologia[tech])
         if (tecnologiasSeleccionadas.length > 0) {
-            if (!producto.tecnologia || !tecnologiasSeleccionadas.map(t => t.toLowerCase()).includes(producto.tecnologia)) {
+            if (!producto.tecnologia) return false
+            if (!tecnologiasSeleccionadas.map(t => t.toLowerCase()).includes(producto.tecnologia.toLowerCase())) {
                 return false
             }
         }
@@ -518,6 +647,13 @@ const productosFiltrados = computed(() => {
         }
 
         return true
+    })
+
+    // Ordenar por litraje (capacidad) de menor a mayor
+    return filtrados.sort((a, b) => {
+        const capacidadA = parseFloat(a.capacidad_lts) || 0
+        const capacidadB = parseFloat(b.capacidad_lts) || 0
+        return capacidadA - capacidadB
     })
 })
 
