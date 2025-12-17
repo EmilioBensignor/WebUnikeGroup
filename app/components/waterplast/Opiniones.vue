@@ -6,13 +6,13 @@
             top: '50%',
             transform: 'translateY(-50%)',
             left: {
-                md: '-5rem',
+                md: '-2rem',
                 lg: '2rem',
                 xl: '2rem',
                 xxl: '-2rem',
             },
             right: {
-                md: '-5rem',
+                md: '-2rem',
                 lg: '2rem',
                 xl: '2rem',
                 xxl: '-2rem',

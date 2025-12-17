@@ -1,17 +1,24 @@
 <template>
-    <div v-if="producto" class="w-full md:max-w-72 flex flex-col sm:flex-row md:flex-col items-center gap-2 lg:gap-4">
+    <div v-if="producto" class="w-full flex flex-row flex-wrap justify-center md:justify-start items-center gap-2 lg:gap-3 xl:gap-4">
         <ButtonPrimary :href="whatsappLink" aria-label="Consultar por este producto" target="_blank" rel="noopener noreferrer"
-            class="w-full lg:w-1/2 flex justify-center items-center gap-2.5 sm:px-6">
+            class="min-w-72 lg:min-w-[13.75rem] flex justify-center items-center gap-2.5 sm:px-6">
             <NuxtImg src="/images/redes/Whatsapp.svg" alt="Logo Whatsapp" class="w-6 h-6 flex-shrink-0" />
             <span class="xxl:hidden font-bold">Consultar</span>
             <span class="hidden xxl:inline font-bold">Consultar por este producto</span>
         </ButtonPrimary>
 
-        <ButtonPrimary v-if="producto.ficha_tecnica" aria-label="Descargar ficha técnica" @click="downloadFichaTecnica"
-            class="w-full lg:w-1/2 flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6 cursor-pointer">
+        <ButtonPrimary v-if="producto.ficha_tecnica" aria-label="Descargar ficha técnica" @click="downloadArchivo('ficha_tecnica')"
+            class="min-w-72 lg:min-w-[13.75rem] flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6 cursor-pointer">
             <Icon name="material-symbols:docs-outline-rounded" class="w-6 h-6 flex-shrink-0" />
             <span class="xxl:hidden font-bold">Ficha técnica</span>
             <span class="hidden xxl:inline font-bold">Descargar ficha técnica</span>
+        </ButtonPrimary>
+
+        <ButtonPrimary  aria-label="Descargar manual de instalación" @click="downloadArchivo('manual_instalacion')"
+            class="min-w-72 lg:min-w-[13.75rem] flex justify-center items-center gap-2.5 !bg-gray-blue !text-terciary sm:px-6 cursor-pointer">
+            <Icon name="material-symbols:description-outline-rounded" class="w-6 h-6 flex-shrink-0" />
+            <span class="xxl:hidden font-bold">Manual de instalación</span>
+            <span class="hidden xxl:inline font-bold">Descargar manual de instalación</span>
         </ButtonPrimary>
     </div>
 </template>
@@ -34,23 +41,24 @@ const whatsappLink = computed(() => {
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 })
 
-const downloadFichaTecnica = async () => {
-    if (!props.producto?.ficha_tecnica) return
+const downloadArchivo = async (tipo) => {
+    const archivoPath = props.producto?.[tipo]
+    if (!archivoPath) return
 
-    const fichaTecnica = props.producto.ficha_tecnica
-
-    const fileName = fichaTecnica.split('/').pop()
+    const fileName = archivoPath.split('/').pop()
     const extension = fileName.split('.').pop()
+
+    const tipoNombre = tipo === 'ficha_tecnica' ? 'ficha-tecnica' : 'manual-instalacion'
     const downloadName = props.producto?.nombre
-        ? `${props.producto.nombre}-ficha-tecnica.${extension}`
+        ? `${props.producto.nombre}-${tipoNombre}.${extension}`
         : fileName
 
     let downloadUrl = ''
 
-    if (fichaTecnica.startsWith('http')) {
-        downloadUrl = fichaTecnica
+    if (archivoPath.startsWith('http')) {
+        downloadUrl = archivoPath
     } else {
-        downloadUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${fichaTecnica}`
+        downloadUrl = `${config.public.supabase.url}/storage/v1/object/public/waterplast-productos/${archivoPath}`
     }
 
     try {
@@ -74,7 +82,7 @@ const downloadFichaTecnica = async () => {
             URL.revokeObjectURL(blobUrl)
         }, 500)
     } catch (error) {
-        console.error('Error al descargar ficha técnica:', error)
+        console.error(`Error al descargar ${tipoNombre}:`, error)
         const downloadLink = document.createElement('a')
         downloadLink.href = downloadUrl
         downloadLink.download = downloadName
