@@ -1,4 +1,4 @@
-export const useWaterplastDistribuidores = () => {
+export const useDistribuidores = (empresa) => {
     const supabase = useSupabaseClient()
     const loading = ref(false)
     const distribuidores = ref([])
@@ -17,7 +17,11 @@ export const useWaterplastDistribuidores = () => {
 
             if (supabaseError) throw supabaseError
 
-            distribuidores.value = data || []
+            const filteredData = data?.filter(distribuidor =>
+                distribuidor.vende && distribuidor.vende.includes(empresa)
+            ) || []
+
+            distribuidores.value = filteredData
         } catch (err) {
             error.value = err.message
             console.error('Error al obtener distribuidores:', err)
@@ -64,7 +68,9 @@ export const useWaterplastDistribuidores = () => {
 
             if (supabaseError) throw supabaseError
 
-            distribuidores.value.unshift(data)
+            if (data.vende && data.vende.includes(empresa)) {
+                distribuidores.value.unshift(data)
+            }
             return data
         } catch (err) {
             error.value = err.message
@@ -91,7 +97,13 @@ export const useWaterplastDistribuidores = () => {
 
             const index = distribuidores.value.findIndex(dist => dist.id === id)
             if (index !== -1) {
-                distribuidores.value[index] = data
+                if (data.vende && data.vende.includes(empresa)) {
+                    distribuidores.value[index] = data
+                } else {
+                    distribuidores.value.splice(index, 1)
+                }
+            } else if (data.vende && data.vende.includes(empresa)) {
+                distribuidores.value.unshift(data)
             }
 
             currentDistribuidor.value = data

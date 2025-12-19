@@ -4,7 +4,7 @@
         class="gap-3 md:gap-6 lg:gap-8 relative bg-gray-light py-6 lg:pt-12 xxl:pt-16 lg:pb-0 px-4 md:px-8 lg:px-16">
         <HeadingH2 class="flex justify-center items-end gap-2 lg:gap-3 text-center text-primary">
             Distribuidores
-            <NuxtImg src="/images/logos/Logo-Waterplast-Azul.svg" alt="Logo Waterplast"
+            <NuxtImg :src="empresaConfig.logo" :alt="empresaConfig.logoAlt"
                 class="w-24 lg:w-32 h-8 lg:h-11 object-contain" />
         </HeadingH2>
         <div
@@ -91,7 +91,15 @@
 </template>
 
 <script setup>
-import { useWaterplastDistribuidores } from '~/composables/waterplast/useDistribuidores.js'
+import { useDistribuidores } from '~/composables/useDistribuidores.js'
+
+const props = defineProps({
+    empresa: {
+        type: String,
+        required: true,
+        validator: (value) => ['waterplast', 'rohermet', 'unike'].includes(value)
+    }
+})
 
 const mapContainer = ref(null)
 const mapLoaded = ref(false)
@@ -107,7 +115,28 @@ const selectedDistribuidor = shallowRef(null)
 let map = null
 let markers = []
 
-const { distribuidores, loading: isLoading, fetchDistribuidores } = useWaterplastDistribuidores()
+const { distribuidores, loading: isLoading, fetchDistribuidores } = useDistribuidores(props.empresa)
+
+const empresaConfig = computed(() => {
+    const configs = {
+        waterplast: {
+            logo: '/images/logos/Logo-Waterplast-Azul.svg',
+            logoAlt: 'Logo Waterplast',
+            marker: '/images/waterplast/Waterplast-Maps.svg'
+        },
+        rohermet: {
+            logo: '/images/logos/Logo-Rohermet-Azul.svg',
+            logoAlt: 'Logo Rohermet',
+            marker: '/images/rohermet/Rohermet-Maps.svg'
+        },
+        unike: {
+            logo: '/images/logos/Logo-Unike-Group.svg',
+            logoAlt: 'Logo Unike Group',
+            marker: '/images/unike/Unike-Maps.svg'
+        }
+    }
+    return configs[props.empresa]
+})
 
 
 const provincias = computed(() => {
@@ -337,7 +366,7 @@ const updateMarkers = () => {
             markerContainer.style.cssText = 'cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;'
 
             const markerImg = document.createElement('img')
-            markerImg.src = '/images/waterplast/Waterplast-Maps.svg'
+            markerImg.src = empresaConfig.value.marker
             markerImg.style.cssText = 'width: 100px; height: 40px; pointer-events: none; display: block;'
             markerImg.alt = distribuidor.nombreComercio
 
