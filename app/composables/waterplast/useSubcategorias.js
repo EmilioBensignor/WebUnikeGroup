@@ -13,7 +13,7 @@ export const useWaterplastSubcategorias = () => {
             const { data, error: supabaseError } = await supabase
                 .from('waterplast-subcategorias')
                 .select('*')
-                .order('numero_orden', { ascending: true })
+                .order('orden', { ascending: true })
 
             if (supabaseError) throw supabaseError
 
@@ -35,7 +35,7 @@ export const useWaterplastSubcategorias = () => {
                 .from('waterplast-subcategorias')
                 .select('*')
                 .eq('categoria_id', categoriaId)
-                .order('numero_orden', { ascending: true })
+                .order('orden', { ascending: true })
 
             if (supabaseError) throw supabaseError
 

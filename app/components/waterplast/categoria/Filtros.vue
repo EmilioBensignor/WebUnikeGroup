@@ -658,8 +658,8 @@ const productosFiltrados = computed(() => {
     })
 
     return filtrados.sort((a, b) => {
-        const subcategoriaA = subcategorias.value.find(s => s.id === a.subcategoria_id)
-        const subcategoriaB = subcategorias.value.find(s => s.id === b.subcategoria_id)
+        const subcategoriaA = a.subcategoria || subcategorias.value.find(s => s.id === a.subcategoria_id)
+        const subcategoriaB = b.subcategoria || subcategorias.value.find(s => s.id === b.subcategoria_id)
 
         const tieneSubcategoriaA = !!subcategoriaA
         const tieneSubcategoriaB = !!subcategoriaB
@@ -668,8 +668,8 @@ const productosFiltrados = computed(() => {
         if (!tieneSubcategoriaA && tieneSubcategoriaB) return 1
 
         if (tieneSubcategoriaA && tieneSubcategoriaB) {
-            const ordenA = subcategoriaA.numero_orden || 0
-            const ordenB = subcategoriaB.numero_orden || 0
+            const ordenA = subcategoriaA.orden || 0
+            const ordenB = subcategoriaB.orden || 0
 
             if (ordenA !== ordenB) {
                 return ordenA - ordenB

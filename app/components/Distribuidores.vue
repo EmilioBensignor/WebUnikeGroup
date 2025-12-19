@@ -97,7 +97,7 @@ const props = defineProps({
     empresa: {
         type: String,
         required: true,
-        validator: (value) => ['waterplast', 'rohermet', 'unike'].includes(value)
+        validator: (value) => ['waterplast', 'rohermet', 'murallon'].includes(value)
     }
 })
 
@@ -129,10 +129,10 @@ const empresaConfig = computed(() => {
             logoAlt: 'Logo Rohermet',
             marker: '/images/rohermet/Rohermet-Maps.svg'
         },
-        unike: {
-            logo: '/images/logos/Logo-Unike-Group.svg',
-            logoAlt: 'Logo Unike Group',
-            marker: '/images/unike/Unike-Maps.svg'
+        murallon: {
+            logo: '/images/logos/Logo-Murallon-Group.svg',
+            logoAlt: 'Logo Murallon Group',
+            marker: '/images/murallon/Murallon-Group-Maps.svg'
         }
     }
     return configs[props.empresa]
