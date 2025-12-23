@@ -77,6 +77,11 @@ export const useWaterplastProductos = () => {
                         nombre,
                         slug,
                         color
+                    ),
+                    subcategoria:subcategoria_id (
+                        id,
+                        nombre,
+                        orden
                     )
                 `)
                 .eq('estado', true)

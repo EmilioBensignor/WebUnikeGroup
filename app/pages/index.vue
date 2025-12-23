@@ -4,7 +4,7 @@
         <WaterplastMuestra />
         <WaterplastSobre />
         <WaterplastOpiniones />
-        <WaterplastDistribuidores />
+        <Distribuidores empresa="waterplast" />
         <WaterplastFAQs />
         <Blog />
     </DefaultMain>

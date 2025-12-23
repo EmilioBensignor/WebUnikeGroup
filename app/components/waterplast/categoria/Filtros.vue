@@ -261,6 +261,7 @@
 
 <script setup>
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
+import { useWaterplastSubcategorias } from '~/composables/waterplast/useSubcategorias.js'
 
 const props = defineProps({
     categoriaActual: Object,
@@ -269,6 +270,14 @@ const props = defineProps({
         default: () => []
     }
 })
+
+const { subcategorias, fetchSubcategoriasByCategoria } = useWaterplastSubcategorias()
+
+watch(() => props.categoriaActual?.id, async (newCategoriaId) => {
+    if (newCategoriaId) {
+        await fetchSubcategoriasByCategoria(newCategoriaId)
+    }
+}, { immediate: true })
 
 const filtrosAbiertos = ref(false)
 const esPantallaGrande = ref(false)
@@ -369,7 +378,6 @@ const filtros = ref({
     }
 })
 
-// Computed properties para determinar qué filtros mostrar
 const alturaRangosDisponibles = computed(() => {
     if (!props.productos?.length) return []
 
@@ -649,8 +657,29 @@ const productosFiltrados = computed(() => {
         return true
     })
 
-    // Ordenar por litraje (capacidad) de menor a mayor
     return filtrados.sort((a, b) => {
+        const subcategoriaA = a.subcategoria || subcategorias.value.find(s => s.id === a.subcategoria_id)
+        const subcategoriaB = b.subcategoria || subcategorias.value.find(s => s.id === b.subcategoria_id)
+
+        const tieneSubcategoriaA = !!subcategoriaA
+        const tieneSubcategoriaB = !!subcategoriaB
+
+        if (tieneSubcategoriaA && !tieneSubcategoriaB) return -1
+        if (!tieneSubcategoriaA && tieneSubcategoriaB) return 1
+
+        if (tieneSubcategoriaA && tieneSubcategoriaB) {
+            const ordenA = subcategoriaA.orden || 0
+            const ordenB = subcategoriaB.orden || 0
+
+            if (ordenA !== ordenB) {
+                return ordenA - ordenB
+            }
+
+            const capacidadA = parseFloat(a.capacidad_lts) || 0
+            const capacidadB = parseFloat(b.capacidad_lts) || 0
+            return capacidadA - capacidadB
+        }
+
         const capacidadA = parseFloat(a.capacidad_lts) || 0
         const capacidadB = parseFloat(b.capacidad_lts) || 0
         return capacidadA - capacidadB
