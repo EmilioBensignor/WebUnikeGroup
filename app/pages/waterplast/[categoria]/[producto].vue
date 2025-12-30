@@ -1,7 +1,7 @@
 <template>
   <DefaultMain>
     <span class="hero-gradient md:w-full md:h-[11.5rem] lg:h-[16.5rem] hidden md:block md:absolute md:top-0"
-      :style="{ '--categoria-color': categoriaColor }"></span>
+      :style="`--categoria-color: ${categoriaColor}`"></span>
     <DefaultSection class="py-6 px-4 md:p-16 md:pb-8 lg:pt-44 lg:pb-12 lg:px-16 xxl:py-32">
       <div class="w-full xxl:max-w-[1304px] flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xxl:gap-16">
         <ProductoModelo class="hidden lg:block xxl:w-[40%]" />
