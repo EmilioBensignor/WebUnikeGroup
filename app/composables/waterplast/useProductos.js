@@ -262,10 +262,35 @@ export const useWaterplastProductos = () => {
                     offset: 0,
                 })
 
-            if (error || !files || files.length === 0) return null
+            console.log('[DEBUG] 📂 Explorando estructura de Storage para:', `${cleanName}/images`)
+
+            if (error) {
+                console.error('[DEBUG] ❌ Error al listar carpeta:', error)
+                return null
+            }
+
+            if (!files || files.length === 0) {
+                console.warn('[DEBUG] ⚠️ La carpeta está vacía o no existe:', `${cleanName}/images`)
+
+                // Intentar listar el directorio raíz del producto para ver qué hay
+                const { data: rootFiles } = await supabase.storage
+                    .from('waterplast-productos')
+                    .list(cleanName, { limit: 100 })
+
+                if (rootFiles && rootFiles.length > 0) {
+                    console.log('[DEBUG] 📁 Contenido del directorio raíz:', rootFiles.map(f => f.name))
+                }
+
+                return null
+            }
+
+            console.log('[DEBUG] 📋 Archivos/carpetas encontrados:', files.map(f => f.name))
 
             const hasPngFiles = files.some(item => item.name && item.name.endsWith('.png'))
-            if (hasPngFiles) return null
+            if (hasPngFiles) {
+                console.log('[DEBUG] ✅ Encontrados archivos PNG directamente en /images')
+                return null
+            }
 
             const folders = files.filter(item => {
                 if (!item.name || item.name === 'files') return false
@@ -275,9 +300,13 @@ export const useWaterplastProductos = () => {
             })
 
             if (folders.length > 0) {
+                console.log('[DEBUG] 📁 Subcarpeta de imágenes detectada:', folders[0].name)
                 return folders[0].name
             }
+
+            console.log('[DEBUG] ⚠️ No se encontró subcarpeta de imágenes')
         } catch (error) {
+            console.error('[DEBUG] ❌ Error en detectImageFolderFromStorage:', error)
         }
 
         return null
@@ -293,14 +322,20 @@ export const useWaterplastProductos = () => {
         return baseUrl
     }
 
-    const processKeyShotXRHTML = async (html, productoNombre, imagesFolder = null) => {
+    const processKeyShotXRHTML = async (html, productoNombre, imagesFolder = null, cleanNameOverride = null) => {
         if (!html) return ''
 
         let processedHTML = html
-        const cleanName = generateCleanName(productoNombre)
+        const cleanName = cleanNameOverride || generateCleanName(productoNombre)
+
+        console.log('[DEBUG] 🔍 Procesando KeyShot XR HTML')
+        console.log('[DEBUG] 📦 Producto Nombre:', productoNombre)
+        console.log('[DEBUG] 🏷️ Clean Name:', cleanName)
+        console.log('[DEBUG] 📁 Images Folder (inicial):', imagesFolder)
 
         if (!imagesFolder) {
             imagesFolder = await detectImageFolderFromStorage(cleanName)
+            console.log('[DEBUG] 📁 Images Folder (detectado):', imagesFolder)
         }
 
         const baseUrl = import.meta.client ? window.location.origin : (config.public.siteUrl || 'https://unikegroup.com.ar')
@@ -326,13 +361,39 @@ export const useWaterplastProductos = () => {
         }
 
         const imageBaseUrl = getImageBaseUrl(cleanName, imagesFolder)
+        console.log('[DEBUG] 🖼️ Image Base URL:', imageBaseUrl)
+        console.log('[DEBUG] 📸 Ejemplo de URL de imagen:', `${imageBaseUrl}/0_0.png`)
+
+        // Verificar si la primera imagen existe
+        if (import.meta.client) {
+            const testImageUrl = `${imageBaseUrl}/0_0.png`
+            fetch(testImageUrl, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('[DEBUG] ✅ La imagen de prueba existe y es accesible:', testImageUrl)
+                    } else {
+                        console.error('[DEBUG] ❌ La imagen de prueba NO es accesible:', testImageUrl, 'Status:', response.status)
+                        console.error('[DEBUG] 💡 Posibles causas:')
+                        console.error('[DEBUG]    1. Las imágenes están en una subcarpeta diferente')
+                        console.error('[DEBUG]    2. El bucket no es público')
+                        console.error('[DEBUG]    3. Las imágenes tienen nombres diferentes')
+                        console.error('[DEBUG] 🔍 Verifica la estructura en Supabase Storage en: waterplast-productos/' + cleanName)
+                    }
+                })
+                .catch(err => {
+                    console.error('[DEBUG] ⚠️ Error al verificar imagen:', err)
+                })
+        }
 
         let modified = false
 
         const vaPattern = /this\.va=function\(b,f\)\{return A\+a\.s\+[^}]+\}/
         const vaMatch = keyshotContent.match(vaPattern)
 
+        console.log('[DEBUG] 🔧 Buscando patrón .va function:', !!vaMatch)
+
         if (vaMatch) {
+            console.log('[DEBUG] ✅ Reemplazando .va function con imageBaseUrl')
             keyshotContent = keyshotContent.replace(
                 vaPattern,
                 `this.va=function(b,f){return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"}`
@@ -341,14 +402,20 @@ export const useWaterplastProductos = () => {
         }
 
         if (!modified) {
+            console.log('[DEBUG] 🔍 Buscando patrón alternativo parseInt')
             if (keyshotContent.includes('parseInt(f)+"_"+parseInt(b)')) {
+                console.log('[DEBUG] ✅ Reemplazando patrón alternativo parseInt')
                 keyshotContent = keyshotContent.replace(
                     /return [^;]+parseInt\(f\)\+["']_["']\+parseInt\(b\)[^;]+/g,
                     `return "${imageBaseUrl}/"+parseInt(f)+"_"+parseInt(b)+".png"`
                 )
                 modified = true
+            } else {
+                console.log('[DEBUG] ⚠️ No se encontró ningún patrón de URL de imagen para modificar')
             }
         }
+
+        console.log('[DEBUG] 🎨 URL modificada:', modified)
 
         keyshotContent = keyshotContent.replace(
             /A\+a\.s\+["']\/files\/["']\+d/g,
@@ -468,7 +535,20 @@ export const useWaterplastProductos = () => {
             const htmlResponse = await $fetch(htmlUrl)
 
             let imagesFolder = producto.xr_images_folder || producto.images_folder || null
-            const cleanName = generateCleanName(producto.nombre)
+
+            // Extraer el nombre de la carpeta desde la ruta del archivo HTML
+            // Por ejemplo: "agro-blanco-10000/html.html" -> "agro-blanco-10000"
+            let folderName = null
+            if (producto.archivo_html && producto.archivo_html.includes('/')) {
+                folderName = producto.archivo_html.split('/')[0]
+            }
+
+            // Si no se puede extraer del path, usar el cleanName como fallback
+            const cleanName = folderName || generateCleanName(producto.nombre)
+
+            console.log('[DEBUG] 🗂️ Folder name extraído del archivo_html:', folderName)
+            console.log('[DEBUG] 🏷️ Clean name fallback:', generateCleanName(producto.nombre))
+            console.log('[DEBUG] 📂 Usando folder:', cleanName)
 
             if (!imagesFolder) {
                 imagesFolder = await detectImageFolderFromStorage(cleanName)
@@ -484,7 +564,7 @@ export const useWaterplastProductos = () => {
                 }
             }
 
-            const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre, imagesFolder)
+            const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre, imagesFolder, cleanName)
 
             return {
                 ...producto,
