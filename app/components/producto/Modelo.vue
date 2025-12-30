@@ -45,12 +45,10 @@ const route = useRoute()
 const supabase = useSupabaseClient()
 const config = useRuntimeConfig()
 
-// Determinar la marca desde la URL
 const marca = computed(() => {
     return route.path.includes('waterplast') ? 'waterplast' : 'rohermet'
 })
 
-// Usar el composable correcto según la marca
 const waterplastComposable = useWaterplastProductos()
 const rohermetComposable = useRohermetProductos()
 

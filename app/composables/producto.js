@@ -25,7 +25,6 @@ export const useProducto = (marca) => {
                 .single()
 
             if (supabaseError) {
-                // Si no encuentra por slug, intenta por ID
                 if (supabaseError.code === 'PGRST116') {
                     const { data: dataById, error: errorById } = await supabase
                         .from(`${marcaName}-productos`)
