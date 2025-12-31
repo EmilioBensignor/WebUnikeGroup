@@ -42,7 +42,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteUrl: 'https://web-unike-group.vercel.app',
+      siteUrl: 'https://www.unikegroup.com.ar/',
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
       supabase: {
         url: process.env.SUPABASE_URL
@@ -51,8 +51,8 @@ export default defineNuxtConfig({
   },
 
   site: {
-    url: 'https://web-unike-group.vercel.app',
-    name: 'Waterplast - Unike Group',
+    url: 'https://www.unikegroup.com.ar/',
+    name: 'Unike Group',
     description:
       'En Unike Group desarrollamos soluciones innovadoras para el almacenamiento y tratamiento del agua en Argentina. Nuestros tanques Waterplast garantizan calidad, durabilidad y protección antibacteriana. Descubrí nuestra red de distribuidores y asesorate con nuestros expertos en soluciones hídricas sustentables.',
     defaultLocale: 'es'
