@@ -4,7 +4,7 @@
         class="gap-3 md:gap-6 lg:gap-8 relative bg-gray-light py-6 lg:pt-12 xxl:pt-16 lg:pb-0 px-4 md:px-8 lg:px-16">
         <HeadingH2 class="flex justify-center items-end gap-2 lg:gap-3 text-center text-primary">
             Distribuidores
-            <NuxtImg :src="empresaConfig.logo" :alt="empresaConfig.logoAlt"
+            <img :src="empresaConfig.logo" :alt="empresaConfig.logoAlt"
                 class="w-24 lg:w-32 h-8 lg:h-11 object-contain" />
         </HeadingH2>
         <div
@@ -41,6 +41,21 @@
                                     <Icon name="material-symbols:content-copy-outline-rounded" />
                                 </button>
                             </div>
+                            <div v-if="selectedDistribuidor?.telefono" class="flex items-center justify-between">
+                                <p class="text-xs text-dark">{{ selectedDistribuidor.telefono }}</p>
+                                <button @click="copyToClipboard(selectedDistribuidor.telefono)" class="text-primary">
+                                    <Icon name="material-symbols:content-copy-outline-rounded" />
+                                </button>
+                            </div>
+                            <a
+                                :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${selectedDistribuidor?.nombreComercio}, ${selectedDistribuidor?.calle}, ${selectedDistribuidor?.localidad}, ${selectedDistribuidor?.provincia}`)}`"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center justify-center gap-2 bg-primary text-white text-xs font-medium rounded-full py-2 px-4 mt-1"
+                            >
+                                <Icon name="material-symbols:map-outline" />
+                                Abrir en Google Maps
+                            </a>
                         </div>
                     </div>
 
@@ -49,7 +64,7 @@
                         leave-active-class="transition-all duration-200 ease-in"
                         leave-from-class="opacity-100 transform translate-y-0" leave-to-class="opacity-0 transform translate-y-2">
                         <div v-if="showCopyText"
-                            class="w-max flex items-center gap-2 absolute top-4 md:top-[7.5rem] right-6 bg-primary text-white rounded-[18px] shadow-md shadow-dark/20 z-50 px-4 py-2">
+                            class="w-max flex items-center gap-2 absolute top-4 md:top-48 right-6 bg-primary text-white rounded-[18px] shadow-md shadow-dark/20 z-50 px-4 py-2">
                             <Icon name="material-symbols:check-circle-outline-rounded" class="text-white w-5 h-5" />
                             <span class="text-sm font-medium">¡Copiado al portapapeles!</span>
                         </div>
@@ -275,7 +290,7 @@ const showCopyNotification = () => {
     showCopyText.value = true
     setTimeout(() => {
         showCopyText.value = false
-    }, 2000000)
+    }, 2000)
 }
 
 const initializeMap = async () => {

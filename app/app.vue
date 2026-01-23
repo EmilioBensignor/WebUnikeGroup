@@ -1,10 +1,13 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div :data-brand="brand">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <script setup>
+const { brand } = useBrand();
 const { preloadCriticalData, preloadFeaturedImages } = usePreloadData();
 
 onMounted(async () => {
