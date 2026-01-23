@@ -27,7 +27,7 @@ export const useRohermetCategorias = () => {
 
             const categoriasWithUrls = (data || []).map(categoria => ({
                 ...categoria,
-                imagen_principal: categoria.imagen_principal ? getCategoriaImageUrl(categoria.imagen_principal) : null,
+                imagen: categoria.imagen ? getCategoriaImageUrl(categoria.imagen) : null,
             }))
 
             categorias.value = categoriasWithUrls
