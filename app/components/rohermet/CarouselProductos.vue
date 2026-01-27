@@ -119,17 +119,14 @@ const getCardHeight = (index) => {
     const isLg = currentBreakpoint.value === 'lg'
 
     if (distance === 0) {
-        // Center card
-        return isLg || isXl ? '320px' : '15.5rem'
+        return isLg || isXl ? '20rem' : '15.5rem'
     }
 
     if (isXl) {
-        // Progressive sizing at xl+
-        if (distance === 1) return '280px'
-        return '240px'
+        if (distance === 1) return '17.5rem'
+        return '15rem'
     }
 
-    // lg and below: same as before
     return isLg ? '17.5rem' : '13rem'
 }
 
