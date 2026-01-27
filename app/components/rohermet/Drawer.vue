@@ -75,7 +75,7 @@
                                     <img :src="categoria.imagen" :alt="`Categoria ${categoria.nombre}`"
                                         class="w-full h-44 md:h-52 object-cover rounded-2xl shadow-lg" />
                                     <p
-                                        class="absolute top-4 left-0 right-0 text-center text-sm text-white font-semibold">
+                                        class="absolute bottom-4 left-0 right-0 text-center text-sm text-white font-semibold px-4">
                                         {{ categoria.nombre }}</p>
                                 </NuxtLink>
                             </div>

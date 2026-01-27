@@ -16,7 +16,7 @@
                     :style="{ width: `${slideWidth}px` }">
                     <NuxtLink :to="ROUTES_NAMES.ROHERMET.CATEGORIA(item.categoria.slug)"
                         class="group relative block rounded-2xl overflow-hidden"
-                        :class="[isCenter(index) ? 'h-[15.5rem] lg:h-80' : 'h-52 lg:h-[17.5rem]']">
+                        :style="{ height: getCardHeight(index) }">
                         <img v-if="item.categoria.imagen" :src="item.categoria.imagen"
                             :alt="item.categoria.nombre"
                             class="w-full h-full object-cover transition-transform duration-300 lg:group-hover:scale-110" />
@@ -111,6 +111,26 @@ const wrapperStyles = computed(() => ({
 
 const isCenter = (index) => {
     return index === centerIndex.value
+}
+
+const getCardHeight = (index) => {
+    const distance = Math.abs(index - centerIndex.value)
+    const isXl = ['xl', 'xxl'].includes(currentBreakpoint.value)
+    const isLg = currentBreakpoint.value === 'lg'
+
+    if (distance === 0) {
+        // Center card
+        return isLg || isXl ? '320px' : '15.5rem'
+    }
+
+    if (isXl) {
+        // Progressive sizing at xl+
+        if (distance === 1) return '280px'
+        return '240px'
+    }
+
+    // lg and below: same as before
+    return isLg ? '17.5rem' : '13rem'
 }
 
 const updateCenterIndex = () => {
