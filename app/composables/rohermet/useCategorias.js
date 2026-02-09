@@ -13,6 +13,25 @@ export const useRohermetCategorias = () => {
         return `${config.public.supabase.url}/storage/v1/object/public/rohermet-categorias/${imagePath}`
     }
 
+    const mapCategoriaUrls = (categoria) => ({
+        ...categoria,
+        imagen: categoria.imagen ? getCategoriaImageUrl(categoria.imagen) : null,
+        imagen_xl_categorias: categoria.imagen_xl_categorias ? getCategoriaImageUrl(categoria.imagen_xl_categorias) : null,
+        imagen_l_categorias: categoria.imagen_l_categorias ? getCategoriaImageUrl(categoria.imagen_l_categorias) : null,
+        imagen_m_categorias: categoria.imagen_m_categorias ? getCategoriaImageUrl(categoria.imagen_m_categorias) : null,
+        imagen_s_categorias: categoria.imagen_s_categorias ? getCategoriaImageUrl(categoria.imagen_s_categorias) : null,
+        icono1: categoria.icono1 ? getCategoriaImageUrl(categoria.icono1) : null,
+        icono2: categoria.icono2 ? getCategoriaImageUrl(categoria.icono2) : null,
+        icono3: categoria.icono3 ? getCategoriaImageUrl(categoria.icono3) : null,
+        imagenesRedes: categoria.imagenesRedes
+            ? categoria.imagenesRedes.map((img, index) => ({
+                id: `red-${index}`,
+                name: `imagen-red-${index + 1}.jpg`,
+                url: getCategoriaImageUrl(img)
+            }))
+            : [],
+    })
+
     const fetchCategorias = async () => {
         loading.value = true
         error.value = null
@@ -25,10 +44,7 @@ export const useRohermetCategorias = () => {
 
             if (supabaseError) throw supabaseError
 
-            const categoriasWithUrls = (data || []).map(categoria => ({
-                ...categoria,
-                imagen: categoria.imagen ? getCategoriaImageUrl(categoria.imagen) : null,
-            }))
+            const categoriasWithUrls = (data || []).map(mapCategoriaUrls)
 
             categorias.value = categoriasWithUrls
             return categoriasWithUrls
@@ -55,10 +71,7 @@ export const useRohermetCategorias = () => {
 
             if (supabaseError) throw supabaseError
 
-            const categoriaWithUrls = {
-                ...data,
-                imagen_principal: data.imagen_principal ? getCategoriaImageUrl(data.imagen_principal) : null,
-            }
+            const categoriaWithUrls = mapCategoriaUrls(data)
 
             currentCategoria.value = categoriaWithUrls
             return categoriaWithUrls

@@ -13,6 +13,24 @@ export const useRohermetProductos = () => {
         return `${config.public.supabase.url}/storage/v1/object/public/rohermet-productos/${imagePath}`
     }
 
+    const mapProductoUrls = (producto) => ({
+        ...producto,
+        imagen: producto.imagen ? getProductoImageUrl(producto.imagen) : null,
+        imagen_principal: producto.imagen_principal ? getProductoImageUrl(producto.imagen_principal) : (producto.imagen ? getProductoImageUrl(producto.imagen) : null),
+        icono1: producto.icono1 ? getProductoImageUrl(producto.icono1) : null,
+        icono2: producto.icono2 ? getProductoImageUrl(producto.icono2) : null,
+        icono3: producto.icono3 ? getProductoImageUrl(producto.icono3) : null,
+        ficha_tecnica: producto.ficha_tecnica ? getProductoImageUrl(producto.ficha_tecnica) : null,
+        manual_instalacion: producto.manual_instalacion ? getProductoImageUrl(producto.manual_instalacion) : null,
+        galeria: producto.galeria
+            ? producto.galeria.map((img, index) => ({
+                id: `galeria-${index}`,
+                name: `imagen-galeria-${index + 1}.jpg`,
+                url: getProductoImageUrl(img)
+            }))
+            : [],
+    })
+
     const fetchProductosByCategoria = async (categoriaSlug) => {
         loading.value = true
         error.value = null
@@ -36,14 +54,12 @@ export const useRohermetProductos = () => {
                         slug
                     )
                 `)
+                .eq('estado', true)
                 .eq('categoria_id', categoriaData.id)
 
             if (supabaseError) throw supabaseError
 
-            const productosWithUrls = (data || []).map(producto => ({
-                ...producto,
-                imagen_principal: producto.imagen_principal ? getProductoImageUrl(producto.imagen_principal) : null,
-            }))
+            const productosWithUrls = (data || []).map(mapProductoUrls)
 
             productos.value = productosWithUrls
             return productosWithUrls
@@ -77,10 +93,7 @@ export const useRohermetProductos = () => {
 
             if (supabaseError) throw supabaseError
 
-            const productoWithUrls = {
-                ...data,
-                imagen_principal: data.imagen_principal ? getProductoImageUrl(data.imagen_principal) : null,
-            }
+            const productoWithUrls = mapProductoUrls(data)
 
             currentProducto.value = productoWithUrls
             return productoWithUrls
@@ -107,10 +120,7 @@ export const useRohermetProductos = () => {
 
             if (supabaseError) throw supabaseError
 
-            const productoWithUrls = {
-                ...data,
-                imagen_principal: data.imagen_principal ? getProductoImageUrl(data.imagen_principal) : null,
-            }
+            const productoWithUrls = mapProductoUrls(data)
 
             currentProducto.value = productoWithUrls
             return productoWithUrls
@@ -367,6 +377,62 @@ export const useRohermetProductos = () => {
         }
     }
 
+    const fetchProductosRelacionados = async (productosRelacionadosIds) => {
+        if (!productosRelacionadosIds || productosRelacionadosIds.length === 0) {
+            return []
+        }
+
+        try {
+            const { data, error: supabaseError } = await supabase
+                .from('rohermet-productos')
+                .select(`
+                    *,
+                    categoria:categoria_id (
+                        id,
+                        nombre,
+                        slug
+                    )
+                `)
+                .in('id', productosRelacionadosIds)
+                .eq('estado', true)
+
+            if (supabaseError) throw supabaseError
+
+            return (data || []).map(mapProductoUrls)
+        } catch (err) {
+            console.error('Error al obtener productos relacionados:', err)
+            return []
+        }
+    }
+
+    const fetchImagenesRedes = async (categoriaSlug) => {
+        if (!categoriaSlug) return []
+
+        try {
+            const { data: files, error } = await supabase.storage
+                .from('rohermet-categorias')
+                .list(`${categoriaSlug}/imagenes-redes`, {
+                    limit: 100,
+                    offset: 0,
+                })
+
+            if (error || !files || files.length === 0) return []
+
+            return files
+                .filter(file => {
+                    const ext = file.name.split('.').pop().toLowerCase()
+                    return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)
+                })
+                .map(file => ({
+                    name: file.name,
+                    url: `${config.public.supabase.url}/storage/v1/object/public/rohermet-categorias/${categoriaSlug}/imagenes-redes/${file.name}`
+                }))
+        } catch (err) {
+            console.error('Error al obtener imágenes de redes:', err)
+            return []
+        }
+    }
+
     return {
         productos: readonly(productos),
         currentProducto: readonly(currentProducto),
@@ -375,6 +441,8 @@ export const useRohermetProductos = () => {
         fetchProductosByCategoria,
         fetchProductoBySlug,
         fetchProductoBySlugOrId,
+        fetchProductosRelacionados,
+        fetchImagenesRedes,
         getProductoImageUrl,
         generateCleanName,
         processProductoHTML,

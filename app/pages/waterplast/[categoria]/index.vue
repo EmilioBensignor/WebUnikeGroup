@@ -16,7 +16,7 @@
           :alt="`Waterplast Categoría ${categoriaData.nombre}`" class="w-full hidden xxl:block" />
       </div>
       <div v-if="categoriaData?.nombre"
-        class="infoHeader md:max-w-96 lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 xl:gap-8 md:absolute md:top-6 lg:top-[11.75rem] xxl:top-52 md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 lg:px-0 xxl:mx-auto">
+        class="infoHeader md:max-w-96 lg:max-w-[25rem] xxl:w-full xxl:max-w-[1304px] flex flex-col gap-4 xl:gap-8 md:absolute md:top-6 lg:top-[11.75rem] xxl:top-52 md:left-8 lg:left-16 xxl:left-0 xxl:right-0 px-4 md:px-0 xxl:mx-auto">
         <NuxtImg :src="getSolapaImageUrl(categoriaData.nombre)" :alt="`${categoriaData.nombre} - Solapa`"
           class="w-64 sm:w-96 lg:w-[22rem] h-12 lg:h-16 absolute md:static top-4 sm:top-10 left-0 right-0 object-contain object-left mx-auto lg:mx-0" />
         <HeadingH1 class="absolute -z-10 text-white">{{ categoriaData.nombre }}
