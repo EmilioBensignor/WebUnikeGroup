@@ -4,8 +4,7 @@
         isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
     ]">
         <NuxtLink :to="ROUTES_NAMES.HOME">
-            <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast"
-                fetchpriority="high"
+            <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast" fetchpriority="high"
                 class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
         </NuxtLink>
         <button @click="toggleDrawer" aria-label="Toggle Menu"
@@ -52,22 +51,22 @@
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
-            <!-- <div class="relative ml-2 group">
+            <div class="relative ml-2 group">
                 <ButtonSecondary>
                     Somos Unike Group
                 </ButtonSecondary>
                 <div
                     class="w-full flex flex-col absolute top-full left-0 z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
-                    <NuxtLink to="#"
+                    <NuxtLink :to="ROUTES_NAMES.ROHERMET.HOME"
                         class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
                         Rohermet
                     </NuxtLink>
-                    <NuxtLink to="#"
+                    <!-- <NuxtLink to="#"
                         class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
                         Murallón
-                    </NuxtLink>
+                    </NuxtLink> -->
                 </div>
-            </div> -->
+            </div>
         </nav>
     </header>
 

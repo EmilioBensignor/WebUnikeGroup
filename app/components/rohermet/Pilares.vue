@@ -24,11 +24,11 @@
                         allí donde se instala.
                     </p>
                 </div>
-                <ButtonPrimary class="flex md:hidden justify-center items-center sm:self-center gap-2.5">
+                <ButtonPrimary :to="ROUTES_NAMES.HOME" class="flex md:hidden justify-center items-center sm:self-center gap-2.5">
                     Somos Unike Group
                     <Icon name="material-symbols:arrow-right-alt-rounded" class="w-6 h-6" />
                 </ButtonPrimary>
-                <ButtonPrimary class="hidden md:flex justify-center items-center sm:self-center gap-2.5">
+                <ButtonPrimary :to="ROUTES_NAMES.HOME" class="hidden md:flex justify-center items-center sm:self-center gap-2.5">
                     Somos parte de Unike Group
                     <Icon name="material-symbols:arrow-right-alt-rounded" class="w-6 h-6" />
                 </ButtonPrimary>
@@ -38,6 +38,8 @@
 </template>
 
 <script setup>
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES';
+
 const pilares = [
     {
         title: "Seguridad",
