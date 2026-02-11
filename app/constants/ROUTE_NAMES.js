@@ -33,4 +33,13 @@ export const ROUTES_NAMES = {
         CATEGORIA: (slug) => `/waterplast/${slug}`,
         PRODUCTO: (categoria, producto) => `/waterplast/${categoria}/${producto}`,
     },
+    ROHERMET: {
+        HOME: "/rohermet",
+        PRODUCTOS: "#",
+        DISTRIBUIDORES: "#distribuidores",
+        BLOG: "#blog",
+        CONTACTO: "#footer",
+        CATEGORIA: (slug) => `/rohermet/${slug}`,
+        PRODUCTO: (categoria, producto) => `/rohermet/${categoria}/${producto}`,
+    },
 }

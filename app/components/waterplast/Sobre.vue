@@ -15,7 +15,7 @@
                         soluciones.
                     </p>
                 </div>
-                <ButtonPrimary class="hidden lg:w-max md:flex justify-center items-center gap-2.5 md:self-start">
+                <ButtonPrimary :to="ROUTES_NAMES.HOME" class="hidden lg:w-max md:flex justify-center items-center gap-2.5 md:self-start">
                     Somos Unike Group
                     <Icon name="material-symbols:arrow-right-alt-rounded" class="w-6 h-6" />
                 </ButtonPrimary>
@@ -30,7 +30,7 @@
                     <p class="text-sm lg:text-xl text-dark font-medium">{{ item.texto }}</p>
                 </div>
             </div>
-            <ButtonPrimary class="flex md:hidden justify-center items-center sm:self-center gap-2.5">
+            <ButtonPrimary :to="ROUTES_NAMES.HOME" class="flex md:hidden justify-center items-center sm:self-center gap-2.5">
                 Somos Unike Group
                 <Icon name="material-symbols:arrow-right-alt-rounded" class="w-6 h-6" />
             </ButtonPrimary>
