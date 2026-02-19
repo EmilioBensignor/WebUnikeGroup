@@ -12,17 +12,17 @@
             <div class="carousel-wrapper flex items-center py-4" :style="wrapperStyles">
                 <div v-for="(item, index) in loopedCategorias" :key="`${item.categoria.slug}-${index}`"
                     class="carousel-item flex-shrink-0 transition-all duration-300"
-                    :class="[isCenter(index) ? 'opacity-100' : 'opacity-60']"
-                    :style="{ width: `${slideWidth}px` }">
+                    :class="[isCenter(index) ? 'opacity-100' : 'opacity-60']" :style="{ width: `${slideWidth}px` }">
                     <NuxtLink :to="ROUTES_NAMES.ROHERMET.CATEGORIA(item.categoria.slug)"
                         class="group relative block rounded-2xl overflow-hidden"
                         :style="{ height: getCardHeight(index) }">
-                        <img v-if="item.categoria.imagen" :src="item.categoria.imagen"
-                            :alt="item.categoria.nombre"
-                            class="w-full h-full object-cover transition-transform duration-300 lg:group-hover:scale-110" />
-                        <span class="absolute bottom-4 lg:bottom-6 left-0 right-0 lg:text-xl text-white font-semibold text-center">
+                        <HeadingH3
+                            class="absolute top-6 left-0 right-0 z-[2] lg:text-xl text-white font-semibold text-center">
                             {{ item.categoria.nombre }}
-                        </span>
+                        </HeadingH3>
+                        <img v-if="item.categoria.imagen" :src="item.categoria.imagen" :alt="item.categoria.nombre"
+                            class="w-full h-full object-cover transition-transform duration-300 lg:group-hover:scale-110" />
+
                     </NuxtLink>
                 </div>
             </div>
