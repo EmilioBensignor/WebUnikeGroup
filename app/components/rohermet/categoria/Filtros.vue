@@ -642,6 +642,10 @@ const productosFiltrados = computed(() => {
         }
 
         return true
+    }).sort((a, b) => {
+        const ordenA = a.orden ?? Infinity
+        const ordenB = b.orden ?? Infinity
+        return ordenA - ordenB
     })
 })
 
