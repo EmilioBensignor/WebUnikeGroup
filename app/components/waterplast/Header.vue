@@ -20,7 +20,7 @@
                         Productos
                     </div>
                     <div
-                        class="w-[59.5rem] xxl:w-[82.25rem] flex gap-6 absolute top-full -left-[384%] xxl:-left-[554%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
+                        class="w-[59.5rem] xxl:w-[82.25rem] flex gap-6 absolute top-full -left-[230%] xxl:-left-[400%] z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
                         <div class="grid grid-cols-4 gap-3">
                             <div v-if="loading" class="col-span-4 flex justify-center items-center py-8">
                                 <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
@@ -51,7 +51,7 @@
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
-            <!-- <div class="relative ml-2 group">
+            <div class="relative ml-2 group">
                 <ButtonSecondary>
                     Somos Unike Group
                 </ButtonSecondary>
@@ -66,7 +66,7 @@
                         Murallón
                     </NuxtLink>
                 </div>
-            </div> -->
+            </div>
         </nav>
     </header>
 
@@ -104,7 +104,7 @@ const conditionalMenu = computed(() => {
             } else {
                 return {
                     ...item,
-                    route: '/'
+                    route: item.route.startsWith('#') ? ROUTES_NAMES.WATERPLAST.HOME + item.route : ROUTES_NAMES.WATERPLAST.HOME
                 }
             }
         }

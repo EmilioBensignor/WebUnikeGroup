@@ -101,7 +101,7 @@ const conditionalMenu = computed(() => {
             } else {
                 return {
                     ...item,
-                    route: '/'
+                    route: item.route.startsWith('#') ? ROUTES_NAMES.ROHERMET.HOME + item.route : ROUTES_NAMES.ROHERMET.HOME
                 }
             }
         }
