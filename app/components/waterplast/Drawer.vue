@@ -184,7 +184,7 @@ const conditionalMenu = computed(() => {
             } else {
                 return {
                     ...item,
-                    route: '/'
+                    route: item.route.startsWith('#') ? ROUTES_NAMES.WATERPLAST.HOME + item.route : ROUTES_NAMES.WATERPLAST.HOME
                 }
             }
         }

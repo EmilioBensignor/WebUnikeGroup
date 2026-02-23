@@ -72,7 +72,7 @@ const filteredSections = computed(() => {
                         if (item.route && item.route.startsWith('#')) {
                             return {
                                 ...item,
-                                route: '/'
+                                route: '/' + item.route
                             };
                         }
                         return item;

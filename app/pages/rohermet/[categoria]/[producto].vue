@@ -64,7 +64,7 @@
                 </div>
 
                 <!-- Orientación -->
-                <div v-if="producto.orientacion" class="flex flex-col items-center gap-3 md:gap-4">
+                <div v-if="producto.orientacion && producto.orientacion.toLowerCase() !== 'no aplica'" class="flex flex-col items-center gap-3 md:gap-4">
                   <div class="w-16 h-16 flex justify-center items-center rounded-full"
                     :style="{ backgroundColor: categoriaColor }">
                     <NuxtImg :src="getOrientacionIcon(producto.orientacion)" alt="Orientación"
@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- Color -->
-                <div v-if="producto.color" class="flex flex-col items-center gap-3 md:gap-4">
+                <div v-if="producto.color && producto.color.toLowerCase() !== 'no aplica'" class="flex flex-col items-center gap-3 md:gap-4">
                   <div class="w-16 h-16 flex justify-center items-center rounded-full"
                     :style="{ backgroundColor: categoriaColor }">
                     <NuxtImg src="/images/waterplast/producto/color.svg" alt="Color" class="w-10 h-10 object-contain"
@@ -88,7 +88,7 @@
                 </div>
 
                 <!-- Tecnología -->
-                <div v-if="producto.tecnologia" class="flex flex-col items-center gap-3 md:gap-4">
+                <div v-if="producto.tecnologia && producto.tecnologia.toLowerCase() !== 'no aplica'" class="flex flex-col items-center gap-3 md:gap-4">
                   <div class="w-16 h-16 flex justify-center items-center rounded-full"
                     :style="{ backgroundColor: categoriaColor }">
                     <NuxtImg :src="getTecnologiaIcon(producto.tecnologia)" alt="Tecnología"
@@ -100,7 +100,7 @@
                 </div>
 
                 <!-- Uso -->
-                <div v-if="producto.opcion" class="flex flex-col items-center gap-3 md:gap-4">
+                <div v-if="producto.opcion && producto.opcion.toLowerCase() !== 'no aplica'" class="flex flex-col items-center gap-3 md:gap-4">
                   <div class="w-16 h-16 flex justify-center items-center rounded-full"
                     :style="{ backgroundColor: categoriaColor }">
                     <NuxtImg :src="getOpcionIcon(producto.opcion)" alt="Uso" class="w-10 h-10 object-contain"
