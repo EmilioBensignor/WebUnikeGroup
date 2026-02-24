@@ -61,10 +61,6 @@
                         class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
                         Rohermet
                     </NuxtLink>
-                    <NuxtLink to="#"
-                        class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
-                        Murallón
-                    </NuxtLink>
                 </div>
             </div>
         </nav>

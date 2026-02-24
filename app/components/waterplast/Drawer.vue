@@ -117,13 +117,8 @@
                     <nav class="flex flex-col gap-6 px-4 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
                         <ul class="text-sm text-white font-bold">
                             <li @click="$emit('close')" class="w-full text-start py-4 px-3">
-                                <NuxtLink to="#">
+                                <NuxtLink :to="ROUTES_NAMES.ROHERMET.HOME">
                                     Rohermet
-                                </NuxtLink>
-                            </li>
-                            <li @click="$emit('close')" class="w-full text-start py-4 px-3">
-                                <NuxtLink to="#">
-                                    Murallón
                                 </NuxtLink>
                             </li>
                         </ul>
