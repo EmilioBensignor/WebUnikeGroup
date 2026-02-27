@@ -14,8 +14,8 @@
         </button>
         <nav class="hidden lg:flex">
             <ul class="flex items-center text-white font-bold">
-                <li v-for="(item, index) in conditionalMenu" :key="index"
-                    class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 xxl:px-6">
+                <li v-for="(item, index) in menu" :key="index"
+                    class="h-12 flex justify-center items-center border-2 border-transparent hover:border-white rounded-full transition-colors duration-300 px-4 xxl:px-6">
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
@@ -25,64 +25,29 @@
                 </ButtonSecondary>
                 <div
                     class="w-full flex flex-col absolute top-full left-0 z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
-                    <NuxtLink :to="ROUTES_NAMES.HOME"
+                    <NuxtLink v-if="!isWaterplast" :to="ROUTES_NAMES.HOME"
                         class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
                         Waterplast
                     </NuxtLink>
-                    <NuxtLink to="#"
+                    <NuxtLink v-if="!isRohermet" :to="ROUTES_NAMES.ROHERMET.HOME"
                         class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
                         Rohermet
-                    </NuxtLink>
-                    <NuxtLink to="#"
-                        class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
-                        Murallón
                     </NuxtLink>
                 </div>
             </div>
         </nav>
     </header>
 
-    <WaterplastDrawer :isOpen="isDrawerOpen" @close="closeDrawer" />
+    <DefaultDrawer :isOpen="isDrawerOpen" @close="closeDrawer" />
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
-import menu from '~/shared/waterplast/menu.js'
-
-const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
-const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = useWaterplastCategorias()
-
-const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
-const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
-
-const route = useRoute()
+import menu from '~/shared/unike/menu.js'
+const { isWaterplast, isRohermet } = useBrand()
 
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
-const imagenBanner = ref(null)
-
-const isOnHome = computed(() => {
-    return route.path === '/' || route.path === '/waterplast'
-})
-
-const conditionalMenu = computed(() => {
-    return menu.map(item => {
-        if (isOnHome.value) {
-            return item
-        } else {
-            if (item.nombre === 'Contacto') {
-                return item
-            } else {
-                return {
-                    ...item,
-                    route: '/'
-                }
-            }
-        }
-    })
-})
-
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value
@@ -96,20 +61,7 @@ const handleScroll = () => {
     isScrolled.value = window.scrollY > 0
 }
 
-onMounted(async () => {
-    setTimeout(() => {
-        fetchCategorias()
-    }, 0)
-
-    try {
-        const imagenMenu = await fetchImagenDestacadaBySlug('imagen-menu')
-        if (imagenMenu) {
-            imagenBanner.value = imagenMenu
-        }
-    } catch (error) {
-        console.log(error);
-    }
-
+onMounted(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
 })
 

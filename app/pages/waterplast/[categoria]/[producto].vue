@@ -127,7 +127,7 @@
         </div>
       </div>
     </DefaultSection>
-    <WaterplastOpiniones />
+    <Opiniones />
     <DefaultSection v-if="imagenesRedes.length > 0"
       class="hidden w-full flex-col items-center gap-3 md:gap-6 xxl:gap-8 py-6 lg:py-12 md:px-16">
       <HeadingH2 class="text-primary">Seguinos en nuestras redes</HeadingH2>

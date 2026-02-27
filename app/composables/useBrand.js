@@ -4,7 +4,7 @@ export const useBrand = () => {
     const brand = computed(() => {
         const path = route.path
 
-        if (path.startsWith('/waterplast')) return 'waterplast'
+        if (path === '/' || path.startsWith('/waterplast')) return 'waterplast'
         if (path.startsWith('/rohermet')) return 'rohermet'
 
         return 'default'

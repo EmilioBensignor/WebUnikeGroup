@@ -24,6 +24,8 @@ export const ROUTES_NAMES = {
         YOUTUBE: "https://www.youtube.com/channel/UCf7ptluQ34qdjBTtvmMhKmA",
         LINKEDIN: "https://www.linkedin.com/company/unike-group-sa/",
     },
+    DISTRIBUIDORES: "/distribuidores",
+    BLOG: "/blog",
     WATERPLAST: {
         HOME: "/waterplast",
         PRODUCTOS: "#",

@@ -16,6 +16,12 @@
     --brand-terciary: #1E2E46;
 }
 
+[data-brand="default"] {
+    --brand-primary: #37AEDD;
+    --brand-secondary: #1473A3;
+    --brand-terciary: #26418C;
+}
+
 * {
     margin: 0;
     padding: 0;

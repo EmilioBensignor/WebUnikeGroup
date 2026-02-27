@@ -32,11 +32,11 @@
                                     {{ item.nombre }}
                                 </NuxtLink>
                             </li>
-                            <!-- <li>
+                            <li>
                                 <button @click="navigateToPanel(3)" class="w-full text-start py-4 px-3">
                                     Somos Unike Group
                                 </button>
-                            </li> -->
+                            </li>
                         </ul>
                     </nav>
 
@@ -116,7 +116,12 @@
 
                     <nav class="flex flex-col gap-6 px-4 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
                         <ul class="text-sm text-white font-bold">
-                            <li @click="$emit('close')" class="w-full text-start py-4 px-3">
+                            <li v-if="!isWaterplast" @click="$emit('close')" class="w-full text-start py-4 px-3">
+                                <NuxtLink :to="ROUTES_NAMES.HOME">
+                                    Waterplast
+                                </NuxtLink>
+                            </li>
+                            <li v-if="!isRohermet" @click="$emit('close')" class="w-full text-start py-4 px-3">
                                 <NuxtLink :to="ROUTES_NAMES.ROHERMET.HOME">
                                     Rohermet
                                 </NuxtLink>
@@ -135,17 +140,15 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/waterplast/menu.js'
+const { isWaterplast, isRohermet } = useBrand()
 
 const { useWaterplastCategorias } = await import('~/composables/waterplast/useCategorias.js')
 const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = useWaterplastCategorias()
 
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
 const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
-
-const route = useRoute()
 
 const imagenBanner = ref(null)
 
@@ -165,26 +168,7 @@ const navigateToPanel = (panelNumber) => {
     currentPanel.value = panelNumber
 }
 
-const isOnHome = computed(() => {
-    return route.path === '/' || route.path === '/waterplast'
-})
-
-const conditionalMenu = computed(() => {
-    return menu.map(item => {
-        if (isOnHome.value) {
-            return item
-        } else {
-            if (item.nombre === 'Contacto') {
-                return item
-            } else {
-                return {
-                    ...item,
-                    route: item.route.startsWith('#') ? ROUTES_NAMES.WATERPLAST.HOME + item.route : ROUTES_NAMES.WATERPLAST.HOME
-                }
-            }
-        }
-    })
-})
+const conditionalMenu = menu
 
 
 watch(() => props.isOpen, (newVal) => {
