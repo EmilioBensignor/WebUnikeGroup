@@ -3,11 +3,11 @@ import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 const menu = [
     {
         nombre: "Distribuidores",
-        route: ROUTES_NAMES.ROHERMET.DISTRIBUIDORES
+        route: ROUTES_NAMES.DISTRIBUIDORES
     },
     {
         nombre: "Blog",
-        route: ROUTES_NAMES.ROHERMET.BLOG
+        route: ROUTES_NAMES.BLOG
     },
     {
         nombre: "Contacto",

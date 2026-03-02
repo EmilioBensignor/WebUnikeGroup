@@ -46,11 +46,11 @@ const footerSections = [
             },
             {
                 nombre: "Lista de distribuidores",
-                route: ROUTES_NAMES.AYUDA.DISTRIBUIDORES
+                route: ROUTES_NAMES.DISTRIBUIDORES
             },
             {
                 nombre: "Blog",
-                route: ROUTES_NAMES.AYUDA.BLOG
+                route: ROUTES_NAMES.BLOG
             },
         ]
     },

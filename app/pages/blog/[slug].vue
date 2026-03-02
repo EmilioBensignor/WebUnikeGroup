@@ -61,7 +61,7 @@
 import { useBlog } from '~/composables/useBlog'
 
 definePageMeta({
-    layout: 'waterplast'
+    layout: 'default'
 });
 
 const route = useRoute()

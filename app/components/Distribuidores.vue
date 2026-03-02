@@ -2,7 +2,7 @@
     <DefaultSection
         id="distribuidores"
         class="gap-3 md:gap-6 lg:gap-8 relative bg-gray-light py-6 lg:pt-12 xxl:pt-16 lg:pb-0 px-4 md:px-8 lg:px-16">
-        <HeadingH2 class="flex justify-center items-end gap-2 lg:gap-3 text-center text-primary">
+        <HeadingH2 v-if="showTitle" class="flex justify-center items-end gap-2 lg:gap-3 text-center text-dark">
             Distribuidores
             <img :src="empresaConfig.logo" :alt="empresaConfig.logoAlt"
                 class="w-24 lg:w-32 h-8 lg:h-11 object-contain" />
@@ -26,7 +26,7 @@
                     <div v-if="mapLoaded && selectedDistribuidor"
                         class="w-[90%] md:max-w-64 lg:max-w-72 flex flex-col gap-3 absolute bottom-4 md:top-6 md:bottom-auto left-0 md:left-auto right-0 md:right-6 bg-white rounded-[18px] shadow-md shadow-dark/20 z-10 p-3 mx-auto">
                         <div class="flex justify-between items-start gap-3">
-                            <div class="flex items-start gap-1 text-primary">
+                            <div class="flex items-start gap-1 text-terciary">
                                 <Icon name="material-symbols:shopping-bag-outline" class="flex-shrink-0" />
                                 <p class="text-sm font-semibold">{{ selectedDistribuidor?.nombreComercio }}</p>
                             </div>
@@ -51,7 +51,7 @@
                                 :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${selectedDistribuidor?.nombreComercio}, ${selectedDistribuidor?.calle}, ${selectedDistribuidor?.localidad}, ${selectedDistribuidor?.provincia}`)}`"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="flex items-center justify-center gap-2 bg-primary text-white text-xs font-medium rounded-full py-2 px-4 mt-1"
+                                class="flex items-center justify-center gap-2 bg-terciary text-white text-xs font-medium rounded-full py-2 px-4 mt-1"
                             >
                                 <Icon name="material-symbols:map-outline" />
                                 Abrir en Google Maps
@@ -113,6 +113,10 @@ const props = defineProps({
         type: String,
         required: true,
         validator: (value) => ['waterplast', 'rohermet', 'murallon'].includes(value)
+    },
+    showTitle: {
+        type: Boolean,
+        default: true
     }
 })
 

@@ -71,7 +71,6 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
 import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/rohermet/menu.js'
 
@@ -81,32 +80,11 @@ const { categorias, loading, error, fetchCategorias } = useRohermetCategorias()
 const { useRohermetImagenesDestacadas } = await import('~/composables/rohermet/useImagenesDestacadas.js')
 const { fetchImagenDestacadaBySlug } = useRohermetImagenesDestacadas()
 
-const route = useRoute()
-
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
 const imagenBanner = ref(null)
 
-const isOnHome = computed(() => {
-    return route.path === '/' || route.path === '/rohermet'
-})
-
-const conditionalMenu = computed(() => {
-    return menu.map(item => {
-        if (isOnHome.value) {
-            return item
-        } else {
-            if (item.nombre === 'Contacto') {
-                return item
-            } else {
-                return {
-                    ...item,
-                    route: item.route.startsWith('#') ? ROUTES_NAMES.ROHERMET.HOME + item.route : ROUTES_NAMES.ROHERMET.HOME
-                }
-            }
-        }
-    })
-})
+const conditionalMenu = menu
 
 
 const toggleDrawer = () => {
