@@ -27,8 +27,8 @@
                 <HeadingH2 class="text-terciary">Todas las notas</HeadingH2>
 
                 <div class="w-full flex md:justify-center gap-2 lg:gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
-                    <ButtonPrimary @click="setFiltro(null)" class="!px-4 sm:!px-10 flex-shrink-0 !border-2 !border-terciary"
-                        :class="filtroActivo === null ? '!bg-terciary' : '!bg-transparent !text-terciary'">
+                    <ButtonPrimary @click="setFiltro('Unike Group')" class="!px-4 sm:!px-10 flex-shrink-0 !border-2 !border-terciary"
+                        :class="filtroActivo === 'Unike Group' ? '!bg-terciary' : '!bg-transparent !text-terciary'">
                         Unike Group
                     </ButtonPrimary>
                     <ButtonPrimary @click="setFiltro('Waterplast')" class="!px-4 sm:!px-10 flex-shrink-0 !border-2 !border-terciary"
