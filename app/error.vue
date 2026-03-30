@@ -16,18 +16,12 @@
                     <p class="text-xs lg:text-base text-dark font-medium">Soluciones en almacenamiento y manejo del
                         agua.</p>
                 </NuxtLink>
-                <div
+                <NuxtLink :to="ROUTES_NAMES.ROHERMET.HOME"
                     class="w-72 md:w-[14.5rem] lg:w-[19.25rem] xxl:w-[23rem] flex flex-col gap-2.5 bg-white rounded-2xl shadow-md shadow-black/20 p-4 lg:p-6">
-                    <div class="w-full relative">
-                        <NuxtImg src="/images/404/Rohermet-Dev.webp" alt="Rohermet"
-                            class="w-full h-40 md:h-32 lg:h-40 xxl:h-52" />
-                        <span
-                            class="w-max absolute top-1/2 left-0 right-0 -translate-y-1/2 bg-primary rounded-full text-sm text-white font-semibold py-1 px-4 mx-auto">Web
-                            en desarrollo</span>
-                    </div>
+                    <NuxtImg src="/images/404/Rohermet-Dev.webp" alt="Rohermet" class="w-full h-40 md:h-32 lg:h-40 xxl:h-52" />
                     <p class="text-xs lg:text-base text-dark font-medium">Desarrollo en instalaciones y componentes
                         sanitarios.</p>
-                </div>
+                </NuxtLink>
                 <div
                     class="w-72 md:w-[14.5rem] lg:w-[19.25rem] xxl:w-[23rem] flex flex-col gap-2.5 bg-white rounded-2xl shadow-md shadow-black/20 p-4 lg:p-6">
                     <div class="w-full relative">
