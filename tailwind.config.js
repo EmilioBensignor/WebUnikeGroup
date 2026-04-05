@@ -2,6 +2,7 @@ export default {
     theme: {
         screens: {
             'sm': '480px',
+            'tab': '600px',
             'md': '768px',
             'lg': '1080px',
             'xl': '1280px',

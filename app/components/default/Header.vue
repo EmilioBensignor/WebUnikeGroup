@@ -20,12 +20,12 @@
                 </li>
             </ul>
             <div class="relative ml-2 group">
-                <ButtonSecondary class="bg-white !text-terciary">
+                <ButtonPrimary class="!px-6">
                     Somos Unike Group
-                </ButtonSecondary>
+                </ButtonPrimary>
                 <div
                     class="w-full flex flex-col absolute top-full left-0 z-20 bg-white rounded-3xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-3 mt-5">
-                    <NuxtLink v-if="!isWaterplast" :to="ROUTES_NAMES.HOME"
+                    <NuxtLink v-if="!isWaterplast" :to="ROUTES_NAMES.WATERPLAST.HOME"
                         class="hover:bg-gray-mid rounded-xl text-dark font-semibold transition-colors duration-300 py-2.5 px-3">
                         Waterplast
                     </NuxtLink>

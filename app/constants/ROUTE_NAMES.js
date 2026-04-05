@@ -6,9 +6,10 @@ export const ROUTES_NAMES = {
         UBICACION: "Av. San Martín 2768, Lanús Buenos Aires, Argentina",
     },
     UNIKE: {
-        SOBRE: "#",
-        ROHERMET: "#",
-        MURALLON: "#",
+        SOBRE: "/",
+        ROHERMET: "/rohermet",
+        MURALLON: "https://www.murallon.com.ar",
+        CONTACTO: "/contacto",
         BLOG: "/blog",
         BLOG_DETALLE: (slug) => `/blog/${slug}`,
     },

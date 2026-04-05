@@ -64,7 +64,7 @@
                     <nav class="flex flex-col gap-6 px-4 overflow-y-scroll" style="min-height: calc(100vh - 100px);">
                         <ul class="text-sm text-white font-bold">
                             <li v-if="!isWaterplast" @click="$emit('close')" class="w-full text-start py-4 px-3">
-                                <NuxtLink :to="ROUTES_NAMES.HOME">Waterplast</NuxtLink>
+                                <NuxtLink :to="ROUTES_NAMES.WATERPLAST.HOME">Waterplast</NuxtLink>
                             </li>
                             <li v-if="!isRohermet" @click="$emit('close')" class="w-full text-start py-4 px-3">
                                 <NuxtLink :to="ROUTES_NAMES.ROHERMET.HOME">Rohermet</NuxtLink>
@@ -100,7 +100,7 @@ const currentPanel = ref(1)
 const menu = [
     { nombre: "Distribuidores", route: ROUTES_NAMES.DISTRIBUIDORES },
     { nombre: "Blog", route: ROUTES_NAMES.BLOG },
-    { nombre: "Contacto", route: "#footer" },
+    { nombre: "Contacto", route: "/contacto" },
 ]
 
 watch(() => props.isOpen, (newVal) => {
