@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="w-full text-center text-white text-sm md:text-base font-medium py-4 md:py-6 lg:py-12 xxl:pt-16">
-            <p>© Copyright {{ new Date().getFullYear() }} Unike Group S.A.</p>
+            <NuxtLink to="https://www.benteveo.com" target="_blank">© Copyright {{ new Date().getFullYear() }} Benteveo</NuxtLink>
         </div>
     </footer>
 </template>

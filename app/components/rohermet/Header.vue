@@ -52,8 +52,8 @@
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
-            <div class="relative ml-2 group">
-                <ButtonSecondary>
+            <div class="flex justify-center items-center relative ml-2 group">
+                <ButtonSecondary :to="ROUTES_NAMES.HOME">
                     Somos Unike Group
                 </ButtonSecondary>
                 <div
