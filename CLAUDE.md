@@ -13,16 +13,17 @@
 
 ## Arquitectura multi-marca
 
-3 marcas en un solo codebase:
-- **Waterplast** (principal) — tanques de agua
-- **Rohermet** (en desarrollo) — construcción
-- **Unike Group** (default) — corporativo
+3 marcas en un solo codebase + 1 externa:
+- **Waterplast** — tanques de agua (`/waterplast`)
+- **Rohermet** — construcción (`/rohermet`)
+- **Unike Group** (default) — corporativo (`/`)
+- **Murallón** — pinturas (dominio externo, links desactivados hasta que esté lista la web — ver `MURALLON-LINKS.md`)
 
 ### Detección de marca
 - `useBrand()` composable lee la ruta actual
-- `/` y `/waterplast*` → waterplast
+- `/waterplast*` → waterplast
 - `/rohermet*` → rohermet
-- Todo lo demás → default (Unike Group)
+- Todo lo demás (incluido `/`) → default (Unike Group)
 - `data-brand` en `#__nuxt` activa CSS variables por marca
 
 ### Layouts
@@ -46,6 +47,8 @@ app/
 ├── assets/css/main.css        — variables de marca, estilos globales
 ├── components/
 │   ├── default/               — Header, Footer, Main, Section, Drawer (Unike)
+│   ├── unike/                 — Hero, Historia, Define, MarcasCards, Capacidad, MediosContacto
+│   ├── contacto/              — Hero, RedDistribuidores
 │   ├── waterplast/            — Header, Drawer, Hero, Muestra, Sobre, categoria/, producto/
 │   ├── rohermet/              — Header, Drawer, Hero, CarouselProductos, Pilares, categoria/, producto/
 │   ├── heading/               — H1, H2, H3
@@ -66,7 +69,7 @@ app/
 │   ├── useBlog.js             — fetch blogs
 │   ├── useDistribuidores.js   — CRUD distribuidores
 │   ├── useDebounce.js         — utilidad debounce
-│   ├── useHomeScroll.js       — scroll por hash
+│   ├── useHomeScroll.js       — scroll por hash (usado en waterplast home)
 │   ├── useOptimizedQueries.js — field mappings, paginación
 │   ├── usePassiveListeners.js — listeners optimizados
 │   ├── usePreloadData.js      — precarga en app mount
@@ -79,7 +82,8 @@ app/
 │   └── ROUTE_NAMES.js         — rutas centralizadas, contacto, redes sociales
 ├── layouts/                   — default, waterplast, rohermet
 ├── pages/
-│   ├── index.vue              — home (layout waterplast)
+│   ├── index.vue              — home Unike Group (layout default)
+│   ├── contacto/index.vue     — página de contacto (layout default)
 │   ├── distribuidores/index.vue
 │   ├── blog/index.vue
 │   ├── blog/[slug].vue
@@ -104,7 +108,7 @@ app/
 │   ├── storeOpiniones.js
 │   └── storeProductos.js
 ├── app.vue                    — root, setea data-brand, precarga datos
-└── error.vue                  — página 404
+└── error.vue                  — página 404 (usa UnikeMarcasCards)
 server/
 ├── middleware/
 │   ├── cache-headers.js       — cache por tipo de recurso
@@ -154,8 +158,16 @@ Cada store/composable tiene funciones `get*ImageUrl()` que resuelven paths relat
 - Hero gradient: `<span class="bg-gradient-hero absolute top-0">` como primer hijo de `<DefaultMain>`, se ancla a `#__nuxt` (tiene `position: relative`)
 - `DefaultMain` NO debe tener `position: relative` (rompe el hero en otras páginas)
 - Tab buttons activos: `!bg-terciary`, inactivos: `!bg-transparent !border-2 !border-terciary !text-terciary`
-- "Somos Unike Group" siempre oculta la marca actual usando `isWaterplast`/`isRohermet` de `useBrand()`
+- "Somos Unike Group" dropdown oculta la marca actual usando `isWaterplast`/`isRohermet` de `useBrand()`
 - Drawers waterplast/rohermet: panel 1 (menu) → panel 2 (Productos) → panel 3 (Somos Unike Group)
+- `UnikeMarcasCards`: componente reutilizable con 3 marcas (Waterplast, Rohermet, Murallón). Prop `showTitle` (default true). Murallón tiene `disabled: true` (badge "Próximamente", sin link)
+
+### Rutas
+- `ROUTES_NAMES.HOME` = `/` (home Unike Group)
+- `ROUTES_NAMES.WATERPLAST.HOME` = `/waterplast` (home Waterplast)
+- `ROUTES_NAMES.ROHERMET.HOME` = `/rohermet` (home Rohermet)
+- `ROUTES_NAMES.UNIKE.MURALLON` = URL externa (desactivada en UI)
+- Links a Waterplast en dropdowns/drawers usan `WATERPLAST.HOME`, no `HOME`
 
 ### Data fetching
 - Composables y stores siguen el mismo patrón: `loading` ref, `error` ref, `data` ref, `readonly()` en return
@@ -171,6 +183,7 @@ Cada store/composable tiene funciones `get*ImageUrl()` que resuelven paths relat
 - Múltiples tamaños por entidad (_s, _m, _l, _xl o chica, mediana, grande)
 - `@nuxt/image` con formato WebP y quality 75
 - Plugin `lazy-offscreen-images.js` para lazy load con `data-src`
+- Imágenes estáticas en `/public/images/` (unike, marcas, capacidad, logos, etc.)
 
 ## Variables de entorno
 ```
@@ -180,11 +193,11 @@ GOOGLE_MAPS_API_KEY=
 ```
 
 ## Reglas del proyecto
-- Nunca agregar links a Murallón (no está desarrollado)
 - Links de Distribuidores y Blog van a páginas absolutas (`/distribuidores`, `/blog`), nunca anchor scrolls
 - Color de texto `text-dark` para títulos en páginas Unike (no `text-primary`)
 - Idioma UI: español. Idioma código: inglés. Comentarios en español.
 - Commit solo cuando se pida explícitamente
+- Murallón: links desactivados hasta que la web esté lista. Ver `MURALLON-LINKS.md` para reactivar.
 
 ## Bugs conocidos
 - `app/stores/storeProductos.js:203`: typo `waterplast-produtos` (portugués) → debería ser `waterplast-productos`

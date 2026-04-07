@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink v-if="to" :to="to" :aria-label="ariaLabel"
+    <NuxtLink v-if="to" :to="to" :target="target" :aria-label="ariaLabel"
         class="bg-primary rounded-full text-white text-base font-bold transition duration-300 py-[0.906rem] px-5 sm:px-10">
         <slot />
     </NuxtLink>

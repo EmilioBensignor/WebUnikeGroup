@@ -25,7 +25,7 @@ const footerSections = [
         items: [
             {
                 nombre: "Waterplast",
-                route: ROUTES_NAMES.HOME
+                route: ROUTES_NAMES.WATERPLAST.HOME
             },
             {
                 nombre: "Rohermet",

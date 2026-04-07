@@ -3,8 +3,10 @@
         class="w-full flex flex-col items-center gap-6 bg-primary-gradient rounded-t-3xl pt-12 xxl:px-16">
         <div
             class="lg:w-full xxl:max-w-[1304px] flex flex-col xxl:flex-row items-center gap-6 md:gap-12 xxl:gap-28 px-4 md:px-8 lg:px-16 xxl:px-0">
-            <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group"
-                class="w-[6.5rem] md:w-[11.75rem] h-[4.5rem] md:h-32" />
+            <NuxtLink :to="ROUTES_NAMES.HOME" class="w-[6.5rem] md:w-[11.75rem] h-[4.5rem] md:h-32 flex-shrink-0">
+                <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group"
+                    class="w-full h-full object-contain" />
+            </NuxtLink>
             <div
                 class="lg:w-full flex flex-col md:flex-row lg:justify-between items-center md:items-start gap-6 md:gap-5 xxl:gap-20 text-sm lg:text-base text-white font-medium">
                 <div v-for="section in filteredSections" :key="section.title"
@@ -45,7 +47,7 @@
             </div>
         </div>
         <div class="w-full text-center text-white text-sm md:text-base font-medium py-4 md:py-6 lg:py-12 xxl:pt-16">
-            <p>© Copyright {{ new Date().getFullYear() }} Unike Group S.A.</p>
+            <NuxtLink to="https://www.benteveo.com" target="_blank">© Copyright {{ new Date().getFullYear() }} Benteveo</NuxtLink>
         </div>
     </footer>
 </template>
@@ -53,11 +55,12 @@
 <script setup>
 import footerSections from '~/shared/menu';
 import { useRoute } from 'vue-router';
+import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES';
 
 const route = useRoute();
 
 const isOnHome = computed(() => {
-    return route.path === '/' || route.path === '/waterplast';
+    return route.path === '/waterplast';
 });
 
 const filteredSections = computed(() => {

@@ -3,7 +3,7 @@
         'xxl:max-w-[1304px] flex items-center justify-between sticky z-20 bg-gradient-to-r from-primary to-terciary lg:border-2 lg:rounded-full py-2 md:py-6 lg:py-3 xxl:py-[0.875rem] px-4 md:px-8 lg:px-4 xxl:pl-6 lg:mx-16 xxl:mx-auto transition-all duration-300',
         isScrolled ? 'top-0 lg:top-6' : 'top-0 lg:top-16'
     ]">
-        <NuxtLink :to="ROUTES_NAMES.HOME">
+        <NuxtLink :to="ROUTES_NAMES.WATERPLAST.HOME">
             <NuxtImg src="/images/logos/Logo-Waterplast-Blanco.svg" alt="Logo Waterplast" fetchpriority="high"
                 class="w-28 md:w-[13.5rem] h-9 md:h-[4.5rem] lg:w-[9.75rem] lg:h-[3.25rem]" />
         </NuxtLink>
@@ -51,8 +51,8 @@
                     <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
-            <div class="relative ml-2 group">
-                <ButtonSecondary>
+            <div class="flex justify-center items-center relative ml-2 group">
+                <ButtonSecondary :to="ROUTES_NAMES.HOME">
                     Somos Unike Group
                 </ButtonSecondary>
                 <div
