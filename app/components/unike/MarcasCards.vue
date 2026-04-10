@@ -47,7 +47,7 @@ const marcas = [
     {
         nombre: 'Waterplast',
         logo: '/images/marcas/Waterplast.webp',
-        imagen: '/images/marcas/Waterplast-Almacenamiento-Manejo-Agua.png',
+        imagen: '/images/marcas/unike_soluciones_almacenamiento_hover.webp',
         descripcion: 'Soluciones para almacenamiento de agua',
         route: ROUTES_NAMES.WATERPLAST.HOME,
         external: false,
@@ -55,7 +55,7 @@ const marcas = [
     {
         nombre: 'Rohermet',
         logo: '/images/marcas/Rohermet.webp',
-        imagen: '/images/marcas/Rohermet-Instalaciones-Componentes-Sanitarios.png',
+        imagen: '/images/marcas/unike_soluciones_componentes_sanitarios_hover.webp',
         descripcion: 'Componentes sanitarios de alta precisión',
         route: ROUTES_NAMES.ROHERMET.HOME,
         external: false,
@@ -63,7 +63,7 @@ const marcas = [
     {
         nombre: 'Murallón',
         logo: '/images/marcas/Murallon.webp',
-        imagen: '/images/marcas/Murallon-Pinturas-Variedad-Espacios.png',
+        imagen: '/images/marcas/unike_soluciones_pintura_hover.webp',
         descripcion: 'Pinturas para hogar y obra',
         route: ROUTES_NAMES.UNIKE.MURALLON,
         external: true,

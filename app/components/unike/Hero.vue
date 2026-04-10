@@ -1,18 +1,18 @@
 <template>
     <DefaultSection class="relative lg:-mt-32">
         <picture class="w-full">
-            <NuxtImg src="/images/unike/Hero-Unike-1440.png" alt="Unike Group" format="webp" quality="75"
+            <NuxtImg src="/images/unike/hero/unike_hero_quienes_somos_1512.webp" alt="Unike Group" format="webp" quality="75"
                 fetchpriority="high" decoding="async"
                 class="hidden xxl:block w-full h-[38rem] object-cover object-center" />
 
-            <NuxtImg src="/images/unike/Hero-Unike-1080.png" alt="Unike Group" format="webp" quality="75"
+            <NuxtImg src="/images/unike/hero/unike_hero_quienes_somos_1080.webp" alt="Unike Group" format="webp" quality="75"
                 fetchpriority="high" decoding="async"
                 class="hidden lg:block xxl:hidden w-full h-[40rem] object-cover object-right xxl:object-center" />
 
-            <NuxtImg src="/images/unike/Hero-Unike-768.png" alt="Unike Group" format="webp" quality="75"
+            <NuxtImg src="/images/unike/hero/unike_hero_quienes_somos_768.webp" alt="Unike Group" format="webp" quality="75"
                 fetchpriority="high" decoding="async" class="hidden md:block lg:hidden w-full h-full object-cover" />
 
-            <NuxtImg src="/images/unike/Hero-Unike-320.webp" alt="Unike Group" quality="75" decoding="async"
+            <NuxtImg src="/images/unike/hero/unike_hero_quienes_somos_320.webp" alt="Unike Group" quality="75" decoding="async"
                 class="block md:hidden w-full h-full object-cover" />
         </picture>
 

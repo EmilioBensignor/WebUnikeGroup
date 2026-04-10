@@ -2,7 +2,7 @@
     <DefaultSection class="px-4 pb-6 md:pt-0 md:p-8 lg:px-16 lg:pb-12 xxl:pb-16">
         <div class="xxl:max-w-[1304px] xxl:w-full flex flex-col gap-6 md:gap-8 lg:gap-12 xxl:gap-16 mx-auto">
             <div class="w-full flex flex-col md:flex-row-reverse gap-4 lg:gap-8">
-                <NuxtImg src="/images/unike/Nuestra-Historia.png" alt="Historia de Unike Group"
+                <NuxtImg src="/images/unike/unike_historia_quienes_somos.webp" alt="Historia de Unike Group"
                     class="w-full md:w-1/2 h-full md:max-h-60 lg:max-h-80 xxl:max-h-[18.75rem] object-cover rounded-3xl" />
                 <div class="md:w-1/2 flex flex-col md:justify-center gap-3 md:gap-4 lg:gap-6">
                     <div class="flex items-center gap-2 text-terciary">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
-                <NuxtImg src="/images/unike/Mision-Valores.png" alt="Nuestra misión y valores"
+                <NuxtImg src="/images/unike/unike_mision_vision_quienes_somos.webp" alt="Nuestra misión y valores"
                     class="w-full md:w-1/2 h-full md:max-h-60 lg:max-h-80 xxl:max-h-[18.75rem] object-cover rounded-3xl" />
                 <div class="md:w-1/2 flex flex-col justify-center gap-8">
                     <div class="flex flex-col gap-3 lg:gap-6">
