@@ -20,7 +20,7 @@
             }" class="md:px-16">
             <div v-for="item in procesos" :key="item.nombre" class="flex flex-col gap-2 md:gap-4">
                 <div class="overflow-hidden rounded-3xl">
-                    <NuxtImg :src="`/images/unike/unike_mision_proceso_${item.imagen}.webp`" :alt="item.nombre"
+                    <NuxtImg :src="`/images/unike/capacidad/unike_mision_proceso_${item.imagen}.webp`" :alt="item.nombre"
                         format="webp" quality="75" class="w-full h-[17rem] lg:h-[24rem] xxl:h-[23.5rem] object-cover" />
                 </div>
                 <p class="text-center lg:text-xl font-semibold">{{ item.nombre }}</p>
