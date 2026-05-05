@@ -13,7 +13,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/seo',
-    '@nuxtjs/supabase'
+    '@nuxtjs/supabase',
+    '@vercel/analytics/nuxt',
+    '@vercel/speed-insights/nuxt'
   ],
 
   app: {
@@ -128,12 +130,9 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'vercel-static',
     prerender: {
-      crawlLinks: true,
+      crawlLinks: false,
       routes: ['/', '/waterplast', '/blog', '/sitemap.xml'],
       ignore: ['/admin']
-    },
-    routeRules: {
-      '/**': { cache: { maxAge: 60 * 60 * 24 * 7 } }
     }
   },
 
