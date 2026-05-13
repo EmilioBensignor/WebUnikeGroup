@@ -2,30 +2,6 @@
   "framework": null,
   "buildCommand": "npm run generate",
   "outputDirectory": ".output/public",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "web-unike-group.vercel.app"
-        }
-      ],
-      "destination": "https://www.unikegroup.com.ar/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "unikegroup.com.ar"
-        }
-      ],
-      "destination": "https://www.unikegroup.com.ar/:path*",
-      "permanent": true
-    }
-  ],
   "headers": [
     {
       "source": "/_nuxt/(.*)",
