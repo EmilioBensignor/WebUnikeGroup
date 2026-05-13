@@ -65,6 +65,12 @@ export default defineNuxtConfig({
     redirectToCanonicalSiteUrl: false
   },
 
+  // robots.txt sirve un único sitemap (canonical) para evitar que Google
+  // crawlee el dominio web-unike-group.vercel.app y duplique edge requests.
+  robots: {
+    sitemap: ['https://www.unikegroup.com.ar/sitemap.xml']
+  },
+
   sitemap: {
     urls: async () => {
       const supabaseUrl = process.env.SUPABASE_URL
