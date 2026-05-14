@@ -125,6 +125,11 @@
                                     Rohermet
                                 </NuxtLink>
                             </li>
+                            <li @click="$emit('close')" class="w-full text-start py-4 px-3">
+                                <NuxtLink :to="ROUTES_NAMES.UNIKE.MURALLON" target="_blank" rel="noopener noreferrer">
+                                    Murallón
+                                </NuxtLink>
+                            </li>
                         </ul>
                         <div class="flex justify-center pb-5">
                             <NuxtImg src="/images/logos/Logo-Rohermet-Blanco.svg" alt="Logo Rohermet"

@@ -31,6 +31,10 @@ const footerSections = [
                 nombre: "Rohermet",
                 route: ROUTES_NAMES.ROHERMET.HOME
             },
+            {
+                nombre: "Murallón",
+                route: ROUTES_NAMES.UNIKE.MURALLON
+            },
         ]
     },
     {

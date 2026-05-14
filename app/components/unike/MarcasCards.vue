@@ -67,7 +67,6 @@ const marcas = [
         descripcion: 'Pinturas para hogar y obra',
         route: ROUTES_NAMES.UNIKE.MURALLON,
         external: true,
-        disabled: true,
     },
 ]
 </script>

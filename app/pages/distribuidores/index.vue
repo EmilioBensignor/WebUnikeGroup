@@ -128,7 +128,6 @@ const setEmpresa = async (empresa) => {
     }
 }
 
-// Reset page when empresa changes
 watch(empresaActiva, () => { paginaActual.value = 1 })
 
 onMounted(async () => {
