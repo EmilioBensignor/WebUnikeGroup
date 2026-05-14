@@ -17,7 +17,7 @@
 - **Waterplast** — tanques de agua (`/waterplast`)
 - **Rohermet** — construcción (`/rohermet`)
 - **Unike Group** (default) — corporativo (`/`)
-- **Murallón** — pinturas (dominio externo, links desactivados hasta que esté lista la web — ver `MURALLON-LINKS.md`)
+- **Murallón** — pinturas (dominio externo `https://www.murallon.com.ar`, abre en nueva pestaña)
 
 ### Detección de marca
 - `useBrand()` composable lee la ruta actual
@@ -160,13 +160,13 @@ Cada store/composable tiene funciones `get*ImageUrl()` que resuelven paths relat
 - Tab buttons activos: `!bg-terciary`, inactivos: `!bg-transparent !border-2 !border-terciary !text-terciary`
 - "Somos Unike Group" dropdown oculta la marca actual usando `isWaterplast`/`isRohermet` de `useBrand()`
 - Drawers waterplast/rohermet: panel 1 (menu) → panel 2 (Productos) → panel 3 (Somos Unike Group)
-- `UnikeMarcasCards`: componente reutilizable con 3 marcas (Waterplast, Rohermet, Murallón). Prop `showTitle` (default true). Murallón tiene `disabled: true` (badge "Próximamente", sin link)
+- `UnikeMarcasCards`: componente reutilizable con 3 marcas (Waterplast, Rohermet, Murallón). Prop `showTitle` (default true). Murallón usa `external: true` y abre `https://www.murallon.com.ar` en nueva pestaña
 
 ### Rutas
 - `ROUTES_NAMES.HOME` = `/` (home Unike Group)
 - `ROUTES_NAMES.WATERPLAST.HOME` = `/waterplast` (home Waterplast)
 - `ROUTES_NAMES.ROHERMET.HOME` = `/rohermet` (home Rohermet)
-- `ROUTES_NAMES.UNIKE.MURALLON` = URL externa (desactivada en UI)
+- `ROUTES_NAMES.UNIKE.MURALLON` = `https://www.murallon.com.ar` (URL externa, links abren en nueva pestaña)
 - Links a Waterplast en dropdowns/drawers usan `WATERPLAST.HOME`, no `HOME`
 
 ### Data fetching
@@ -197,7 +197,7 @@ GOOGLE_MAPS_API_KEY=
 - Color de texto `text-dark` para títulos en páginas Unike (no `text-primary`)
 - Idioma UI: español. Idioma código: inglés. Comentarios en español.
 - Commit solo cuando se pida explícitamente
-- Murallón: links desactivados hasta que la web esté lista. Ver `MURALLON-LINKS.md` para reactivar.
+- Murallón: links activos a `https://www.murallon.com.ar`, siempre con `target="_blank"` y `rel="noopener noreferrer"`
 
 ## Bugs conocidos
 - `app/stores/storeProductos.js:203`: typo `waterplast-produtos` (portugués) → debería ser `waterplast-productos`
