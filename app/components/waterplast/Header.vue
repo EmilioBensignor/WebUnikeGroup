@@ -48,7 +48,12 @@
                 </li>
                 <li v-for="(item, index) in conditionalMenu" :key="index"
                     class="h-12 flex justify-center items-center border-2 border-transparent hover:border-secondary rounded-full transition-colors duration-300 px-4 xxl:px-6">
-                    <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
+                    <a v-if="item.isCatalogo" :href="catalogoUrl" :download="catalogoUrl ? true : undefined"
+                        target="_blank" rel="noopener noreferrer"
+                        class="cursor-pointer" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''">
+                        {{ item.nombre }}
+                    </a>
+                    <NuxtLink v-else :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
             <div class="flex justify-center items-center relative ml-2 group">
@@ -70,7 +75,7 @@
         </nav>
     </header>
 
-    <WaterplastDrawer :isOpen="isDrawerOpen" @close="closeDrawer" />
+    <WaterplastDrawer :isOpen="isDrawerOpen" :catalogoUrl="catalogoUrl" @close="closeDrawer" />
 </template>
 
 <script setup>
@@ -83,9 +88,12 @@ const { categorias, loading, error, fetchCategorias, getCategoriaImageUrl } = us
 const { useWaterplastImagenesDestacadas } = await import('~/composables/waterplast/useImagenesDestacadas.js')
 const { fetchImagenDestacadaBySlug } = useWaterplastImagenesDestacadas()
 
+const { fetchCatalogoByMarca } = useCatalogos()
+
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
 const imagenBanner = ref(null)
+const catalogoUrl = ref(null)
 
 const conditionalMenu = menu
 
@@ -115,6 +123,10 @@ onMounted(async () => {
     } catch (error) {
         console.log(error);
     }
+
+    fetchCatalogoByMarca('Waterplast').then((url) => {
+        catalogoUrl.value = url
+    })
 
     window.addEventListener('scroll', handleScroll, { passive: true })
 })

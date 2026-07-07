@@ -28,7 +28,11 @@
                             </li>
                             <li v-for="(item, index) in conditionalMenu" :key="index" @click="$emit('close')"
                                 class="w-full text-start py-4 px-3">
-                                <NuxtLink :to="item.route" class="text-white">
+                                <a v-if="item.isCatalogo" :href="catalogoUrl" target="_blank" rel="noopener noreferrer"
+                                    class="text-white" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''">
+                                    {{ item.nombre }}
+                                </a>
+                                <NuxtLink v-else :to="item.route" class="text-white">
                                     {{ item.nombre }}
                                 </NuxtLink>
                             </li>
@@ -159,6 +163,10 @@ const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
+    },
+    catalogoUrl: {
+        type: String,
+        default: null
     }
 })
 
