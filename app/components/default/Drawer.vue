@@ -9,7 +9,8 @@
         leave-active-class="transition-transform duration-300 ease-in" enter-from-class="translate-x-full"
         enter-to-class="translate-x-0" leave-from-class="translate-x-0" leave-to-class="translate-x-full">
         <div v-if="isOpen" class="w-full sm:max-w-md h-full fixed top-0 right-0 z-50">
-            <div class="h-full flex flex-col md:gap-6 absolute inset-0 z-10 bg-primary-reverse-gradient sm:rounded-l-[18px] md:p-6">
+            <div
+                class="h-full flex flex-col md:gap-6 absolute inset-0 z-10 bg-primary-reverse-gradient sm:rounded-l-[18px] md:p-6">
                 <div class="flex justify-end py-2 px-4 md:p-0">
                     <button @click="$emit('close')" class="w-12 h-12 flex justify-center items-center">
                         <div class="w-6 h-6 flex justify-center items-center bg-white rounded-full">
@@ -23,9 +24,13 @@
                         <ul class="text-sm text-white font-bold">
                             <li v-for="(item, index) in menu" :key="index" @click="$emit('close')"
                                 class="w-full text-start py-4 px-3">
-                                <NuxtLink :to="item.route" class="text-white">
+                                <a v-if="item.isCatalogo" :href="catalogoUrl" target="_blank" rel="noopener noreferrer"
+                                    class="text-white" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''"">
                                     {{ item.nombre }}
-                                </NuxtLink>
+                                </a>
+                                <NuxtLink v-else :to="item.route" class="text-white">
+                                    {{ item.nombre }}
+                                    </NuxtLink>
                             </li>
                             <li>
                                 <button @click="currentPanel = 2" class="w-full text-start py-4 px-3">
@@ -36,8 +41,7 @@
                     </nav>
 
                     <div class="flex justify-center">
-                        <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group"
-                            fetchpriority="high"
+                        <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group" fetchpriority="high"
                             class="w-24 md:w-36 h-12 md:h-[4.5rem] object-contain" />
                     </div>
                 </div>
@@ -77,8 +81,7 @@
                         </ul>
                         <div class="flex justify-center pb-5">
                             <NuxtImg src="/images/logos/Logo-Unike-Group.svg" alt="Logo Unike Group"
-                                fetchpriority="high"
-                                class="w-24 md:w-36 h-12 md:h-[4.5rem] object-contain" />
+                                fetchpriority="high" class="w-24 md:w-36 h-12 md:h-[4.5rem] object-contain" />
                         </div>
                     </nav>
                 </div>
@@ -95,6 +98,10 @@ const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
+    },
+    catalogoUrl: {
+        type: String,
+        default: null
     }
 })
 
@@ -103,6 +110,7 @@ defineEmits(['close'])
 const currentPanel = ref(1)
 
 const menu = [
+    { nombre: "Catálogo", route: null, isCatalogo: true, marca: "Unike Group" },
     { nombre: "Distribuidores", route: ROUTES_NAMES.DISTRIBUIDORES },
     { nombre: "Blog", route: ROUTES_NAMES.BLOG },
     { nombre: "Contacto", route: "/contacto" },

@@ -2,6 +2,12 @@ import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 
 const menu = [
     {
+        nombre: "Catálogo",
+        route: null,
+        isCatalogo: true,
+        marca: "Rohermet",
+    },
+    {
         nombre: "Distribuidores",
         route: ROUTES_NAMES.DISTRIBUIDORES
     },

@@ -16,7 +16,12 @@
             <ul class="flex items-center text-white font-bold">
                 <li v-for="(item, index) in menu" :key="index"
                     class="h-12 flex justify-center items-center border-2 border-transparent hover:border-white rounded-full transition-colors duration-300 px-4 xxl:px-6">
-                    <NuxtLink :to="item.route">{{ item.nombre }}</NuxtLink>
+                    <a v-if="item.isCatalogo" :href="catalogoUrl" :download="catalogoUrl ? true : undefined"
+                        target="_blank" rel="noopener noreferrer"
+                        class="cursor-pointer" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''">
+                        {{ item.nombre }}
+                    </a>
+                    <NuxtLink v-else :to="item.route">{{ item.nombre }}</NuxtLink>
                 </li>
             </ul>
             <div class="flex justify-center items-center relative ml-2 group">
@@ -42,7 +47,7 @@
         </nav>
     </header>
 
-    <DefaultDrawer :isOpen="isDrawerOpen" @close="closeDrawer" />
+    <DefaultDrawer :isOpen="isDrawerOpen" :catalogoUrl="catalogoUrl" @close="closeDrawer" />
 </template>
 
 <script setup>
@@ -50,8 +55,11 @@ import { ROUTES_NAMES } from '~/constants/ROUTE_NAMES'
 import menu from '~/shared/unike/menu.js'
 const { isWaterplast, isRohermet } = useBrand()
 
+const { fetchCatalogoByMarca } = useCatalogos()
+
 const isDrawerOpen = ref(false)
 const isScrolled = ref(false)
+const catalogoUrl = ref(null)
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value
@@ -66,6 +74,10 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
+    fetchCatalogoByMarca('Unike Group').then((url) => {
+        catalogoUrl.value = url
+    })
+
     window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
