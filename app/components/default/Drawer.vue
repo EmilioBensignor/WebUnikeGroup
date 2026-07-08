@@ -22,10 +22,10 @@
                 <div class="flex flex-col gap-6">
                     <nav class="px-4 md:p-0">
                         <ul class="text-sm text-white font-bold">
-                            <li v-for="(item, index) in menu" :key="index" @click="$emit('close')"
-                                class="w-full text-start py-4 px-3">
+                            <li v-for="(item, index) in menu" :key="index" v-show="!item.isCatalogo || catalogoUrl"
+                                @click="$emit('close')" class="w-full text-start py-4 px-3">
                                 <a v-if="item.isCatalogo" :href="catalogoUrl" target="_blank" rel="noopener noreferrer"
-                                    class="text-white" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''"">
+                                    class="text-white">
                                     {{ item.nombre }}
                                 </a>
                                 <NuxtLink v-else :to="item.route" class="text-white">

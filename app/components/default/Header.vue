@@ -14,11 +14,10 @@
         </button>
         <nav class="hidden lg:flex">
             <ul class="flex items-center text-white font-bold">
-                <li v-for="(item, index) in menu" :key="index"
+                <li v-for="(item, index) in menu" :key="index" v-show="!item.isCatalogo || catalogoUrl"
                     class="h-12 flex justify-center items-center border-2 border-transparent hover:border-white rounded-full transition-colors duration-300 px-4 xxl:px-6">
-                    <a v-if="item.isCatalogo" :href="catalogoUrl" :download="catalogoUrl ? true : undefined"
-                        target="_blank" rel="noopener noreferrer"
-                        class="cursor-pointer" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''">
+                    <a v-if="item.isCatalogo" :href="catalogoUrl" :download="true"
+                        target="_blank" rel="noopener noreferrer" class="cursor-pointer">
                         {{ item.nombre }}
                     </a>
                     <NuxtLink v-else :to="item.route">{{ item.nombre }}</NuxtLink>
