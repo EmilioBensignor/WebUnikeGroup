@@ -1,0 +1,22 @@
+diff --git a/node_modules/@nuxt/vite-builder/dist/index.mjs b/node_modules/@nuxt/vite-builder/dist/index.mjs
+index 0a6baa1..74ee130 100644
+--- a/node_modules/@nuxt/vite-builder/dist/index.mjs
++++ b/node_modules/@nuxt/vite-builder/dist/index.mjs
+@@ -491,16 +491,7 @@ function listenAndRestrict(server, socketPath) {
+ 		server.listen(socketPath, () => {
+ 			try {
+ 				fs.chmodSync(socketPath, 384);
+-			} catch (error) {
+-				console.error("[nuxt] Failed to restrict vite-node socket permissions; closing.", error);
+-				server.close();
+-				try {
+-					fs.rmSync(dirname(socketPath), {
+-						recursive: true,
+-						force: true
+-					});
+-				} catch {}
+-			}
++			} catch {}
+ 		});
+ 	} finally {
+ 		process.umask(previousUmask);

@@ -26,10 +26,11 @@
                                 <button @click="navigateToPanel(2)"
                                     class="w-full text-start py-4 px-3">Productos</button>
                             </li>
-                            <li v-for="(item, index) in conditionalMenu" :key="index" @click="$emit('close')"
+                            <li v-for="(item, index) in conditionalMenu" :key="index"
+                                v-show="!item.isCatalogo || catalogoUrl" @click="$emit('close')"
                                 class="w-full text-start py-4 px-3">
                                 <a v-if="item.isCatalogo" :href="catalogoUrl" target="_blank" rel="noopener noreferrer"
-                                    class="text-white" :class="!catalogoUrl ? 'opacity-50 pointer-events-none' : ''">
+                                    class="text-white">
                                     {{ item.nombre }}
                                 </a>
                                 <NuxtLink v-else :to="item.route" class="text-white">

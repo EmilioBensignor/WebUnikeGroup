@@ -27,4 +27,4 @@ logs
 .env.*
 !.env.example
 
-.claude
+.claude.tmp

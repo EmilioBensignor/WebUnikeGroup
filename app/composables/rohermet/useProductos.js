@@ -154,10 +154,6 @@ export const useRohermetProductos = () => {
         let processedHTML = html
         const cleanName = generateCleanName(productoNombre)
 
-        if (!imagesFolder) {
-            imagesFolder = await detectImageFolderFromStorage(cleanName)
-        }
-
         const baseUrl = import.meta.client ? window.location.origin : (config.public.siteUrl || 'https://unikegroup.com.ar')
 
         let keyshotContent
@@ -263,36 +259,6 @@ export const useRohermetProductos = () => {
         return processedHTML
     }
 
-    const detectImageFolderFromStorage = async (cleanName) => {
-        try {
-            const { data: files, error } = await supabase.storage
-                .from('rohermet-productos')
-                .list(`${cleanName}/images`, {
-                    limit: 100,
-                    offset: 0,
-                })
-
-            if (error || !files || files.length === 0) return null
-
-            const hasPngFiles = files.some(item => item.name && item.name.endsWith('.png'))
-            if (hasPngFiles) return null
-
-            const folders = files.filter(item => {
-                if (!item.name || item.name === 'files') return false
-                const hasImageExtension = /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(item.name)
-                const hasHtmlExtension = /\.html?$/i.test(item.name)
-                return !hasImageExtension && !hasHtmlExtension
-            })
-
-            if (folders.length > 0) {
-                return folders[0].name
-            }
-        } catch (error) {
-        }
-
-        return null
-    }
-
     const getImageBaseUrl = (cleanName, imagesFolder = null) => {
         const baseUrl = `${config.public.supabase.url}/storage/v1/object/public/rohermet-productos/${cleanName}/images`
 
@@ -314,22 +280,8 @@ export const useRohermetProductos = () => {
 
             const htmlResponse = await $fetch(htmlUrl)
 
-            let imagesFolder = producto.xr_images_folder || producto.images_folder || null
+            const imagesFolder = producto.xr_images_folder || null
             const cleanName = generateCleanName(producto.nombre)
-
-            if (!imagesFolder) {
-                imagesFolder = await detectImageFolderFromStorage(cleanName)
-
-                if (imagesFolder && producto.id) {
-                    try {
-                        await supabase
-                            .from('rohermet-productos')
-                            .update({ xr_images_folder: imagesFolder })
-                            .eq('id', producto.id)
-                    } catch (updateErr) {
-                    }
-                }
-            }
 
             const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre, imagesFolder)
 
