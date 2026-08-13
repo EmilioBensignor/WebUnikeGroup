@@ -227,7 +227,7 @@ export const useWaterplastProductos = () => {
         try {
             const { data, error } = await supabase
                 .from('waterplast-productos')
-                .select('archivo_html, nombre, xr_images_folder, images_folder')
+                .select('archivo_html, nombre, xr_images_folder')
                 .eq('id', productoId)
                 .single()
 
@@ -236,7 +236,7 @@ export const useWaterplastProductos = () => {
             if (data && data.archivo_html) {
                 const htmlResponse = await $fetch(data.archivo_html)
 
-                const imagesFolder = data.xr_images_folder || data.images_folder || null
+                const imagesFolder = data.xr_images_folder || null
                 const processedHTML = await processKeyShotXRHTML(htmlResponse, data.nombre, imagesFolder)
 
                 return {
@@ -251,41 +251,6 @@ export const useWaterplastProductos = () => {
             console.error('Error fetching 3D product from Supabase:', error)
             throw error
         }
-    }
-
-    const detectImageFolderFromStorage = async (cleanName) => {
-        try {
-            const { data: files, error } = await supabase.storage
-                .from('waterplast-productos')
-                .list(`${cleanName}/images`, {
-                    limit: 100,
-                    offset: 0,
-                })
-
-            if (error || !files || files.length === 0) {
-                return null
-            }
-
-            const hasPngFiles = files.some(item => item.name && item.name.endsWith('.png'))
-            if (hasPngFiles) {
-                return null
-            }
-
-            const folders = files.filter(item => {
-                if (!item.name || item.name === 'files') return false
-                const hasImageExtension = /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(item.name)
-                const hasHtmlExtension = /\.html?$/i.test(item.name)
-                return !hasImageExtension && !hasHtmlExtension
-            })
-
-            if (folders.length > 0) {
-                return folders[0].name
-            }
-        } catch (error) {
-            console.error('Error en detectImageFolderFromStorage:', error)
-        }
-
-        return null
     }
 
     const getImageBaseUrl = (cleanName, imagesFolder = null) => {
@@ -303,10 +268,6 @@ export const useWaterplastProductos = () => {
 
         let processedHTML = html
         const cleanName = cleanNameOverride || generateCleanName(productoNombre)
-
-        if (!imagesFolder) {
-            imagesFolder = await detectImageFolderFromStorage(cleanName)
-        }
 
         const baseUrl = import.meta.client ? window.location.origin : (config.public.siteUrl || 'https://unikegroup.com.ar')
 
@@ -472,7 +433,7 @@ export const useWaterplastProductos = () => {
 
             const htmlResponse = await $fetch(htmlUrl)
 
-            let imagesFolder = producto.xr_images_folder || producto.images_folder || null
+            const imagesFolder = producto.xr_images_folder || null
 
             let folderName = null
             if (producto.archivo_html && producto.archivo_html.includes('/')) {
@@ -480,20 +441,6 @@ export const useWaterplastProductos = () => {
             }
 
             const cleanName = folderName || generateCleanName(producto.nombre)
-
-            if (!imagesFolder) {
-                imagesFolder = await detectImageFolderFromStorage(cleanName)
-
-                if (imagesFolder && producto.id) {
-                    try {
-                        await supabase
-                            .from('waterplast-productos')
-                            .update({ xr_images_folder: imagesFolder })
-                            .eq('id', producto.id)
-                    } catch (updateErr) {
-                    }
-                }
-            }
 
             const processedHTML = await processKeyShotXRHTML(htmlResponse, producto.nombre, imagesFolder, cleanName)
 
