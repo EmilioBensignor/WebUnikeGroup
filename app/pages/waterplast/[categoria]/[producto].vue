@@ -315,7 +315,8 @@ const fetchProducto = async () => {
           id,
           nombre,
           slug,
-          color
+          color,
+          imagenes_redes
         )
       `)
       .eq('slug', route.params.producto)
@@ -361,12 +362,8 @@ const fetchProducto = async () => {
       }
     }
 
-    if (data && data.categoria && data.categoria.slug) {
-      try {
-        imagenesRedes.value = await fetchImagenesRedes(data.categoria.slug)
-      } catch (redesError) {
-        console.warn('Error loading social media images:', redesError)
-      }
+    if (data && data.categoria) {
+      imagenesRedes.value = fetchImagenesRedes(data.categoria.imagenes_redes)
     }
   } catch (error) {
     console.error('Error al cargar producto:', error)

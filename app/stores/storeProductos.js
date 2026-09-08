@@ -283,35 +283,20 @@ export const useStoreProductos = defineStore('productos', () => {
     }
   }
 
-  const fetchImagenesRedes = async (categoriaSlug) => {
-    if (!categoriaSlug) return []
+  const fetchImagenesRedes = (imagenesRedesPaths) => {
+    if (!imagenesRedesPaths || imagenesRedesPaths.length === 0) return []
 
-    try {
-      const { data: files, error } = await supabase.storage
-        .from('waterplast-categorias')
-        .list(`${categoriaSlug}/imagenes-redes`, {
-          limit: 100,
-          offset: 0,
-        })
+    const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
 
-      if (error || !files || files.length === 0) return []
-
-      const supabaseUrl = config.public.supabase?.url || config.public.bucketUrl?.replace('/storage/v1/object/public', '')
-      const imagenesRedes = files
-        .filter(file => {
-          const ext = file.name.split('.').pop().toLowerCase()
-          return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)
-        })
-        .map(file => ({
-          name: file.name,
-          url: `${supabaseUrl}/storage/v1/object/public/waterplast-categorias/${categoriaSlug}/imagenes-redes/${file.name}`
-        }))
-
-      return imagenesRedes
-    } catch (err) {
-      console.error('Error al obtener imágenes de redes:', err)
-      return []
-    }
+    return imagenesRedesPaths
+      .filter(path => {
+        const ext = path.split('.').pop().toLowerCase()
+        return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)
+      })
+      .map(path => ({
+        name: path.split('/').pop(),
+        url: `${supabaseUrl}/storage/v1/object/public/waterplast-categorias/${path}`
+      }))
   }
 
   const getProductosByCategoria = (categoriaSlug) => {
