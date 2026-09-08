@@ -357,32 +357,18 @@ export const useRohermetProductos = () => {
         }
     }
 
-    const fetchImagenesRedes = async (categoriaSlug) => {
-        if (!categoriaSlug) return []
+    const fetchImagenesRedes = (imagenesRedesPaths) => {
+        if (!imagenesRedesPaths || imagenesRedesPaths.length === 0) return []
 
-        try {
-            const { data: files, error } = await supabase.storage
-                .from('rohermet-categorias')
-                .list(`${categoriaSlug}/imagenes-redes`, {
-                    limit: 100,
-                    offset: 0,
-                })
-
-            if (error || !files || files.length === 0) return []
-
-            return files
-                .filter(file => {
-                    const ext = file.name.split('.').pop().toLowerCase()
-                    return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)
-                })
-                .map(file => ({
-                    name: file.name,
-                    url: `${config.public.supabase.url}/storage/v1/object/public/rohermet-categorias/${categoriaSlug}/imagenes-redes/${file.name}`
-                }))
-        } catch (err) {
-            console.error('Error al obtener imágenes de redes:', err)
-            return []
-        }
+        return imagenesRedesPaths
+            .filter(path => {
+                const ext = path.split('.').pop().toLowerCase()
+                return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)
+            })
+            .map(path => ({
+                name: path.split('/').pop(),
+                url: `${config.public.supabase.url}/storage/v1/object/public/rohermet-categorias/${path}`
+            }))
     }
 
     return {
